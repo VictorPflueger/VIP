@@ -4,17 +4,20 @@
  * TO ADD AN ENTRY: copy one block from { to }, paste it anywhere in the list, and change the values.
  * Keep the quotes around text and the comma after each block.
  *
- *   kind         What it is; sets the icon and the label:                             (required)
- *                "article", "whitepaper", "event", "talk", "feature", "podcast" or "interview".
- *   label        Your own label instead of the kind's, e.g. "Expert article".        (optional)
- *   title        Title of the piece, talk or event.                                  (required)
- *   publisher    Who published or hosted it.                                         (required)
- *   date         "YYYY-MM-DD" (or "YYYY-MM" if the day is unknown).                   (required)
- *                Events and talks dated today or later are marked "Upcoming".
- *   place        For events: city or "Online".                                       (optional)
- *   url          Where a click on the entry leads.                                    (required)
- *   description  One or two short sentences.                                         (optional)
- *   role         Your part, e.g. "Co-author", "Speaker", "Interviewed".              (optional)
+ *   kind          What it is; sets the icon and the label:                            (required)
+ *                 "article", "whitepaper", "event", "talk", "feature", "podcast" or "interview".
+ *   label         Your own label instead of the kind's, e.g. "Expert article".       (optional)
+ *   title         Title of the piece, talk or event.                                 (required)
+ *   publisher     Who published or hosted it.                                        (required)
+ *   date          "YYYY-MM-DD" (or "YYYY-MM" if the day is unknown).                  (required)
+ *                 Events and talks dated today or later are marked "Upcoming".
+ *   place         For events: city or "Online".                                      (optional)
+ *   url           Where a click on the entry leads.                                   (required)
+ *   language      The language of that page when it is not English, e.g. "German".  (optional)
+ *   translations  The same piece in other languages, each shown as its own link:     (optional)
+ *                 [{ language: "German", url: "https://…" }]
+ *   description   One or two short sentences.                                        (optional)
+ *   role          Your part, e.g. "Co-author", "Speaker", "Interviewed".             (optional)
  *
  * Save the file and reload the page: the entry appears, and the counter on the home page updates.
  * If an entry does not appear, the browser console (F12) says which value is missing.
@@ -49,5 +52,28 @@ window.ARTICLES = [
     url: "https://www.t-systems.com/de/en/insights/newsroom/expert-blogs/agentic-ai-as-a-game-changer-1155332",
     description: "Why agentic AI moves AI from assisting to acting, how the EU AI Act affects high-risk use cases, and how Detecon's APEX framework supports a secure, scalable rollout.",
     role: "Co-author",
+  },
+  {
+    kind: "interview",
+    title: "How to use Agentic AI as a strategic game changer",
+    publisher: "Detecon International",
+    date: "2025-12-04",
+    url: "https://www.detecon.com/en/insights/interview/how-to-use-agentic-ai-as-a-strategic-game-changer",
+    translations: [
+      { language: "German", url: "https://www.detecon.com/de/insights/interview/so-wird-agentic-ai-zum-strategischen-game-changer" },
+    ],
+    description: "Generative AI delivers answers, agentic AI delivers results: how agentic AI differs from automation and GenAI, where it pays off in industry, logistics, finance and customer service, and how governance and Detecon's APEX framework keep AI agents in check.",
+    role: "Interviewee and co-author",
+  },
+  {
+    kind: "talk",
+    label: "Masterclass",
+    title: "Agentic AI: From reactive tools to AI agents that act",
+    publisher: "DIGITAL X Focus Edition AI",
+    date: "2025-09-10",
+    place: "Cologne",
+    url: "https://www.digital-x.com/en/events/2025/focus-editions/ai",
+    description: "A masterclass with speakers from Deutsche Telekom and Detecon on why traditional automation reaches its limits, and how Detecon's agentic AI framework bridges the gap: adaptive, action-oriented agents, a clear method (APEX) and business impact from real projects.",
+    role: "Speaker",
   },
 ];

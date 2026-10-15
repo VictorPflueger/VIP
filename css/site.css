@@ -125,6 +125,8 @@ img { display: block; max-width: 100%; }
 .icon svg { display: block; }
 .visually-hidden { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .num { font-variant-numeric: tabular-nums lining-nums; }
+/* Keeps a hyphenated word such as Tech-Showcases on one line. */
+.nowrap { white-space: nowrap; }
 
 .wrap { width: min(var(--page), 100% - 2 * var(--gutter)); margin-inline: auto; }
 
@@ -546,6 +548,12 @@ a.kpi:hover .kpi-value { color: var(--brand); }
 .card:hover .card-go { color: var(--brand); }
 .card-desc { color: var(--text); line-height: 1.5; }
 .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+/* What a card is (prototype, demo, tech-showcase): the first chip, with its icon and a firmer edge. */
+.chip-kind { color: var(--text); border-color: var(--border-control); }
+.chip-kind .icon { color: var(--text-muted); }
+/* A card's practical note, such as how to try it: quiet, with an info mark. */
+.card-note { display: flex; align-items: flex-start; gap: 8px; color: var(--text-muted); font-size: var(--fs-sm); line-height: 1.4; }
+.card-note .icon { margin-top: 1px; color: var(--text-faint); }
 .card-foot {
   display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
   gap: 8px 12px;
@@ -583,6 +591,9 @@ a.kpi:hover .kpi-value { color: var(--brand); }
 .card:hover .entry-title { color: var(--brand); }
 .entry-desc { margin-top: 6px; max-width: 78ch; color: var(--text); }
 .entry-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; margin-top: 12px; }
+/* A link to the same piece in another language sits above the entry's own link. */
+/* The 44 px target reaches into the foot's spacing, so the row stays as low as the text beside it. */
+.entry-foot .btn { margin: -10px 0 -10px -6px; }
 .entry-role { color: var(--text-muted); font-size: var(--fs-sm); }
 
 /* Empty and no-script notes. */
@@ -670,14 +681,21 @@ a.kpi:hover .kpi-value { color: var(--brand); }
   .ring-label, .acct-label { display: none; }
 }
 
-/* Phones: Home becomes an icon (its name stays for screen readers), the long label may wrap. */
-@media (max-width: 560px) {
-  .nav-list li:last-child { flex: 1 1 auto; }
+/* Narrow screens: Home becomes an icon (its name stays for screen readers), and the two long page
+   names share the rest of the row, wrapping onto a second or third line where they must. */
+@media (max-width: 760px) {
+  .nav-list li:first-child { flex: none; }
+  .nav-list li:not(:first-child) { flex: 1 1 auto; min-width: 0; }
+  .nav-list li:not(:first-child) .nav-link { width: 100%; }
   .nav-link { padding: 6px 14px 6px 12px; }
   .nav-link .nav-text { white-space: normal; }
   .nav-home { padding: 0; justify-content: center; }
   .nav-home .nav-text { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
   .nav-list li:not(:first-child) .nav-link .icon { display: none; }
+}
+@media (max-width: 560px) {
+  .nav-link { font-size: var(--fs-sm); line-height: 1.25; padding: 6px 10px; }
+  .nav-home { padding: 0; }
 }
 
 @media (max-width: 400px) {

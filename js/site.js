@@ -18,7 +18,18 @@
     calendar: '<rect x="4" y="5.5" width="16" height="14" rx="1.5"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/>',
     mic: '<rect x="9" y="3.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v2.5M9 20.5h6"/>',
     star: '<path d="M12 3.8l2.5 5.2 5.7.8-4.1 4 1 5.6-5.1-2.7-5.1 2.7 1-5.6-4.1-4 5.7-.8z"/>',
-    chat: '<path d="M4.5 5.5h15v10h-8l-4.5 3.5v-3.5h-2.5z"/>'
+    chat: '<path d="M4.5 5.5h15v10h-8l-4.5 3.5v-3.5h-2.5z"/>',
+    flask: '<path d="M9.5 3.5h5M10.5 3.5v5.2L5.4 18a1.6 1.6 0 0 0 1.4 2.5h10.4a1.6 1.6 0 0 0 1.4-2.5l-5.1-9.3V3.5"/><path d="M7.6 14.5h8.8"/>',
+    play: '<circle cx="12" cy="12" r="8.5"/><path d="M10.2 8.8v6.4l5-3.2z"/>',
+    screen: '<rect x="3.5" y="4.5" width="17" height="11.5" rx="1.5"/><path d="M8.5 20h7M12 16v4"/>',
+    info: '<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.7v.3"/>'
+  };
+
+  /* The kinds of card on the Prototypes, Demos and Tech-Showcases page. */
+  var SHOWCASE_KINDS = {
+    prototype: { label: "Prototype",     icon: "flask",  cta: "Open the prototype" },
+    demo:      { label: "Demo",          icon: "play",   cta: "Open the demo" },
+    showcase:  { label: "Tech-Showcase", icon: "screen", cta: "Open the showcase" }
   };
 
   /* The kinds of entry on the Articles, Events & Features page. "dated" kinds take place on a day,
@@ -138,14 +149,22 @@
     var url = webUrl(entry.url);
     if (!url) { warn(where, 'needs a url that starts with "https://"', "skipped"); return null; }
 
+    var kindKey = isText(entry.kind) ? entry.kind.trim().toLowerCase() : "prototype";
+    var kind = SHOWCASE_KINDS[kindKey];
+    if (!kind) {
+      warn(where, "kind should be one of: " + Object.keys(SHOWCASE_KINDS).join(", "), "shown as a prototype");
+      kind = SHOWCASE_KINDS.prototype;
+    }
     var item = {
       name: entry.name.trim(),
+      kind: kind,
       subtitle: isText(entry.subtitle) ? entry.subtitle.trim() : "",
       description: entry.description.trim(),
       url: url,
       code: null,
       icon: null,
-      tags: []
+      tags: [],
+      note: isText(entry.note) ? entry.note.trim() : ""
     };
     if (given(entry.code)) {
       item.code = webUrl(entry.code);
@@ -194,7 +213,7 @@
     link.href = item.url;
     link.target = "_blank";
     link.rel = "noopener";
-    link.appendChild(hiddenText(" (opens the prototype in a new tab)"));
+    link.appendChild(hiddenText(" (opens in a new tab)"));
     title.appendChild(link);
     head.appendChild(title);
     if (item.subtitle) head.appendChild(el("p", "card-sub", item.subtitle));
@@ -207,15 +226,25 @@
 
     card.appendChild(el("p", "card-desc", item.description));
 
-    if (item.tags.length) {
-      var tags = el("ul", "tags");
-      tags.setAttribute("aria-label", "Topics");
-      item.tags.forEach(function (tag) { tags.appendChild(el("li", "chip", tag)); });
-      card.appendChild(tags);
+    // What it is (prototype, demo or tech-showcase), then its topics.
+    var tags = el("ul", "tags");
+    tags.setAttribute("aria-label", "Kind and topics");
+    var kindChip = el("li", "chip chip-kind");
+    kindChip.appendChild(icon(item.kind.icon, 14));
+    kindChip.appendChild(document.createTextNode(item.kind.label));
+    tags.appendChild(kindChip);
+    item.tags.forEach(function (tag) { tags.appendChild(el("li", "chip", tag)); });
+    card.appendChild(tags);
+
+    if (item.note) {
+      var note = el("p", "card-note");
+      note.appendChild(icon("info", 16));
+      note.appendChild(el("span", null, item.note));
+      card.appendChild(note);
     }
 
     var foot = el("div", "card-foot");
-    var cta = el("span", "card-cta", "Open the prototype");
+    var cta = el("span", "card-cta", item.kind.cta);
     cta.setAttribute("aria-hidden", "true");
     cta.appendChild(icon("arrowRight", 18));
     foot.appendChild(cta);
@@ -236,7 +265,7 @@
   function renderPrototypes(root, items) {
     root.textContent = "";
     if (!items.length) {
-      root.appendChild(emptyNote("New prototypes are on their way."));
+      root.appendChild(emptyNote("New prototypes, demos and tech-showcases are on their way."));
       return;
     }
     items.forEach(function (item) { root.appendChild(prototypeCard(item)); });
@@ -260,6 +289,19 @@
       warn(where, 'kind should be one of: ' + Object.keys(KINDS).join(", "), "shown as an article");
       kind = KINDS.article;
     }
+    // The same piece in other languages: each needs a language and its own web address.
+    var translations = [];
+    if (given(entry.translations)) {
+      if (!Array.isArray(entry.translations)) {
+        warn(where, 'translations should be a list: [{ language: "German", url: "https://…" }]', "left out");
+      } else {
+        entry.translations.forEach(function (t, i) {
+          var tUrl = t && webUrl(t.url);
+          if (t && isText(t.language) && tUrl) translations.push({ language: t.language.trim(), url: tUrl, host: siteName(tUrl) });
+          else warn(where, "translation " + (i + 1) + ' needs a language and a url that starts with "https://"', "left out");
+        });
+      }
+    }
     return {
       title: entry.title.trim(),
       publisher: entry.publisher.trim(),
@@ -272,7 +314,9 @@
       upcoming: Boolean(kind.dated) && isUpcoming(date),
       place: isText(entry.place) ? entry.place.trim() : "",
       description: isText(entry.description) ? entry.description.trim() : "",
-      role: isText(entry.role) ? entry.role.trim() : ""
+      role: isText(entry.role) ? entry.role.trim() : "",
+      language: isText(entry.language) ? entry.language.trim() : "",
+      translations: translations
     };
   }
 
@@ -300,6 +344,10 @@
       meta.appendChild(separator());
       meta.appendChild(el("span", null, item.place));
     }
+    if (item.language) {
+      meta.appendChild(separator());
+      meta.appendChild(el("span", null, "In " + item.language));
+    }
     body.appendChild(meta);
 
     var title = el("h3", "entry-title");
@@ -319,6 +367,15 @@
     cta.setAttribute("aria-hidden", "true");
     cta.appendChild(icon("external", 16));
     foot.appendChild(cta);
+    item.translations.forEach(function (t) {
+      var alt = el("a", "btn btn-ghost btn-sm above", "Also in " + t.language);
+      alt.href = t.url;
+      alt.target = "_blank";
+      alt.rel = "noopener";
+      alt.appendChild(hiddenText(": " + item.title + " (opens on " + t.host + " in a new tab)"));
+      alt.appendChild(icon("external", 16));
+      foot.appendChild(alt);
+    });
     body.appendChild(foot);
 
     card.appendChild(body);

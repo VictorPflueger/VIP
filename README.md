@@ -11,18 +11,18 @@ works when `index.html` is opened straight from disk.
 | Page | File | Content |
 |---|---|---|
 | Home | `index.html` | Introduction with portrait and LinkedIn link, key figures, fields of work, career, education, contact |
-| Prototypes | `prototypes.html` | One card per prototype, from `data/prototypes.js` |
+| Prototypes, Demos and Tech-Showcases | `prototypes.html` | One card per prototype, demo or tech-showcase, from `data/prototypes.js` |
 | Articles, Events & Features | `articles.html` | One entry per article, event or feature, from `data/articles.js` |
 
 The two lists live in data files. Adding something means editing one file; the HTML stays as it is.
 
 ---
 
-## Add a prototype
+## Add a prototype, demo or tech-showcase
 
-1. Put the prototype's icon into `images/prototypes/`: a square SVG or PNG, at least 112 × 112 px.
-   For my prototypes, that is their `favicon.svg`. Without an icon, the card shows a burgundy tile
-   with the first letter.
+1. Put its icon into `images/prototypes/`: a square SVG or PNG, at least 112 × 112 px. For my
+   prototypes, that is their `favicon.svg`. Without an icon, the card shows a burgundy tile with the
+   first letter.
 2. Open `data/prototypes.js`, copy one block from `{` to `},` and paste it where the card should
    appear (the first block is the first card).
 3. Change the values:
@@ -30,16 +30,21 @@ The two lists live in data files. Adding something means editing one file; the H
 ```js
   {
     name: "Rebate Hunter",                                   // card title (required)
+    kind: "prototype",                                       // prototype, demo or showcase (default: prototype)
     subtitle: "Procurement Rebate Hunter",                   // one line under the title
     description: "An AI agent that finds supplier rebates …", // one or two sentences (required)
     url: "https://victorpflueger.github.io/PROC-Rebate-Hunter/", // a click on the card opens this (required)
     code: "https://github.com/VictorPflueger/PROC-Rebate-Hunter", // "Source code" link
     icon: "images/prototypes/rebate-hunter.svg",
     tags: ["Agentic AI", "Procurement"],
+    note: "Free simulation, no API key needed.",            // optional: a short practical note
   },
 ```
 
-4. Save and reload the page. The card appears, and the prototype counter on the home page goes up.
+4. Save and reload the page. The card appears, and the counter on the home page goes up.
+
+The `kind` shows as the card's first label (*Prototype*, *Demo* or *Tech-Showcase*) and sets the
+card's link text (*Open the prototype*, *Open the demo*, *Open the showcase*).
 
 ## Add an article, event or feature
 
@@ -56,10 +61,17 @@ The two lists live in data files. Adding something means editing one file; the H
     date: "2027-03-18",            // YYYY-MM-DD, or YYYY-MM if the day is unknown (required)
     place: "Berlin",               // optional, for events
     url: "https://…",              // a click on the entry opens this (required)
+    language: "German",            // optional: the language of that page, if not English
+    translations: [                // optional: the same piece in other languages
+      { language: "German", url: "https://…" },
+    ],
     description: "…",              // optional, one or two sentences
     role: "Speaker",               // optional: Co-author, Speaker, Interviewed, …
   },
 ```
+
+`language` adds "In German" to the entry's line of details. Each of the `translations` gets its own
+link next to the main one ("Also in German"), as on the Detecon interview.
 
 3. Save and reload. Events and talks dated today or later get an **Upcoming** chip, and the tile on
    the home page then shows the next one instead of the latest.
@@ -133,7 +145,7 @@ enforce it. Links to LinkedIn, GitHub, the prototypes and the articles open in a
 index.html               Home
 prototypes.html          Prototypes
 articles.html            Articles, Events & Features
-data/prototypes.js       ← add prototypes here
+data/prototypes.js       ← add prototypes, demos and tech-showcases here
 data/articles.js         ← add articles, events and features here
 js/site.js               turns the data files into cards and home-page tiles
 css/tokens.css           colour palette (from the prototypes)
