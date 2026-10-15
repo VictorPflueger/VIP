@@ -1,4 +1,4 @@
-# Victor Pflüger — personal website
+# Victor Pflüger — personal website:
 
 A static website with three pages, built in the design system of my two prototypes,
 [Rebate Hunter](https://github.com/VictorPflueger/PROC-Rebate-Hunter) and
