@@ -70,10 +70,8 @@ the value that is missing or malformed, for example a `url` without `https://` o
 
 ## Replace the portrait
 
-`images/portrait.jpg` is a placeholder cut from the LinkedIn profile picture, so it is small (the
-original is about 112 px across). Replace it with a square photo of at least 400 × 400 px
-(800 × 800 px is ideal), saved as JPEG under the same name. The page crops it to a circle, so keep
-the face in the middle.
+`images/portrait.jpg` is a 600 × 600 px photo. To change it, save another square photo of at least
+400 × 400 px under the same name. The page crops it to a circle, so keep the face in the middle.
 
 ## Preview locally
 
@@ -141,7 +139,7 @@ js/site.js               turns the data files into cards and home-page tiles
 css/tokens.css           colour palette (from the prototypes)
 css/fonts.css, fonts/    self-hosted fonts (from the prototypes)
 css/site.css             roles, layout and components
-images/portrait.jpg      portrait (placeholder, replace)
+images/portrait.jpg      portrait (600 × 600 px)
 images/prototypes/       prototype icons
 favicon.svg              browser tab icon
 ```
