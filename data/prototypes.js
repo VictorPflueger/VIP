@@ -44,4 +44,15 @@ window.PROTOTYPES = [
     tags: ["Agentic AI", "Supply chain"],
     note: "Free simulation, no API key needed. Fictional company, no client data.",
   },
+  {
+    name: "Repack Pilot",
+    kind: "showcase",
+    subtitle: "Physical AI repacking showcase",
+    description: "A simulated robot cell, planned by an AI agent, repacks mixed pallets into store orders overnight and learns from surprises. An engine prices every 1,000 units in labour hours and euros, manual baseline against the hybrid cell.",
+    url: "https://victorpflueger.github.io/physicalAI-repacking/",
+    code: "https://github.com/VictorPflueger/physicalAI-repacking",
+    icon: "images/prototypes/repack-pilot.svg",
+    tags: ["Physical AI", "Agentic AI", "Logistics"],
+    note: "Work in progress. Free simulation, no API key needed. Fictional retailer, no client data.",
+  },
 ];
