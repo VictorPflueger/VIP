@@ -45,6 +45,17 @@ window.PROTOTYPES = [
     note: "Free simulation, no API key needed. Fictional company, no client data.",
   },
   {
+    name: "Timetable Translator",
+    kind: "prototype",
+    subtitle: "Two timetables, one truth",
+    description: "An AI agent that finds where railway passenger information contradicts the operational timetable, checks it against track and train sensors, works out who will act on the wrong information and how soon, and proposes costed responses for your approval.",
+    url: "https://victorpflueger.github.io/physicalAI-scheduler/",
+    code: "https://github.com/VictorPflueger/physicalAI-scheduler",
+    icon: "images/prototypes/timetable-translator.svg",
+    tags: ["Agentic AI", "Physical AI", "Rail"],
+    note: "Free simulation, no API key needed. Fictional trains, no client data.",
+  },
+  {
     name: "Repack Pilot",
     kind: "showcase",
     subtitle: "Physical AI repacking showcase",
