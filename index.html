@@ -7,22 +7,23 @@
        anywhere else, and the browser enforces it. -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta name="color-scheme" content="light">
-  <meta name="theme-color" content="#ffffff">
+  <meta name="color-scheme" content="light dark">
   <meta name="author" content="Victor Pflüger">
   <meta name="description" content="Victor Pflüger, Senior Consultant for Data Science & Artificial Intelligence at Detecon (Deutsche Telekom Group) in Berlin: AI use cases, data quality, agentic AI and EU AI Act governance.">
   <meta property="og:type" content="profile">
   <meta property="og:title" content="Victor Pflüger — Data Science & Artificial Intelligence">
   <meta property="og:description" content="Data and AI only pay off once they reach everyday decisions and processes. Senior Consultant for Data Science & AI at Detecon (Deutsche Telekom Group), Berlin.">
   <title>Victor Pflüger — Data Science &amp; Artificial Intelligence</title>
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="vici/assets/logo/favicon.svg" type="image/svg+xml">
 
-  <link rel="stylesheet" href="css/fonts.css">
-  <link rel="stylesheet" href="css/tokens.css">
+  <!-- The look comes from Victor's design system Vici, copied unchanged into vici/. -->
+  <link rel="stylesheet" href="vici/dist/vici.min.css">
   <link rel="stylesheet" href="css/site.css">
+  <script src="js/theme.js"></script>
+  <script src="vici/dist/vici.js" defer></script>
 
   <!-- The lists live in the data files: plain scripts that set window globals, so the pages also
-       work when opened straight from disk. js/site.js turns them into tiles and cards. -->
+       work when opened straight from disk. js/site.js turns them into cards and key figures. -->
   <script src="data/prototypes.js" defer></script>
   <script src="data/articles.js" defer></script>
   <script src="js/site.js" defer></script>
@@ -32,6 +33,8 @@
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Victor Pflüger",
+    "url": "https://victorpflueger.github.io/VIP/index.html",
+    "image": "https://victorpflueger.github.io/VIP/vici/assets/brand/portrait.jpg",
     "jobTitle": "Senior Consultant for Data Science & Artificial Intelligence",
     "worksFor": { "@type": "Organization", "name": "Detecon International" },
     "address": { "@type": "PostalAddress", "addressLocality": "Berlin", "addressCountry": "DE" },
@@ -41,234 +44,237 @@
   </script>
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
+  <a class="vc-skip-link" href="#main">Skip to content</a>
 
-  <header class="site-header">
-    <div class="wrap header-bar">
-      <a class="brand" href="index.html">
-        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-          <rect class="mark-tile" x="1" y="1" width="30" height="30" rx="8"/>
-          <path class="mark-line" d="M8.5 9.5 16 22.5l5.8-10.05"/>
-          <circle class="mark-start" cx="8.5" cy="9.5" r="2.2"/>
-          <circle class="mark-node" cx="16" cy="22.5" r="2"/>
-          <circle class="mark-ring" cx="23.5" cy="9.5" r="3.4"/>
-        </svg>
-        <span class="brand-text">
-          <span class="brand-name">Victor Pflüger</span>
-          <span class="brand-sub">Data Science &amp; AI · Berlin</span>
-        </span>
+  <header class="vc-header">
+    <div class="vc-header__inner">
+      <a class="vc-header__brand" href="index.html">
+        <img class="vc-when-light" src="vici/assets/logo/vertex/color.svg" alt="" width="28" height="26">
+        <img class="vc-when-dark" src="vici/assets/logo/vertex/dark.svg" alt="" width="28" height="26">
+        Victor Pflüger
       </a>
-
-      <div class="header-links">
-        <a class="pill" href="https://github.com/VictorPflueger" target="_blank" rel="noopener">
-          <span class="icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8.5 7.5 4 12l4.5 4.5M15.5 7.5 20 12l-4.5 4.5"/></svg></span>
-          <span class="pill-text">GitHub</span><span class="visually-hidden"> (GitHub profile, opens in a new tab)</span>
-        </a>
-        <a class="pill pill-brand" href="https://www.linkedin.com/in/victorpflueger" target="_blank" rel="noopener">
-          <span class="icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M8 10.5v6M8 7.6v.3M11.5 16.5v-6M11.5 13.2c0-1.7 1-2.7 2.4-2.7s2.1 1 2.1 2.7v3.3"/></svg></span>
-          <span class="pill-text">LinkedIn</span><span class="visually-hidden"> (LinkedIn profile, opens in a new tab)</span>
-          <span class="icon ext"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 4.5h5.5V10M19.5 4.5L11 13M17 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h5"/></svg></span>
-        </a>
+      <nav class="vc-header__nav" aria-label="Main">
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="prototypes.html">Prototypes<span class="site-nav-more">, Demos and Tech-Showcases</span></a>
+        <a href="articles.html">Articles<span class="site-nav-more">, Events &amp; Features</span></a>
+      </nav>
+      <div class="vc-header__actions">
+        <button type="button" class="vc-icon-button" data-vc-theme-toggle aria-label="Dark theme"><span class="vc-icon vc-icon--moon vc-when-light" aria-hidden="true"></span><span class="vc-icon vc-icon--sun vc-when-dark" aria-hidden="true"></span></button>
+        <button type="button" class="vc-icon-button vc-header__toggle" aria-expanded="false" aria-label="Menu"><span class="vc-icon vc-icon--menu" aria-hidden="true"></span></button>
       </div>
     </div>
   </header>
 
-  <nav class="site-nav" aria-label="Main">
-    <ul class="wrap nav-list">
-      <li><a class="nav-link nav-home" href="index.html" aria-current="page"><span class="icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 11.2 12 4.5l8 6.7"/><path d="M6 9.8v9.7h12V9.8"/><path d="M10 19.5v-5h4v5"/></svg></span><span class="nav-text">Home</span></a></li>
-      <li><a class="nav-link" href="prototypes.html"><span class="icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8.5"/><path d="M10.2 8.8v6.4l5-3.2z"/></svg></span><span class="nav-text">Prototypes, Demos and <span class="nowrap">Tech-Showcases</span></span></a></li>
-      <li><a class="nav-link" href="articles.html"><span class="icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 3.5h8.5L19 8v12.5H6z"/><path d="M14 3.5v5h5"/><path d="M9 12.5h7M9 16h7"/></svg></span><span class="nav-text">Articles, Events &amp; Features</span></a></li>
-    </ul>
-  </nav>
-
   <main id="main" tabindex="-1">
-    <section class="hero canvas" aria-labelledby="intro-title">
-      <div class="wrap hero-grid">
-        <div class="constellation">
-          <!-- After the rebate board's group view: the person as the hub, the fields of work as the
-               accounts linked on the ring. Decorative: the fields are listed under "What I work on". -->
-          <svg viewBox="0 0 560 384" aria-hidden="true" focusable="false">
-            <defs><path id="ring-arc" d="M185.9 57.7A164 164 0 0 1 374.1 57.7"/></defs>
-            <circle class="ring-zone" cx="280" cy="192" r="150"/>
-            <text class="ring-label"><textPath href="#ring-arc" startOffset="50%" text-anchor="middle">What I work on</textPath></text>
-            <path class="reg-link" d="M201.4 136.9 168.6 114"/>
-            <path class="reg-link" d="M358.6 136.9 391.4 114"/>
-            <path class="reg-link" d="M374.5 208.7 413.9 215.6"/>
-            <path class="reg-link" d="M335.1 270.6 358 303.4"/>
-            <path class="reg-link" d="M224.9 270.6 202 303.4"/>
-            <path class="reg-link" d="M185.5 208.7 146.1 215.6"/>
-            <g>
-              <circle class="acct-halo" cx="157.1" cy="106" r="13"/><circle class="acct-dot" cx="157.1" cy="106" r="9.5"/>
-              <circle class="acct-halo" cx="402.9" cy="106" r="13"/><circle class="acct-dot" cx="402.9" cy="106" r="9.5"/>
-              <circle class="acct-halo" cx="427.7" cy="218" r="13"/><circle class="acct-dot" cx="427.7" cy="218" r="9.5"/>
-              <circle class="acct-halo" cx="366" cy="314.9" r="13"/><circle class="acct-dot" cx="366" cy="314.9" r="9.5"/>
-              <circle class="acct-halo" cx="194" cy="314.9" r="13"/><circle class="acct-dot" cx="194" cy="314.9" r="9.5"/>
-              <circle class="acct-halo" cx="132.3" cy="218" r="13"/><circle class="acct-dot" cx="132.3" cy="218" r="9.5"/>
-            </g>
-            <text class="acct-label" x="137" y="112" text-anchor="end">AI strategy</text>
-            <text class="acct-label" x="423" y="112">Data quality</text>
-            <text class="acct-label" x="448" y="224">Agentic AI</text>
-            <text class="acct-label" x="386" y="321">Machine learning</text>
-            <text class="acct-label" x="174" y="321" text-anchor="end">Dashboards &amp; BI</text>
-            <text class="acct-label" x="112" y="224" text-anchor="end">EU AI Act</text>
-          </svg>
-          <!-- To change the photo, replace images/portrait.jpg with another square photo of at least
-               400 × 400 px under the same name. The page crops it to a circle. -->
-          <figure class="portrait"><img src="images/portrait.jpg" width="600" height="600" alt="Portrait of Victor Pflüger"></figure>
-        </div>
-
-        <div class="hero-card">
-          <h1 id="intro-title">Victor Pflüger</h1>
-          <p class="hero-role">Senior Consultant for Data Science &amp; Artificial Intelligence</p>
-          <p class="hero-meta">
-            <span><span class="icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="7.5" width="17" height="12" rx="1.5"/><path d="M9 7.5v-2a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M3.5 12.5h17"/></svg></span>Detecon International (Deutsche Telekom Group)</span>
-            <span><span class="icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg></span>Berlin</span>
-          </p>
-          <p class="hero-lead"><strong>Data and AI only pay off once they reach everyday decisions and processes.</strong> I help organizations get there – with the right use cases, data they can trust, and governance that holds up under the EU AI Act.</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="https://www.linkedin.com/in/victorpflueger" target="_blank" rel="noopener">
-              <span class="icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M8 10.5v6M8 7.6v.3M11.5 16.5v-6M11.5 13.2c0-1.7 1-2.7 2.4-2.7s2.1 1 2.1 2.7v3.3"/></svg></span>
-              Connect on LinkedIn<span class="visually-hidden"> (opens in a new tab)</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="wrap kpi-section" aria-label="At a glance">
-      <ul class="kpis">
-        <li>
-          <div class="kpi">
-            <span class="kpi-label">Deutsche Telekom Group</span>
-            <span class="kpi-value num">Since 2017</span>
-            <span class="kpi-sub">dual study, deal management, consulting</span>
-          </div>
-        </li>
-        <li>
-          <div class="kpi">
-            <span class="kpi-label">Data Science &amp; AI at Detecon</span>
-            <span class="kpi-value num">Since 2022</span>
-            <span class="kpi-sub">core team and talent program</span>
-          </div>
-        </li>
-        <li>
-          <a class="kpi" href="prototypes.html">
-            <span class="kpi-label">Prototypes, demos and <span class="nowrap">tech-showcases</span></span>
-            <span class="kpi-value num" data-count="prototypes">4</span>
-            <span class="kpi-sub">working examples to try</span>
-            <span class="icon kpi-go"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13.5 6.5 19 12l-5.5 5.5"/></svg></span>
-          </a>
-        </li>
-        <li>
-          <a class="kpi" href="articles.html">
-            <span class="kpi-label">Articles, events &amp; features</span>
-            <span class="kpi-value num" data-count="articles">4</span>
-            <span class="kpi-sub" data-latest="articles">latest Sep 2026</span>
-            <span class="icon kpi-go"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13.5 6.5 19 12l-5.5 5.5"/></svg></span>
-          </a>
-        </li>
-      </ul>
-    </section>
-
-    <section class="wrap section" aria-labelledby="work-title">
-      <div class="section-head">
-        <h2 id="work-title">What I work on</h2>
-        <p>As Senior Consultant at Detecon, I guide mid-market and enterprise-scale organizations in implementing AI directly into their products, services and processes – from the first use-case workshop and prototype to rollout.</p>
-      </div>
-      <ul class="value-grid">
-        <li><h3>AI strategy &amp; use cases</h3><p>Finding the use cases worth doing and proving them quickly with a prototype.</p></li>
-        <li><h3>Data enablement &amp; data quality</h3><p>Modern data models and the data foundation every AI use case needs.</p></li>
-        <li><h3>Data science &amp; machine learning</h3><p>Analytics and models that answer concrete business questions.</p></li>
-        <li><h3>Data visualization &amp; BI</h3><p>Decision-ready dashboards and lean, fast Power BI models.</p></li>
-        <li><h3>Generative &amp; agentic AI</h3><p>GenAI applications and AI agents with a clear business case and guardrails.</p></li>
-        <li><h3>Data governance &amp; EU AI Act</h3><p>Compliance and risk controls built in from day one.</p></li>
-      </ul>
-    </section>
-
-    <section class="wrap section" aria-labelledby="career-title">
-      <div class="section-head">
-        <h2 id="career-title">Career</h2>
-        <p>I started in the Deutsche Telekom Group as a dual student and later worked as a Deal Manager – so I look at every data and AI initiative from both the technical and the business side.</p>
-      </div>
-      <ol class="steps">
-        <li class="step">
-          <span class="step-mark"><span class="icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></span>
-          <span class="step-years num">2017 – 2020</span>
-          <h3 class="step-title">Dual student</h3>
-          <p class="step-org">T-Systems (Road Charging &amp; Telematics) and Telekom Innovation Laboratories (Innovation Strategy Support)</p>
-        </li>
-        <li class="step">
-          <span class="step-mark"><span class="icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></span>
-          <span class="step-years num">2021 – 2022</span>
-          <h3 class="step-title">Deal Manager</h3>
-          <p class="step-org">Deutsche Telekom Individual Solutions &amp; Products</p>
-        </li>
-        <li class="step">
-          <span class="step-mark"><span class="icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></span>
-          <span class="step-years num">2022 – 2024</span>
-          <h3 class="step-title">Business Analyst, Data Science &amp; AI</h3>
-          <p class="step-org">Detecon International</p>
-        </li>
-        <li class="step">
-          <span class="step-mark"><span class="icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></span>
-          <span class="step-years num">2024 – 2026</span>
-          <h3 class="step-title">Consultant, Data Science &amp; AI</h3>
-          <p class="step-org">Detecon International</p>
-        </li>
-        <li class="step" data-now aria-current="step">
-          <span class="step-mark"><span class="icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="6.5"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/></svg></span></span>
-          <span class="step-years num">Since 2026</span>
-          <h3 class="step-title">Senior Consultant, Data Science &amp; AI</h3>
-          <p class="step-org">Detecon International</p>
-        </li>
-      </ol>
-    </section>
-
-    <section class="wrap section" aria-labelledby="education-title">
-      <div class="section-head">
-        <h2 id="education-title">Education &amp; recognition</h2>
-      </div>
-      <div class="panels">
-        <div class="panel">
-          <h3><span class="icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.5 9.5 12 5l9.5 4.5L12 14z"/><path d="M6.5 11.5v4.2c1.4 1.4 3.3 2.1 5.5 2.1s4.1-.7 5.5-2.1v-4.2M21.5 9.5v5"/></svg></span>Education</h3>
-          <ul class="facts">
-            <li><span class="fact-title">MBA, Artificial Intelligence &amp; Data Science</span><span class="fact-sub">IU International University of Applied Sciences · English-language program alongside consulting, in progress</span></li>
-            <li><span class="fact-title">M.Sc. Big Data &amp; Business Analytics</span><span class="fact-sub">FOM University of Applied Sciences · Top graduate, 2023</span></li>
-            <li><span class="fact-title">B.Sc. Business Informatics</span><span class="fact-sub">FOM University of Applied Sciences</span></li>
-          </ul>
-        </div>
-        <div class="panel">
-          <h3><span class="icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="9" r="5.5"/><path d="M8.6 13.4 7.5 21l4.5-2.5 4.5 2.5-1.1-7.6"/></svg></span>Recognition</h3>
-          <ul class="facts">
-            <li><span class="fact-title">T-Systems Talent Program 26/27</span><span class="fact-sub">T-Systems · Sep 2026 · Participant in the 2026/27 cohort</span></li>
-            <li><span class="fact-title">Top Graduate – M.Sc. Big Data &amp; Business Analytics</span><span class="fact-sub">FOM University of Applied Sciences · Dec 2023 · Earned while working full-time at Deutsche Telekom and Detecon</span></li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="wrap section" aria-labelledby="contact-title">
-      <div class="cta">
+    <section class="site-hero" aria-labelledby="intro-title">
+      <div class="vc-container site-hero__grid">
         <div>
-          <h2 id="contact-title">Working out where data and AI can make a measurable difference in your organization?</h2>
-          <p>Send me a message on LinkedIn.</p>
+          <h1 id="intro-title" class="vc-display site-hero__name">Victor Pflüger</h1>
+          <p class="site-hero__role">Senior Consultant for Data Science &amp; Artificial Intelligence</p>
+          <ul class="site-hero__facts">
+            <li><span class="vc-icon vc-icon--briefcase" aria-hidden="true"></span>Detecon International (Deutsche Telekom Group)</li>
+            <li><span class="vc-icon vc-icon--pin" aria-hidden="true"></span>Berlin</li>
+          </ul>
+          <p class="vc-lead site-hero__lead"><strong>Data and AI only pay off once they reach everyday decisions and processes.</strong> I help organizations get there – with the right use cases, data they can trust, and governance that holds up under the EU AI Act.</p>
+          <a class="vc-button vc-button--lg" href="https://www.linkedin.com/in/victorpflueger" rel="me">Connect on LinkedIn</a>
         </div>
-        <a class="btn btn-primary" href="https://www.linkedin.com/in/victorpflueger" target="_blank" rel="noopener">
-          <span class="icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M8 10.5v6M8 7.6v.3M11.5 16.5v-6M11.5 13.2c0-1.7 1-2.7 2.4-2.7s2.1 1 2.1 2.7v3.3"/></svg></span>
-          Message me on LinkedIn<span class="visually-hidden"> (opens in a new tab)</span>
-        </a>
+
+        <!-- Victor in the middle of a honeycomb, his six fields of work around him. The cells are
+             decoration: "What I work on" lists the same fields with their descriptions, in the same
+             colours. To change the photo, see README.md. -->
+        <div class="site-flower">
+          <span class="vc-avatar site-flower__portrait"><img src="vici/assets/brand/portrait.jpg" alt="Portrait of Victor Pflüger" width="640" height="640"></span>
+          <span class="vc-tile vc-tile--teal site-flower__cell site-flower__cell--n" aria-hidden="true"><span class="vc-icon vc-icon--search"></span>AI strategy</span>
+          <span class="vc-tile vc-tile--fjord site-flower__cell site-flower__cell--ne" aria-hidden="true"><span class="vc-icon vc-icon--layers"></span>Data quality</span>
+          <span class="vc-tile vc-tile--lilac site-flower__cell site-flower__cell--se" aria-hidden="true"><span class="vc-icon vc-icon--sparkle"></span>Agentic AI</span>
+          <span class="vc-tile vc-tile--apricot site-flower__cell site-flower__cell--s" aria-hidden="true"><span class="vc-icon vc-icon--chart-line"></span>Machine learning</span>
+          <span class="vc-tile vc-tile--honey site-flower__cell site-flower__cell--sw" aria-hidden="true"><span class="vc-icon vc-icon--chart-bar"></span>Dashboards &amp; BI</span>
+          <span class="vc-tile vc-tile--merlot site-flower__cell site-flower__cell--nw" aria-hidden="true"><span class="vc-icon vc-icon--lock"></span>EU AI Act</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="site-glance" aria-label="At a glance">
+      <div class="vc-container">
+        <ul class="site-stats">
+          <li>
+            <div class="vc-stat">
+              <p class="vc-stat__label"><span class="vc-icon vc-icon--briefcase" aria-hidden="true"></span>Deutsche Telekom Group</p>
+              <p class="vc-stat__value">Since 2017</p>
+              <p class="vc-stat__note">dual study, deal management, consulting</p>
+            </div>
+          </li>
+          <li>
+            <div class="vc-stat">
+              <p class="vc-stat__label"><span class="vc-icon vc-icon--sparkle" aria-hidden="true"></span>Data Science &amp; AI at Detecon</p>
+              <p class="vc-stat__value">Since 2022</p>
+              <p class="vc-stat__note">core team and talent program</p>
+            </div>
+          </li>
+          <li>
+            <a class="vc-stat site-stat-link" href="prototypes.html">
+              <span class="vc-stat__label"><span class="vc-icon vc-icon--cube" aria-hidden="true"></span><span>Prototypes, demos and <span class="vc-nowrap">tech-showcases</span></span><span class="vc-icon vc-icon--arrow-right site-stat-link__go" aria-hidden="true"></span></span>
+              <span class="vc-stat__value" data-count="prototypes">4</span>
+              <span class="vc-stat__note">working examples to try</span>
+            </a>
+          </li>
+          <li>
+            <a class="vc-stat site-stat-link" href="articles.html">
+              <span class="vc-stat__label"><span class="vc-icon vc-icon--book" aria-hidden="true"></span><span>Articles, events &amp; features</span><span class="vc-icon vc-icon--arrow-right site-stat-link__go" aria-hidden="true"></span></span>
+              <span class="vc-stat__value" data-count="articles">4</span>
+              <span class="vc-stat__note" data-latest="articles">latest Sep 2026</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="vc-section" aria-labelledby="work-title">
+      <div class="vc-container">
+        <div class="site-section-head">
+          <h2 id="work-title">What I work on</h2>
+          <p class="vc-lead">As Senior Consultant at Detecon, I guide mid-market and enterprise-scale organizations in implementing AI directly into their products, services and processes – from the first use-case workshop and prototype to rollout.</p>
+        </div>
+        <ul class="site-fields">
+          <li class="site-field">
+            <span class="vc-tile vc-tile--teal site-field__cell" aria-hidden="true"><span class="vc-icon vc-icon--search"></span></span>
+            <h3>AI strategy &amp; use cases</h3>
+            <p>Finding the use cases worth doing and proving them quickly with a prototype.</p>
+          </li>
+          <li class="site-field">
+            <span class="vc-tile vc-tile--fjord site-field__cell" aria-hidden="true"><span class="vc-icon vc-icon--layers"></span></span>
+            <h3>Data enablement &amp; data quality</h3>
+            <p>Modern data models and the data foundation every AI use case needs.</p>
+          </li>
+          <li class="site-field">
+            <span class="vc-tile vc-tile--apricot site-field__cell" aria-hidden="true"><span class="vc-icon vc-icon--chart-line"></span></span>
+            <h3>Data science &amp; machine learning</h3>
+            <p>Analytics and models that answer concrete business questions.</p>
+          </li>
+          <li class="site-field">
+            <span class="vc-tile vc-tile--honey site-field__cell" aria-hidden="true"><span class="vc-icon vc-icon--chart-bar"></span></span>
+            <h3>Data visualization &amp; BI</h3>
+            <p>Decision-ready dashboards and lean, fast Power BI models.</p>
+          </li>
+          <li class="site-field">
+            <span class="vc-tile vc-tile--lilac site-field__cell" aria-hidden="true"><span class="vc-icon vc-icon--sparkle"></span></span>
+            <h3>Generative &amp; agentic AI</h3>
+            <p>GenAI applications and AI agents with a clear business case and guardrails.</p>
+          </li>
+          <li class="site-field">
+            <span class="vc-tile vc-tile--merlot site-field__cell" aria-hidden="true"><span class="vc-icon vc-icon--lock"></span></span>
+            <h3>Data governance &amp; EU AI Act</h3>
+            <p>Compliance and risk controls built in from day one.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="vc-section vc-surface-subtle" aria-labelledby="career-title">
+      <div class="vc-container site-split">
+        <div class="site-section-head">
+          <h2 id="career-title">Career</h2>
+          <p class="vc-lead">I started in the Deutsche Telekom Group as a dual student and later worked as a Deal Manager – so I look at every data and AI initiative from both the technical and the business side.</p>
+        </div>
+        <ol class="vc-timeline site-timeline">
+          <li class="vc-timeline__item--done">
+            <span class="vc-timeline__date">2017 – 2020</span>
+            <h3 class="vc-timeline__title">Dual student</h3>
+            <p class="vc-timeline__text">T-Systems (Road Charging &amp; Telematics) and Telekom Innovation Laboratories (Innovation Strategy Support)</p>
+          </li>
+          <li class="vc-timeline__item--done">
+            <span class="vc-timeline__date">2021 – 2022</span>
+            <h3 class="vc-timeline__title">Deal Manager</h3>
+            <p class="vc-timeline__text">Deutsche Telekom Individual Solutions &amp; Products</p>
+          </li>
+          <li class="vc-timeline__item--done">
+            <span class="vc-timeline__date">2022 – 2024</span>
+            <h3 class="vc-timeline__title">Business Analyst, Data Science &amp; AI</h3>
+            <p class="vc-timeline__text">Detecon International</p>
+          </li>
+          <li class="vc-timeline__item--done">
+            <span class="vc-timeline__date">2024 – 2026</span>
+            <h3 class="vc-timeline__title">Consultant, Data Science &amp; AI</h3>
+            <p class="vc-timeline__text">Detecon International</p>
+          </li>
+          <li class="vc-timeline__item--current" aria-current="step">
+            <span class="vc-timeline__date">Since 2026</span>
+            <h3 class="vc-timeline__title">Senior Consultant, Data Science &amp; AI</h3>
+            <p class="vc-timeline__text">Detecon International</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="vc-section" aria-labelledby="education-title">
+      <div class="vc-container">
+        <div class="site-section-head">
+          <h2 id="education-title">Education &amp; recognition</h2>
+        </div>
+        <div class="vc-grid vc-grid--2">
+          <section class="vc-card" aria-labelledby="degrees-title">
+            <div class="vc-card__body">
+              <h3 class="vc-card__title site-panel-title" id="degrees-title"><span class="vc-cell vc-cell--lg" aria-hidden="true"><span class="vc-icon vc-icon--book"></span></span>Education</h3>
+              <ul class="vc-list vc-list--ring site-facts">
+                <li><span class="site-fact__title">MBA, Artificial Intelligence &amp; Data Science</span><span class="site-fact__sub">IU International University of Applied Sciences · English-language program alongside consulting, in progress</span></li>
+                <li><span class="site-fact__title">M.Sc. Big Data &amp; Business Analytics</span><span class="site-fact__sub">FOM University of Applied Sciences · Top graduate, 2023</span></li>
+                <li><span class="site-fact__title">B.Sc. Business Informatics</span><span class="site-fact__sub">FOM University of Applied Sciences</span></li>
+              </ul>
+            </div>
+          </section>
+          <section class="vc-card" aria-labelledby="recognition-title">
+            <div class="vc-card__body">
+              <h3 class="vc-card__title site-panel-title" id="recognition-title"><span class="vc-cell vc-cell--lg" aria-hidden="true"><span class="vc-icon vc-icon--flag"></span></span>Recognition</h3>
+              <ul class="vc-list vc-list--ring site-facts">
+                <li><span class="site-fact__title">T-Systems Talent Program 26/27</span><span class="site-fact__sub">T-Systems · Sep 2026 · Participant in the 2026/27 cohort</span></li>
+                <li><span class="site-fact__title">Top Graduate – M.Sc. Big Data &amp; Business Analytics</span><span class="site-fact__sub">FOM University of Applied Sciences · Dec 2023 · Earned while working full-time at Deutsche Telekom and Detecon</span></li>
+              </ul>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="vc-section site-contact" aria-labelledby="contact-title" data-theme="dark">
+      <div class="vc-container vc-container--narrow">
+        <h2 id="contact-title">Working out where data and AI can make a measurable difference in your organization?</h2>
+        <p class="vc-lead">Send me a message on LinkedIn.</p>
+        <div class="vc-cluster site-contact__actions">
+          <a class="vc-button vc-button--lg vc-button--secondary" href="https://www.linkedin.com/in/victorpflueger" rel="me"><img class="vc-platform-mark" src="vici/assets/marks/linkedin.png" alt="" width="840" height="779">Message me on LinkedIn</a>
+          <a class="vc-button vc-button--lg vc-button--ghost" href="https://github.com/VictorPflueger" rel="me"><svg class="vc-platform-mark" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M10.226 17.284c-2.965-.36-5.054-2.493-5.054-5.256 0-1.123.404-2.336 1.078-3.144-.292-.741-.247-2.314.09-2.965.898-.112 2.111.36 2.83 1.01.853-.269 1.752-.404 2.853-.404 1.1 0 1.999.135 2.807.382.696-.629 1.932-1.1 2.83-.988.315.606.36 2.179.067 2.942.72.854 1.101 2 1.101 3.167 0 2.763-2.089 4.852-5.098 5.234.763.494 1.28 1.572 1.28 2.807v2.336c0 .674.561 1.056 1.235.786 4.066-1.55 7.255-5.615 7.255-10.646C23.5 6.188 18.334 1 11.978 1 5.62 1 .5 6.188.5 12.545c0 4.986 3.167 9.12 7.435 10.669.606.225 1.19-.18 1.19-.786V20.63a2.9 2.9 0 0 1-1.078.224c-1.483 0-2.359-.808-2.987-2.313-.247-.607-.517-.966-1.034-1.033-.27-.023-.359-.135-.359-.27 0-.27.45-.471.898-.471.652 0 1.213.404 1.797 1.235.45.651.921.943 1.483.943.561 0 .92-.202 1.437-.719.382-.381.674-.718.944-.943"/></svg>GitHub</a>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="wrap footer-bar">
-      <ul class="footer-links">
-        <li class="footer-copy">© 2026 Victor Pflüger</li>
-        <li><a href="https://www.linkedin.com/in/victorpflueger" target="_blank" rel="noopener">LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a></li>
-        <li><a href="https://github.com/VictorPflueger" target="_blank" rel="noopener">GitHub<span class="visually-hidden"> (opens in a new tab)</span></a></li>
-      </ul>
-      <p class="footer-note"><span class="icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3.5l7.5 3v5.5c0 4.5-3.2 7.6-7.5 8.5-4.3-.9-7.5-4-7.5-8.5V6.5z"/><path d="M9 12.2l2.2 2.2 4-4.4"/></svg></span>No cookies, no tracking, nothing loaded from other sites.</p>
+  <footer class="vc-footer vc-footer--brand">
+    <div class="vc-container">
+      <div class="vc-footer__grid">
+        <div>
+          <p class="vc-footer__title">Victor Pflüger</p>
+          <p>Data Science &amp; AI · Berlin</p>
+        </div>
+        <nav aria-label="Pages">
+          <p class="vc-footer__title">Pages</p>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="prototypes.html">Prototypes, Demos and Tech-Showcases</a></li>
+            <li><a href="articles.html">Articles, Events &amp; Features</a></li>
+          </ul>
+        </nav>
+        <div>
+          <p class="vc-footer__title">Elsewhere</p>
+          <ul>
+            <li><a href="https://www.linkedin.com/in/victorpflueger" rel="me">LinkedIn</a></li>
+            <li><a href="https://github.com/VictorPflueger" rel="me">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="vc-footer__bottom">
+        <span>© 2026 Victor Pflüger</span>
+        <span class="site-footer-note"><span class="vc-icon vc-icon--lock" aria-hidden="true"></span>No cookies, no tracking, nothing loaded from other sites.</span>
+        <span>Built with <a href="https://victorpflueger.github.io/ViciDesign/index.html">Vici</a></span>
+      </div>
     </div>
   </footer>
 </body>

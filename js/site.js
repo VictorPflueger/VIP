@@ -1,57 +1,44 @@
-/* Victor Pflüger — turns data/prototypes.js and data/articles.js into cards and key-figure tiles.
+/* Victor Pflüger — turns data/prototypes.js and data/articles.js into cards and key figures.
  *
  * A plain script rather than a module, so the pages also work when opened straight from disk. Every
- * value from the data files goes into the page as text (textContent), never as markup; the only
- * markup this file injects is its own constant icon set. An entry with a missing or malformed value
- * is left out with a warning in the browser console (F12), so one typo never breaks a page.
+ * value from the data files goes into the page as text (textContent), never as markup, and the
+ * cards are built from Vici's components (vici/dist/vici.min.css). An entry with a missing or
+ * malformed value is left out with a warning in the browser console (F12), so one typo never
+ * breaks a page.
  */
 (function () {
   "use strict";
 
-  /* Line icons on a 24 px grid, drawn like the prototypes' icon set. Constant and trusted. */
-  var ICONS = {
-    external: '<path d="M14 4.5h5.5V10M19.5 4.5L11 13M17 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h5"/>',
-    arrowRight: '<path d="M5 12h14M13.5 6.5 19 12l-5.5 5.5"/>',
-    code: '<path d="M8.5 7.5 4 12l4.5 4.5M15.5 7.5 20 12l-4.5 4.5"/>',
-    file: '<path d="M6 3.5h8.5L19 8v12.5H6z"/><path d="M14 3.5v5h5"/><path d="M9 12.5h7M9 16h7"/>',
-    book: '<path d="M4.5 5.5c2.6-.9 5.1-.6 7.5 1 2.4-1.6 4.9-1.9 7.5-1v13c-2.6-.9-5.1-.6-7.5 1-2.4-1.6-4.9-1.9-7.5-1z"/><path d="M12 6.5v13"/>',
-    calendar: '<rect x="4" y="5.5" width="16" height="14" rx="1.5"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/>',
-    mic: '<rect x="9" y="3.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v2.5M9 20.5h6"/>',
-    star: '<path d="M12 3.8l2.5 5.2 5.7.8-4.1 4 1 5.6-5.1-2.7-5.1 2.7 1-5.6-4.1-4 5.7-.8z"/>',
-    chat: '<path d="M4.5 5.5h15v10h-8l-4.5 3.5v-3.5h-2.5z"/>',
-    flask: '<path d="M9.5 3.5h5M10.5 3.5v5.2L5.4 18a1.6 1.6 0 0 0 1.4 2.5h10.4a1.6 1.6 0 0 0 1.4-2.5l-5.1-9.3V3.5"/><path d="M7.6 14.5h8.8"/>',
-    play: '<circle cx="12" cy="12" r="8.5"/><path d="M10.2 8.8v6.4l5-3.2z"/>',
-    screen: '<rect x="3.5" y="4.5" width="17" height="11.5" rx="1.5"/><path d="M8.5 20h7M12 16v4"/>',
-    info: '<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.7v.3"/>'
-  };
-
-  /* The kinds of card on the Prototypes, Demos and Tech-Showcases page. */
+  /* The kinds of card on the Prototypes, Demos and Tech-Showcases page: label, Vici icon, tag
+     colour and the card's hint. Prototypes are lilac, Vici's colour for experimental work; the
+     three tones follow the light and dark theme alike. */
   var SHOWCASE_KINDS = {
-    prototype: { label: "Prototype",     icon: "flask",  cta: "Open the prototype" },
-    demo:      { label: "Demo",          icon: "play",   cta: "Open the demo" },
-    showcase:  { label: "Tech-Showcase", icon: "screen", cta: "Open the showcase" }
+    prototype: { label: "Prototype",     icon: "cube", tone: "feature", cta: "Open the prototype" },
+    demo:      { label: "Demo",          icon: "play", tone: "info",    cta: "Open the demo" },
+    showcase:  { label: "Tech-Showcase", icon: "eye",  tone: "accent",  cta: "Open the showcase" }
   };
 
   /* The kinds of entry on the Articles, Events & Features page. "dated" kinds take place on a day,
      so the ones still to come are marked as upcoming. */
   var KINDS = {
-    article:    { label: "Article",    icon: "file",     cta: "Read on" },
+    article:    { label: "Article",    icon: "type",     cta: "Read on" },
     whitepaper: { label: "Whitepaper", icon: "book",     cta: "Read on" },
     event:      { label: "Event",      icon: "calendar", cta: "Details on", dated: true },
-    talk:       { label: "Talk",       icon: "mic",      cta: "Details on", dated: true },
-    feature:    { label: "Feature",    icon: "star",     cta: "Read on" },
-    podcast:    { label: "Podcast",    icon: "mic",      cta: "Listen on" },
-    interview:  { label: "Interview",  icon: "chat",     cta: "Read on" }
+    talk:       { label: "Talk",       icon: "users",    cta: "Details on", dated: true },
+    feature:    { label: "Feature",    icon: "flag",     cta: "Read on" },
+    podcast:    { label: "Podcast",    icon: "play",     cta: "Listen on" },
+    interview:  { label: "Interview",  icon: "user",     cta: "Read on" }
   };
 
   var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   /* ---- small helpers ------------------------------------------------------------------------ */
 
-  function icon(name, size) {
+  /* A Vici icon: a span that the stylesheet fills with the icon in the current text colour. */
+  function icon(name) {
     var span = document.createElement("span");
-    span.className = "icon";
-    span.innerHTML = '<svg viewBox="0 0 24 24" width="' + size + '" height="' + size + '" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' + (ICONS[name] || ICONS.file) + "</svg>";
+    span.className = "vc-icon vc-icon--" + name;
+    span.setAttribute("aria-hidden", "true");
     return span;
   }
 
@@ -62,13 +49,7 @@
     return node;
   }
 
-  function hiddenText(text) { return el("span", "visually-hidden", text); }
-
-  function separator() {
-    var dot = el("span", "sep", "·");
-    dot.setAttribute("aria-hidden", "true");
-    return dot;
-  }
+  function hiddenText(text) { return el("span", "vc-visually-hidden", text); }
 
   function isText(value) { return typeof value === "string" && value.trim() !== ""; }
 
@@ -139,6 +120,24 @@
     return list;
   }
 
+  /* A Vici hex-capsule tag, optionally coloured and with an icon. */
+  function tag(text, tone, iconName) {
+    var t = el("span", "vc-tag" + (tone ? " vc-tag--" + tone : ""));
+    if (iconName) t.appendChild(icon(iconName));
+    t.appendChild(document.createTextNode(text));
+    return t;
+  }
+
+  /* A link that sits above the card's own link, such as "Source code" or "Also in German". */
+  function extraLink(url, text, hidden, iconName) {
+    var a = el("a", "vc-button vc-button--sm vc-button--ghost site-above");
+    a.href = url;
+    if (iconName) a.appendChild(icon(iconName));
+    a.appendChild(document.createTextNode(text));
+    if (hidden) a.appendChild(hiddenText(hidden));
+    return a;
+  }
+
   /* ---- prototypes ----------------------------------------------------------------------------- */
 
   function checkPrototype(entry, index) {
@@ -175,24 +174,26 @@
       if (!item.icon) warn(where, "icon should be a file in images/prototypes/", "the initial is shown instead");
     }
     if (Array.isArray(entry.tags)) {
-      item.tags = entry.tags.filter(isText).map(function (tag) { return tag.trim(); });
+      item.tags = entry.tags.filter(isText).map(function (t) { return t.trim(); });
     }
     return item;
   }
 
+  /* Without an icon file: the first letter in a merlot hexagon. */
   function fallbackIcon(name) {
-    var tile = el("span", "app-icon app-icon-fallback", name.charAt(0).toUpperCase());
-    tile.setAttribute("aria-hidden", "true");
-    return tile;
+    var cell = el("span", "vc-cell vc-cell--xl vc-cell--solid site-proto__initial", name.charAt(0).toUpperCase());
+    cell.setAttribute("aria-hidden", "true");
+    return cell;
   }
 
   function prototypeCard(item) {
-    var card = el("li", "card");
+    var card = el("li", "vc-card vc-card--interactive");
+    var body = el("div", "vc-card__body");
 
-    var top = el("div", "card-top");
+    var head = el("div", "site-proto__head");
     if (item.icon) {
       var img = document.createElement("img");
-      img.className = "app-icon";
+      img.className = "site-proto__icon";
       img.src = item.icon;
       img.alt = "";
       img.width = 56;
@@ -202,62 +203,48 @@
         warn("data/prototypes.js (" + item.name + ")", "the icon " + item.icon + " was not found", "the initial is shown instead");
         img.replaceWith(fallbackIcon(item.name));
       });
-      top.appendChild(img);
+      head.appendChild(img);
     } else {
-      top.appendChild(fallbackIcon(item.name));
+      head.appendChild(fallbackIcon(item.name));
     }
-
-    var head = el("div");
-    var title = el("h2", "card-title");
-    var link = el("a", "stretched", item.name);
+    var titles = el("div");
+    var title = el("h2", "vc-card__title");
+    var link = el("a", "vc-card__link", item.name);
     link.href = item.url;
-    link.target = "_blank";
-    link.rel = "noopener";
-    link.appendChild(hiddenText(" (opens in a new tab)"));
     title.appendChild(link);
-    head.appendChild(title);
-    if (item.subtitle) head.appendChild(el("p", "card-sub", item.subtitle));
-    top.appendChild(head);
+    titles.appendChild(title);
+    if (item.subtitle) titles.appendChild(el("p", "vc-card__meta", item.subtitle));
+    head.appendChild(titles);
+    body.appendChild(head);
 
-    var go = icon("external", 20);
-    go.classList.add("card-go");
-    top.appendChild(go);
-    card.appendChild(top);
-
-    card.appendChild(el("p", "card-desc", item.description));
+    body.appendChild(el("p", null, item.description));
 
     // What it is (prototype, demo or tech-showcase), then its topics.
-    var tags = el("ul", "tags");
+    var tags = el("ul", "site-tags");
     tags.setAttribute("aria-label", "Kind and topics");
-    var kindChip = el("li", "chip chip-kind");
-    kindChip.appendChild(icon(item.kind.icon, 14));
-    kindChip.appendChild(document.createTextNode(item.kind.label));
-    tags.appendChild(kindChip);
-    item.tags.forEach(function (tag) { tags.appendChild(el("li", "chip", tag)); });
-    card.appendChild(tags);
+    var kindItem = el("li");
+    kindItem.appendChild(tag(item.kind.label, item.kind.tone, item.kind.icon));
+    tags.appendChild(kindItem);
+    item.tags.forEach(function (t) {
+      var li = el("li");
+      li.appendChild(tag(t));
+      tags.appendChild(li);
+    });
+    body.appendChild(tags);
 
     if (item.note) {
-      var note = el("p", "card-note");
-      note.appendChild(icon("info", 16));
+      var note = el("p", "site-note");
+      note.appendChild(icon("info"));
       note.appendChild(el("span", null, item.note));
-      card.appendChild(note);
+      body.appendChild(note);
     }
+    card.appendChild(body);
 
-    var foot = el("div", "card-foot");
-    var cta = el("span", "card-cta", item.kind.cta);
+    var foot = el("div", "vc-card__footer");
+    var cta = el("span", "site-card-cta", item.kind.cta);
     cta.setAttribute("aria-hidden", "true");
-    cta.appendChild(icon("arrowRight", 18));
     foot.appendChild(cta);
-    if (item.code) {
-      var code = el("a", "btn btn-ghost btn-sm above");
-      code.href = item.code;
-      code.target = "_blank";
-      code.rel = "noopener";
-      code.appendChild(icon("code", 18));
-      code.appendChild(document.createTextNode("Source code"));
-      code.appendChild(hiddenText(" of " + item.name + " on " + siteName(item.code) + " (opens in a new tab)"));
-      foot.appendChild(code);
-    }
+    if (item.code) foot.appendChild(extraLink(item.code, "Source code", " of " + item.name + " on " + siteName(item.code), "code"));
     card.appendChild(foot);
     return card;
   }
@@ -286,7 +273,7 @@
     var kindKey = isText(entry.kind) ? entry.kind.trim().toLowerCase() : "";
     var kind = KINDS[kindKey];
     if (!kind) {
-      warn(where, 'kind should be one of: ' + Object.keys(KINDS).join(", "), "shown as an article");
+      warn(where, "kind should be one of: " + Object.keys(KINDS).join(", "), "shown as an article");
       kind = KINDS.article;
     }
     // The same piece in other languages: each needs a language and its own web address.
@@ -320,61 +307,51 @@
     };
   }
 
+  function metaItem(iconName, text) {
+    var span = el("span");
+    span.appendChild(icon(iconName));
+    span.appendChild(document.createTextNode(text));
+    return span;
+  }
+
   function articleCard(item) {
-    var card = el("li", "card entry");
+    var card = el("li", "vc-card vc-card--interactive site-entry");
+    var body = el("div", "vc-card__body");
 
-    var tile = el("div", "kind-tile");
-    tile.appendChild(icon(item.icon, 26));
-    card.appendChild(tile);
+    var cell = el("span", "vc-cell vc-cell--xl site-entry__cell");
+    cell.setAttribute("aria-hidden", "true");
+    cell.appendChild(icon(item.icon));
+    body.appendChild(cell);
 
-    var body = el("div", "entry-body");
-    var meta = el("p", "entry-meta");
-    meta.appendChild(el("span", "chip", item.label));
-    if (item.upcoming) {
-      var upcoming = el("span", "chip", "Upcoming");
-      upcoming.setAttribute("data-tone", "pending");
-      meta.appendChild(upcoming);
-    }
+    var meta = el("p", "site-entry__meta");
+    meta.appendChild(tag(item.label));
+    if (item.upcoming) meta.appendChild(tag("Upcoming", "info"));
     meta.appendChild(el("span", null, item.publisher));
-    meta.appendChild(separator());
-    var time = el("time", null, formatDate(item.date));
+    var time = el("time");
     time.dateTime = item.date.iso;
+    time.appendChild(icon("calendar"));
+    time.appendChild(document.createTextNode(formatDate(item.date)));
     meta.appendChild(time);
-    if (item.place) {
-      meta.appendChild(separator());
-      meta.appendChild(el("span", null, item.place));
-    }
-    if (item.language) {
-      meta.appendChild(separator());
-      meta.appendChild(el("span", null, "In " + item.language));
-    }
+    if (item.place) meta.appendChild(metaItem("pin", item.place));
+    if (item.language) meta.appendChild(metaItem("globe-hex", "In " + item.language));
     body.appendChild(meta);
 
-    var title = el("h3", "entry-title");
-    var link = el("a", "stretched", item.title);
+    var title = el("h3", "vc-card__title");
+    var link = el("a", "vc-card__link", item.title);
     link.href = item.url;
-    link.target = "_blank";
-    link.rel = "noopener";
-    link.appendChild(hiddenText(" (opens on " + item.host + " in a new tab)"));
+    link.appendChild(hiddenText(" (on " + item.host + ")"));
     title.appendChild(link);
     body.appendChild(title);
 
-    if (item.description) body.appendChild(el("p", "entry-desc", item.description));
+    if (item.description) body.appendChild(el("p", null, item.description));
 
-    var foot = el("p", "entry-foot");
-    if (item.role) foot.appendChild(el("span", "entry-role", item.role));
-    var cta = el("span", "card-cta", item.cta + " " + item.host);
+    var foot = el("div", "site-entry__foot");
+    if (item.role) foot.appendChild(el("span", "site-entry__role", item.role));
+    var cta = el("span", "site-card-cta", item.cta + " " + item.host);
     cta.setAttribute("aria-hidden", "true");
-    cta.appendChild(icon("external", 16));
     foot.appendChild(cta);
     item.translations.forEach(function (t) {
-      var alt = el("a", "btn btn-ghost btn-sm above", "Also in " + t.language);
-      alt.href = t.url;
-      alt.target = "_blank";
-      alt.rel = "noopener";
-      alt.appendChild(hiddenText(": " + item.title + " (opens on " + t.host + " in a new tab)"));
-      alt.appendChild(icon("external", 16));
-      foot.appendChild(alt);
+      foot.appendChild(extraLink(t.url, "Also in " + t.language, ": " + item.title + " (on " + t.host + ")", "globe-hex"));
     });
     body.appendChild(foot);
 
@@ -398,12 +375,12 @@
       group.items.push(item);
     });
     groups.forEach(function (group) {
-      var section = el("section", "year-group");
-      var heading = el("h2", "year num", String(group.year));
+      var section = el("section", "site-year-group");
+      var heading = el("h2", "site-year", String(group.year));
       heading.id = "year-" + group.year;
       section.setAttribute("aria-labelledby", heading.id);
       section.appendChild(heading);
-      var list = el("ul", "entries");
+      var list = el("ul", "site-entries");
       group.items.forEach(function (item) { list.appendChild(articleCard(item)); });
       section.appendChild(list);
       root.appendChild(section);
@@ -413,8 +390,8 @@
   /* ---- shared ----------------------------------------------------------------------------- */
 
   function emptyNote(text) {
-    var note = el("div", "empty");
-    note.appendChild(el("strong", null, text));
+    var note = el("div", "vc-empty site-empty");
+    note.appendChild(el("p", "vc-empty__title", text));
     return note;
   }
 
