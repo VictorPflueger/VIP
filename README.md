@@ -135,11 +135,13 @@ The look is Vici's, and the site follows its guidelines:
 - `vici/` holds Vici's stylesheet, script, fonts, logo, the platforms' marks and the portrait,
   copied unchanged from a Vici release (see `vici/README.md`). Don't edit these files; change Vici
   and copy them again.
-- `css/site.css` only arranges Vici's components: the hero's honeycomb flower and a few details.
-  The grids, rows and stacks are Vici's layout classes (`vc-grid`, `vc-cluster`, `vc-stack`), the
-  breakpoints are Vici's (480, 768, 1024 px), and it uses Vici's tokens (`var(--vc-…)`) only, with
-  no colour values, fonts or round shapes of its own. Its classes start with `site-`; every other
-  class on the pages is Vici's.
+- `css/site.css` only arranges Vici's components. The lists use Vici's layout classes (`vc-grid`,
+  `vc-cluster`, `vc-stack`); the hero with its honeycomb flower, the career section's two columns
+  and the article cards keep small grids of their own. Colours, type, spacing, shadows and motion
+  come from Vici's tokens (`var(--vc-…)`), the breakpoints are Vici's (480, 768, 1024 px), and the
+  few lengths of its own (column minimums, the flower's size) are in `rem` on Vici's 4 px grid.
+  It adds no colour values, fonts or round shapes, and never touches Vici's private properties.
+  Its classes start with `site-`; every other class on the pages is Vici's.
 - Colour carries meaning, as in Vici: merlot for the name, links and the one main button; the six
   fields of work each have a pastel family (teal, fjord, apricot, honey, lilac and merlot's blush)
   that is the same in the honeycomb and in "What I work on". The kinds of prototype are categories,
@@ -148,9 +150,11 @@ The look is Vici's, and the site follows its guidelines:
   semantic tones with an icon and a word.
 - Text follows Vici's writing and type rules: sentence case for headings, navigation and buttons;
   Bricolage only for short headlines of a line or two (long article titles are set in Inter);
-  reading text at 55 to 75 characters per line.
-- Buttons that only show an icon have a tooltip with their name; links and cards that lead to
-  another site show the external-link icon.
+  no more than 75 characters per line in running text (Vici asks for 55 to 75; short card texts
+  are naturally narrower).
+- Buttons that only show an icon have a tooltip with their name. Links, buttons and cards that
+  lead to another site show the external-link icon, except the footer's "Elsewhere" list and the
+  buttons that carry LinkedIn's or GitHub's logo, which already say where they lead.
 - Light and dark theme follow the system setting; the moon/sun button switches and remembers the
   choice. `js/theme.js` applies a stored choice before the page is drawn.
 - LinkedIn's [in] logo and GitHub's Invertocat are the platforms' own files, unchanged: black on
@@ -182,5 +186,5 @@ js/site.js               turns the data files into cards and home-page key figur
 js/theme.js              applies a stored light or dark choice before the page is drawn
 css/site.css             layout of the pages, on top of Vici
 vici/                    Vici, copied unchanged (stylesheet, script, fonts, logo, marks, portrait)
-images/prototypes/       a prototype's own picture, if one is used (none at the moment)
+images/prototypes/       for a prototype's own picture, if one is ever used (create the folder)
 ```

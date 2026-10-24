@@ -62,8 +62,8 @@
 }
 .site-hero__name { margin-bottom: var(--vc-space-4); }
 .site-hero__role {
-  max-width: 30rem;
   margin: 0 0 var(--vc-space-4);
+  text-wrap: balance;
 }
 .site-hero__facts {
   --vc-cluster-gap: var(--vc-space-2) var(--vc-space-6);
@@ -141,8 +141,12 @@
   margin: 0;
 }
 .site-stats .vc-stat { flex: 1; }
-/* labels at the top, figures on one line across the row, however the labels wrap */
+/* labels at the top, figures on one line across the row, however the labels wrap; in four
+   columns a note may take two lines, so every note keeps room for two */
 .site-stats .vc-stat__value { margin-top: auto; padding-top: var(--vc-space-2); }
+@media (min-width: 1024px) {
+  .site-stats .vc-stat__note { min-height: 2lh; }
+}
 /* Linked key figures behave like Vici's interactive cards: they lift with a card-on-hover shadow. */
 .site-stat-link {
   color: inherit;
@@ -331,7 +335,7 @@
 /* Vici's stack of cards */
 .site-entries {
   --vc-stack-gap: var(--vc-space-4);
-  max-width: 42rem;
+  max-width: var(--vc-container-narrow);
   margin: 0;
   padding: 0;
   list-style: none;
