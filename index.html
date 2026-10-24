@@ -55,28 +55,34 @@
       </a>
       <nav class="vc-header__nav" aria-label="Main">
         <a href="index.html" aria-current="page">Home</a>
-        <a href="prototypes.html">Prototypes<span class="site-nav-more">, Demos and Tech-Showcases</span></a>
-        <a href="articles.html">Articles<span class="site-nav-more">, Events &amp; Features</span></a>
+        <a href="prototypes.html">Prototypes<span class="site-nav-more">, demos &amp; tech-showcases</span></a>
+        <a href="articles.html">Articles<span class="site-nav-more">, events &amp; features</span></a>
       </nav>
       <div class="vc-header__actions">
-        <button type="button" class="vc-icon-button" data-vc-theme-toggle aria-label="Dark theme"><span class="vc-icon vc-icon--moon vc-when-light" aria-hidden="true"></span><span class="vc-icon vc-icon--sun vc-when-dark" aria-hidden="true"></span></button>
-        <button type="button" class="vc-icon-button vc-header__toggle" aria-expanded="false" aria-label="Menu"><span class="vc-icon vc-icon--menu" aria-hidden="true"></span></button>
+        <span class="vc-tooltip-anchor">
+          <button type="button" class="vc-icon-button" data-vc-theme-toggle aria-labelledby="tip-theme"><span class="vc-icon vc-icon--moon vc-when-light" aria-hidden="true"></span><span class="vc-icon vc-icon--sun vc-when-dark" aria-hidden="true"></span></button>
+          <span class="vc-tooltip vc-tooltip--bottom" role="tooltip" id="tip-theme">Dark theme</span>
+        </span>
+        <span class="vc-tooltip-anchor">
+          <button type="button" class="vc-icon-button vc-header__toggle" aria-expanded="false" aria-labelledby="tip-menu"><span class="vc-icon vc-icon--menu" aria-hidden="true"></span></button>
+          <span class="vc-tooltip vc-tooltip--bottom" role="tooltip" id="tip-menu">Menu</span>
+        </span>
       </div>
     </div>
   </header>
 
   <main id="main" tabindex="-1">
-    <section class="site-hero" aria-labelledby="intro-title">
+    <section class="vc-section site-hero" aria-labelledby="intro-title">
       <div class="vc-container site-hero__grid">
         <div>
           <h1 id="intro-title" class="vc-display site-hero__name">Victor Pflüger</h1>
-          <p class="site-hero__role">Senior Consultant for Data Science &amp; Artificial Intelligence</p>
-          <ul class="site-hero__facts">
+          <p class="vc-h4 site-hero__role">Senior Consultant for Data Science &amp; Artificial Intelligence</p>
+          <ul class="vc-cluster site-hero__facts">
             <li><span class="vc-icon vc-icon--briefcase" aria-hidden="true"></span>Detecon International (Deutsche Telekom Group)</li>
             <li><span class="vc-icon vc-icon--pin" aria-hidden="true"></span>Berlin</li>
           </ul>
           <p class="vc-lead site-hero__lead"><strong>Data and AI only pay off once they reach everyday decisions and processes.</strong> I help organizations get there – with the right use cases, data they can trust, and governance that holds up under the EU AI Act.</p>
-          <a class="vc-button vc-button--lg" href="https://www.linkedin.com/in/victorpflueger" rel="me">Connect on LinkedIn</a>
+          <a class="vc-button vc-button--lg" href="https://www.linkedin.com/in/victorpflueger" rel="me">Connect on LinkedIn <span class="vc-icon vc-icon--external" aria-hidden="true"></span></a>
         </div>
 
         <!-- Victor in the middle of a honeycomb, his six fields of work around him. The cells are
@@ -96,24 +102,24 @@
 
     <section class="site-glance" aria-label="At a glance">
       <div class="vc-container">
-        <ul class="site-stats">
+        <ul class="vc-grid vc-grid--4 site-stats">
           <li>
             <div class="vc-stat">
-              <p class="vc-stat__label"><span class="vc-icon vc-icon--briefcase" aria-hidden="true"></span>Deutsche Telekom Group</p>
-              <p class="vc-stat__value">Since 2017</p>
+              <p class="vc-stat__label"><span class="vc-icon vc-icon--briefcase" aria-hidden="true"></span>With Deutsche Telekom Group since</p>
+              <p class="vc-stat__value">2017</p>
               <p class="vc-stat__note">dual study, deal management, consulting</p>
             </div>
           </li>
           <li>
             <div class="vc-stat">
-              <p class="vc-stat__label"><span class="vc-icon vc-icon--sparkle" aria-hidden="true"></span>Data Science &amp; AI at Detecon</p>
-              <p class="vc-stat__value">Since 2022</p>
+              <p class="vc-stat__label"><span class="vc-icon vc-icon--sparkle" aria-hidden="true"></span>In Data Science &amp; AI at Detecon since</p>
+              <p class="vc-stat__value">2022</p>
               <p class="vc-stat__note">core team and talent program</p>
             </div>
           </li>
           <li>
             <a class="vc-stat site-stat-link" href="prototypes.html">
-              <span class="vc-stat__label"><span class="vc-icon vc-icon--cube" aria-hidden="true"></span><span>Prototypes, demos and <span class="vc-nowrap">tech-showcases</span></span><span class="vc-icon vc-icon--arrow-right site-stat-link__go" aria-hidden="true"></span></span>
+              <span class="vc-stat__label"><span class="vc-icon vc-icon--cube" aria-hidden="true"></span><span>Prototypes, demos &amp; tech-showcases</span><span class="vc-icon vc-icon--arrow-right site-stat-link__go" aria-hidden="true"></span></span>
               <span class="vc-stat__value" data-count="prototypes">4</span>
               <span class="vc-stat__note">working examples to try</span>
             </a>
@@ -133,38 +139,50 @@
       <div class="vc-container">
         <div class="site-section-head">
           <h2 id="work-title">What I work on</h2>
-          <p class="vc-lead">As Senior Consultant at Detecon, I guide mid-market and enterprise-scale organizations in implementing AI directly into their products, services and processes – from the first use-case workshop and prototype to rollout.</p>
+          <p class="vc-text-muted">As Senior Consultant at Detecon, I guide mid-market and enterprise-scale organizations in implementing AI directly into their products, services and processes – from the first use-case workshop and prototype to rollout.</p>
         </div>
-        <ul class="site-fields">
+        <ul class="vc-grid site-fields">
           <li class="site-field">
-            <span class="vc-tile vc-tile--teal site-field__cell" aria-hidden="true"><span class="vc-icon vc-icon--search"></span></span>
-            <h3>AI strategy &amp; use cases</h3>
-            <p>Finding the use cases worth doing and proving them quickly with a prototype.</p>
+            <span class="vc-cell vc-cell--xl vc-cell--teal" aria-hidden="true"><span class="vc-icon vc-icon--search"></span></span>
+            <div class="site-field__text">
+              <h3>AI strategy &amp; use cases</h3>
+              <p>Finding the use cases worth doing and proving them quickly with a prototype.</p>
+            </div>
           </li>
           <li class="site-field">
-            <span class="vc-tile vc-tile--fjord site-field__cell" aria-hidden="true"><span class="vc-icon vc-icon--layers"></span></span>
-            <h3>Data enablement &amp; data quality</h3>
-            <p>Modern data models and the data foundation every AI use case needs.</p>
+            <span class="vc-cell vc-cell--xl vc-cell--fjord" aria-hidden="true"><span class="vc-icon vc-icon--layers"></span></span>
+            <div class="site-field__text">
+              <h3>Data enablement &amp; data quality</h3>
+              <p>Modern data models and the data foundation every AI use case needs.</p>
+            </div>
           </li>
           <li class="site-field">
-            <span class="vc-tile vc-tile--apricot site-field__cell" aria-hidden="true"><span class="vc-icon vc-icon--chart-line"></span></span>
-            <h3>Data science &amp; machine learning</h3>
-            <p>Analytics and models that answer concrete business questions.</p>
+            <span class="vc-cell vc-cell--xl vc-cell--apricot" aria-hidden="true"><span class="vc-icon vc-icon--chart-line"></span></span>
+            <div class="site-field__text">
+              <h3>Data science &amp; machine learning</h3>
+              <p>Analytics and models that answer concrete business questions.</p>
+            </div>
           </li>
           <li class="site-field">
-            <span class="vc-tile vc-tile--honey site-field__cell" aria-hidden="true"><span class="vc-icon vc-icon--chart-bar"></span></span>
-            <h3>Data visualization &amp; BI</h3>
-            <p>Decision-ready dashboards and lean, fast Power BI models.</p>
+            <span class="vc-cell vc-cell--xl vc-cell--honey" aria-hidden="true"><span class="vc-icon vc-icon--chart-bar"></span></span>
+            <div class="site-field__text">
+              <h3>Data visualization &amp; BI</h3>
+              <p>Decision-ready dashboards and lean, fast Power BI models.</p>
+            </div>
           </li>
           <li class="site-field">
-            <span class="vc-tile vc-tile--lilac site-field__cell" aria-hidden="true"><span class="vc-icon vc-icon--sparkle"></span></span>
-            <h3>Generative &amp; agentic AI</h3>
-            <p>GenAI applications and AI agents with a clear business case and guardrails.</p>
+            <span class="vc-cell vc-cell--xl vc-cell--lilac" aria-hidden="true"><span class="vc-icon vc-icon--sparkle"></span></span>
+            <div class="site-field__text">
+              <h3>Generative &amp; agentic AI</h3>
+              <p>GenAI applications and AI agents with a clear business case and guardrails.</p>
+            </div>
           </li>
           <li class="site-field">
-            <span class="vc-tile vc-tile--merlot site-field__cell" aria-hidden="true"><span class="vc-icon vc-icon--lock"></span></span>
-            <h3>Data governance &amp; EU AI Act</h3>
-            <p>Compliance and risk controls built in from day one.</p>
+            <span class="vc-cell vc-cell--xl vc-cell--merlot" aria-hidden="true"><span class="vc-icon vc-icon--lock"></span></span>
+            <div class="site-field__text">
+              <h3>Data governance &amp; EU AI Act</h3>
+              <p>Compliance and risk controls built in from day one.</p>
+            </div>
           </li>
         </ul>
       </div>
@@ -174,7 +192,7 @@
       <div class="vc-container site-split">
         <div class="site-section-head">
           <h2 id="career-title">Career</h2>
-          <p class="vc-lead">I started in the Deutsche Telekom Group as a dual student and later worked as a Deal Manager – so I look at every data and AI initiative from both the technical and the business side.</p>
+          <p class="vc-text-muted">I started in the Deutsche Telekom Group as a dual student and later worked as a Deal Manager – so I look at every data and AI initiative from both the technical and the business side.</p>
         </div>
         <ol class="vc-timeline site-timeline">
           <li class="vc-timeline__item--done">
@@ -197,7 +215,7 @@
             <h3 class="vc-timeline__title">Consultant, Data Science &amp; AI</h3>
             <p class="vc-timeline__text">Detecon International</p>
           </li>
-          <li class="vc-timeline__item--current" aria-current="step">
+          <li class="vc-timeline__item--current">
             <span class="vc-timeline__date">Since 2026</span>
             <h3 class="vc-timeline__title">Senior Consultant, Data Science &amp; AI</h3>
             <p class="vc-timeline__text">Detecon International</p>
@@ -237,8 +255,8 @@
 
     <section class="vc-section site-contact" aria-labelledby="contact-title" data-theme="dark">
       <div class="vc-container vc-container--narrow">
-        <h2 id="contact-title">Working out where data and AI can make a measurable difference in your organization?</h2>
-        <p class="vc-lead">Send me a message on LinkedIn.</p>
+        <h2 id="contact-title">Let's talk</h2>
+        <p class="vc-lead site-contact__lead">Working out where data and AI can make a measurable difference in your organization? Send me a message on LinkedIn.</p>
         <div class="vc-cluster site-contact__actions">
           <a class="vc-button vc-button--lg vc-button--secondary" href="https://www.linkedin.com/in/victorpflueger" rel="me"><img class="vc-platform-mark" src="vici/assets/marks/linkedin.png" alt="" width="840" height="779">Message me on LinkedIn</a>
           <a class="vc-button vc-button--lg vc-button--ghost" href="https://github.com/VictorPflueger" rel="me"><svg class="vc-platform-mark" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M10.226 17.284c-2.965-.36-5.054-2.493-5.054-5.256 0-1.123.404-2.336 1.078-3.144-.292-.741-.247-2.314.09-2.965.898-.112 2.111.36 2.83 1.01.853-.269 1.752-.404 2.853-.404 1.1 0 1.999.135 2.807.382.696-.629 1.932-1.1 2.83-.988.315.606.36 2.179.067 2.942.72.854 1.101 2 1.101 3.167 0 2.763-2.089 4.852-5.098 5.234.763.494 1.28 1.572 1.28 2.807v2.336c0 .674.561 1.056 1.235.786 4.066-1.55 7.255-5.615 7.255-10.646C23.5 6.188 18.334 1 11.978 1 5.62 1 .5 6.188.5 12.545c0 4.986 3.167 9.12 7.435 10.669.606.225 1.19-.18 1.19-.786V20.63a2.9 2.9 0 0 1-1.078.224c-1.483 0-2.359-.808-2.987-2.313-.247-.607-.517-.966-1.034-1.033-.27-.023-.359-.135-.359-.27 0-.27.45-.471.898-.471.652 0 1.213.404 1.797 1.235.45.651.921.943 1.483.943.561 0 .92-.202 1.437-.719.382-.381.674-.718.944-.943"/></svg>GitHub</a>
@@ -258,8 +276,8 @@
           <p class="vc-footer__title">Pages</p>
           <ul>
             <li><a href="index.html">Home</a></li>
-            <li><a href="prototypes.html">Prototypes, Demos and Tech-Showcases</a></li>
-            <li><a href="articles.html">Articles, Events &amp; Features</a></li>
+            <li><a href="prototypes.html">Prototypes, demos &amp; tech-showcases</a></li>
+            <li><a href="articles.html">Articles, events &amp; features</a></li>
           </ul>
         </nav>
         <div>

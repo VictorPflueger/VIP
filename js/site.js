@@ -9,16 +9,18 @@
 (function () {
   "use strict";
 
-  /* The kinds of card on the Prototypes, Demos and Tech-Showcases page: label, Vici icon, tag
-     colour and the card's hint. Prototypes are lilac, Vici's colour for experimental work; the
-     three tones follow the light and dark theme alike. */
+  /* The kinds of card on the Prototypes, demos and tech-showcases page: label, Vici icon, colour
+     and the card's hint. The kind is a category, so it takes a pastel family (Vici: category tags
+     use the families, status tags the semantic tones): lilac for prototypes, Vici's colour for
+     experimental work, fjord for demos, teal for tech-showcases. The card's hexagon cell has the
+     same colour as its tag. */
   var SHOWCASE_KINDS = {
-    prototype: { label: "Prototype",     icon: "cube", tone: "feature", cta: "Open the prototype" },
-    demo:      { label: "Demo",          icon: "play", tone: "info",    cta: "Open the demo" },
-    showcase:  { label: "Tech-Showcase", icon: "eye",  tone: "accent",  cta: "Open the showcase" }
+    prototype: { label: "Prototype",     icon: "cube", tone: "lilac", cta: "Open the prototype" },
+    demo:      { label: "Demo",          icon: "play", tone: "fjord", cta: "Open the demo" },
+    showcase:  { label: "Tech-showcase", icon: "eye",  tone: "teal",  cta: "Open the showcase" }
   };
 
-  /* The kinds of entry on the Articles, Events & Features page. "dated" kinds take place on a day,
+  /* The kinds of entry on the Articles, events & features page. "dated" kinds take place on a day,
      so the ones still to come are marked as upcoming. */
   var KINDS = {
     article:    { label: "Article",    icon: "type",     cta: "Read on" },
@@ -128,14 +130,47 @@
     return t;
   }
 
-  /* A link that sits above the card's own link, such as "Source code" or "Also in German". */
-  function extraLink(url, text, hidden, iconName) {
-    var a = el("a", "vc-button vc-button--sm vc-button--ghost site-above");
+  /* A second link in a card, such as "Source code" or "Also in German". Vici keeps it clickable
+     above the card's own link. It leaves the site, so it ends with Vici's external icon. */
+  function extraLink(url, text, hidden) {
+    var a = el("a", "vc-button vc-button--sm vc-button--ghost");
     a.href = url;
-    if (iconName) a.appendChild(icon(iconName));
     a.appendChild(document.createTextNode(text));
     if (hidden) a.appendChild(hiddenText(hidden));
+    a.appendChild(icon("external"));
     return a;
+  }
+
+  /* The hint at the bottom of a card that leads to another site: words and the external icon.
+     The card's own link carries the name for screen readers, so the hint is hidden from them. */
+  function cardHint(text) {
+    var hint = el("span", "site-card-cta", text);
+    hint.setAttribute("aria-hidden", "true");
+    var ext = icon("external");
+    ext.classList.add("vc-icon--sm");   // like the "Source code" button's icon: about 1.15 × its text
+    hint.appendChild(ext);
+    return hint;
+  }
+
+  /* Vici's icon names, read once from its stylesheet, to check the icons named in the data. A page
+     opened straight from disk may not let scripts read stylesheets; then every name is accepted. */
+  var viciIcons = null;
+  function isViciIcon(name) {
+    if (!viciIcons) {
+      viciIcons = {};
+      Array.prototype.forEach.call(document.styleSheets, function (sheet) {
+        var rules;
+        try { rules = sheet.cssRules; } catch (e) { return; }
+        (function collect(list) {
+          Array.prototype.forEach.call(list || [], function (rule) {
+            if (rule.cssRules) collect(rule.cssRules);
+            var match = rule.selectorText && rule.selectorText.match(/\.vc-icon--[a-z0-9-]+/g);
+            if (match) match.forEach(function (m) { viciIcons[m.slice(10)] = true; });
+          });
+        })(rules);
+      });
+    }
+    return Object.keys(viciIcons).length === 0 || Object.prototype.hasOwnProperty.call(viciIcons, name);
   }
 
   /* ---- prototypes ----------------------------------------------------------------------------- */
@@ -170,8 +205,15 @@
       if (!item.code) warn(where, 'code should start with "https://"', "the source link is left out");
     }
     if (given(entry.icon)) {
-      item.icon = localPath(entry.icon);
-      if (!item.icon) warn(where, "icon should be a file in images/prototypes/", "the initial is shown instead");
+      // A Vici icon name such as "search", or an image file in this site for a prototype's own icon.
+      var iconValue = isText(entry.icon) ? entry.icon.trim() : "";
+      if (/^[a-z0-9-]+$/.test(iconValue)) {
+        if (isViciIcon(iconValue)) item.viciIcon = iconValue;
+        else warn(where, 'icon "' + iconValue + '" is not one of Vici\'s icons', "the initial is shown instead");
+      } else {
+        item.icon = localPath(iconValue);
+        if (!item.icon) warn(where, "icon should be a Vici icon name or a file in images/prototypes/", "the initial is shown instead");
+      }
     }
     if (Array.isArray(entry.tags)) {
       item.tags = entry.tags.filter(isText).map(function (t) { return t.trim(); });
@@ -179,10 +221,16 @@
     return item;
   }
 
-  /* Without an icon file: the first letter in a merlot hexagon. */
-  function fallbackIcon(name) {
-    var cell = el("span", "vc-cell vc-cell--xl vc-cell--solid site-proto__initial", name.charAt(0).toUpperCase());
+  /* The card's hexagon cell in the kind's colour, with a Vici icon or, without one, the first
+     letter of the name. */
+  function protoCell(item) {
+    var cell = el("span", "vc-cell vc-cell--xl vc-cell--" + item.kind.tone);
     cell.setAttribute("aria-hidden", "true");
+    if (item.viciIcon) cell.appendChild(icon(item.viciIcon));
+    else {
+      cell.classList.add("site-proto__initial");
+      cell.textContent = item.name.charAt(0).toUpperCase();
+    }
     return cell;
   }
 
@@ -192,22 +240,23 @@
 
     var head = el("div", "site-proto__head");
     if (item.icon) {
+      // a prototype's own picture, cropped to a hexagon of the cell's size (Vici's .vc-hex-img)
       var img = document.createElement("img");
-      img.className = "site-proto__icon";
+      img.className = "vc-hex-img site-proto__icon";
       img.src = item.icon;
       img.alt = "";
-      img.width = 56;
+      img.width = 65;
       img.height = 56;
       img.decoding = "async";
       img.addEventListener("error", function () {
         warn("data/prototypes.js (" + item.name + ")", "the icon " + item.icon + " was not found", "the initial is shown instead");
-        img.replaceWith(fallbackIcon(item.name));
+        img.replaceWith(protoCell(item));
       });
       head.appendChild(img);
     } else {
-      head.appendChild(fallbackIcon(item.name));
+      head.appendChild(protoCell(item));
     }
-    var titles = el("div");
+    var titles = el("div", "site-proto__titles");
     var title = el("h2", "vc-card__title");
     var link = el("a", "vc-card__link", item.name);
     link.href = item.url;
@@ -220,7 +269,7 @@
     body.appendChild(el("p", null, item.description));
 
     // What it is (prototype, demo or tech-showcase), then its topics.
-    var tags = el("ul", "site-tags");
+    var tags = el("ul", "vc-cluster vc-cluster--sm site-tags");
     tags.setAttribute("aria-label", "Kind and topics");
     var kindItem = el("li");
     kindItem.appendChild(tag(item.kind.label, item.kind.tone, item.kind.icon));
@@ -241,10 +290,8 @@
     card.appendChild(body);
 
     var foot = el("div", "vc-card__footer");
-    var cta = el("span", "site-card-cta", item.kind.cta);
-    cta.setAttribute("aria-hidden", "true");
-    foot.appendChild(cta);
-    if (item.code) foot.appendChild(extraLink(item.code, "Source code", " of " + item.name + " on " + siteName(item.code), "code"));
+    foot.appendChild(cardHint(item.kind.cta));
+    if (item.code) foot.appendChild(extraLink(item.code, "Source code", " of " + item.name + " on " + siteName(item.code)));
     card.appendChild(foot);
     return card;
   }
@@ -252,7 +299,9 @@
   function renderPrototypes(root, items) {
     root.textContent = "";
     if (!items.length) {
-      root.appendChild(emptyNote("New prototypes, demos and tech-showcases are on their way."));
+      // the empty state takes the list's place instead of sitting in it as one grid cell
+      root.hidden = true;
+      root.insertAdjacentElement("afterend", emptyNote("cube", "New prototypes, demos and tech-showcases are on their way.", "Until then, my code is on ", "GitHub", "https://github.com/VictorPflueger"));
       return;
     }
     items.forEach(function (item) { root.appendChild(prototypeCard(item)); });
@@ -325,7 +374,7 @@
 
     var meta = el("p", "site-entry__meta");
     meta.appendChild(tag(item.label));
-    if (item.upcoming) meta.appendChild(tag("Upcoming", "info"));
+    if (item.upcoming) meta.appendChild(tag("Upcoming", "info", "clock"));
     meta.appendChild(el("span", null, item.publisher));
     var time = el("time");
     time.dateTime = item.date.iso;
@@ -336,7 +385,9 @@
     if (item.language) meta.appendChild(metaItem("globe-hex", "In " + item.language));
     body.appendChild(meta);
 
-    var title = el("h3", "vc-card__title");
+    // titles are quoted as published and often long: Inter (Vici's h5 style), as Bricolage is for
+    // short headlines of a line or two
+    var title = el("h3", "vc-card__title vc-h5");
     var link = el("a", "vc-card__link", item.title);
     link.href = item.url;
     link.appendChild(hiddenText(" (on " + item.host + ")"));
@@ -347,11 +398,9 @@
 
     var foot = el("div", "site-entry__foot");
     if (item.role) foot.appendChild(el("span", "site-entry__role", item.role));
-    var cta = el("span", "site-card-cta", item.cta + " " + item.host);
-    cta.setAttribute("aria-hidden", "true");
-    foot.appendChild(cta);
+    foot.appendChild(cardHint(item.cta + " " + item.host));
     item.translations.forEach(function (t) {
-      foot.appendChild(extraLink(t.url, "Also in " + t.language, ": " + item.title + " (on " + t.host + ")", "globe-hex"));
+      foot.appendChild(extraLink(t.url, "Also in " + t.language, ": " + item.title + " (on " + t.host + ")"));
     });
     body.appendChild(foot);
 
@@ -362,7 +411,7 @@
   function renderArticles(root, items) {
     root.textContent = "";
     if (!items.length) {
-      root.appendChild(emptyNote("New articles and events are on their way."));
+      root.appendChild(emptyNote("book", "New articles and events are on their way.", "Until then, my publications are listed on ", "LinkedIn", "https://www.linkedin.com/in/victorpflueger"));
       return;
     }
     var groups = [];
@@ -380,7 +429,7 @@
       heading.id = "year-" + group.year;
       section.setAttribute("aria-labelledby", heading.id);
       section.appendChild(heading);
-      var list = el("ul", "site-entries");
+      var list = el("ul", "vc-stack site-entries");
       group.items.forEach(function (item) { list.appendChild(articleCard(item)); });
       section.appendChild(list);
       root.appendChild(section);
@@ -389,9 +438,24 @@
 
   /* ---- shared ----------------------------------------------------------------------------- */
 
-  function emptyNote(text) {
+  /* Vici's empty state: a cluster of hexagon cells, what is missing and where to look instead. */
+  function emptyNote(iconName, title, before, linkText, linkUrl) {
     var note = el("div", "vc-empty site-empty");
-    note.appendChild(el("p", "vc-empty__title", text));
+    var art = el("div", "vc-empty__art");
+    art.setAttribute("aria-hidden", "true");
+    art.appendChild(el("span"));
+    art.appendChild(el("span"));
+    art.appendChild(el("span"));
+    art.appendChild(icon(iconName));
+    note.appendChild(art);
+    note.appendChild(el("p", "vc-empty__title", title));
+    var text = el("p", "vc-empty__text", before);
+    var link = el("a", null, linkText);
+    link.href = linkUrl;
+    link.rel = "me";
+    text.appendChild(link);
+    text.appendChild(document.createTextNode("."));
+    note.appendChild(text);
     return note;
   }
 

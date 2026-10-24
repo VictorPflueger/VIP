@@ -1,7 +1,7 @@
 # Vici, copied into this site
 
 These files come unchanged from Vici, Victor Pflüger's design system
-(<https://victorpflueger.github.io/ViciDesign/index.html>), version **v1.0.0** (commit `e292ed5` on its main branch).
+(<https://victorpflueger.github.io/ViciDesign/index.html>), version **v1.0.0** (commit `fdd868b` on its main branch).
 The site loads them from here rather than from a CDN, so every page is served from this site alone.
 
 | File here | What it is |

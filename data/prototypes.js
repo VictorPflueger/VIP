@@ -5,21 +5,26 @@
  * the comma after each block.
  *
  *   name         Card title.                                                         (required)
- *   kind         What it is: "prototype", "demo" or "showcase"; shown as a label,    (optional)
- *                and the card's link reads "Open the prototype", "Open the demo" or
- *                "Open the showcase". Without a kind, the card is a prototype.
+ *   kind         What it is: "prototype", "demo" or "showcase"; shown as a tag in its   (optional)
+ *                colour (lilac, fjord or teal), and the card's hint reads "Open the
+ *                prototype", "Open the demo" or "Open the showcase". Without a kind,
+ *                the card is a prototype.
  *   subtitle     One line under the title.                                           (optional)
  *   description  One or two short sentences.                                         (required)
  *   url          Where a click on the card leads: the live version.                  (required)
  *   code         Link to the source code, shown as a second link on the card.        (optional)
- *   icon         Square icon in images/prototypes/ (SVG or PNG, at least 112 px).     (optional)
- *                Without one, the card shows a burgundy tile with the first letter.
- *   tags         A few keywords, shown as chips.                                     (optional)
+ *   icon         A Vici icon, shown in a hexagon in the kind's colour, e.g. "search",   (optional)
+ *                "clock" or "layers" (all icons: Vici's docs, Guidelines → Icons).
+ *                A picture in images/prototypes/ shows the prototype's own image instead,
+ *                cropped to the same hexagon (so keep its subject in the middle).
+ *                Without an icon, the hexagon shows the name's first letter.
+ *   tags         A few keywords, shown as tags.                                      (optional)
  *   note         A short practical note, e.g. how to try it or what data it uses.    (optional)
  *
  * Save the file and reload the page: the card appears, and the counter on the home page updates.
- * Icons have to sit in this site's own folder (images/prototypes/), because the pages load nothing
- * from other sites. If a card does not appear, the browser console (F12) says which value is missing.
+ * Pictures have to sit in this site's own folder (images/prototypes/), because the pages load
+ * nothing from other sites. If a card does not appear, the browser console (F12) says which value
+ * is missing.
  */
 window.PROTOTYPES = [
   {
@@ -29,7 +34,7 @@ window.PROTOTYPES = [
     description: "An AI agent that finds supplier rebates a company earned but never claimed, works out what is owed and by when, and proposes costed recovery options for your approval.",
     url: "https://victorpflueger.github.io/PROC-Rebate-Hunter/",
     code: "https://github.com/VictorPflueger/PROC-Rebate-Hunter",
-    icon: "images/prototypes/rebate-hunter.svg",
+    icon: "search",
     tags: ["Agentic AI", "Procurement"],
     note: "Free simulation, no API key needed. Fictional company, no client data.",
   },
@@ -40,7 +45,7 @@ window.PROTOTYPES = [
     description: "An AI agent that detects supply chain disruptions, works out which plant stops when and what it costs, and proposes costed responses for your approval.",
     url: "https://victorpflueger.github.io/supply-chain-navigator/",
     code: "https://github.com/VictorPflueger/supply-chain-navigator",
-    icon: "images/prototypes/navigator.svg",
+    icon: "globe-hex",
     tags: ["Agentic AI", "Supply chain"],
     note: "Free simulation, no API key needed. Fictional company, no client data.",
   },
@@ -51,7 +56,7 @@ window.PROTOTYPES = [
     description: "An AI agent that finds where railway passenger information contradicts the operational timetable, checks it against track and train sensors, works out who will act on the wrong information and how soon, and proposes costed responses for your approval.",
     url: "https://victorpflueger.github.io/physicalAI-scheduler/",
     code: "https://github.com/VictorPflueger/physicalAI-scheduler",
-    icon: "images/prototypes/timetable-translator.svg",
+    icon: "clock",
     tags: ["Agentic AI", "Physical AI", "Rail"],
     note: "Free simulation, no API key needed. Fictional trains, no client data.",
   },
@@ -62,7 +67,7 @@ window.PROTOTYPES = [
     description: "A simulated robot cell, planned by an AI agent, repacks mixed pallets into store orders overnight and learns from surprises. An engine prices every 1,000 units in labour hours and euros, manual baseline against the hybrid cell.",
     url: "https://victorpflueger.github.io/physicalAI-repacking/",
     code: "https://github.com/VictorPflueger/physicalAI-repacking",
-    icon: "images/prototypes/repack-pilot.svg",
+    icon: "layers",
     tags: ["Physical AI", "Agentic AI", "Logistics"],
     note: "Work in progress. Free simulation, no API key needed. Fictional retailer, no client data.",
   },
