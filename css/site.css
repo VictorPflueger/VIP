@@ -86,36 +86,35 @@
 .site-hero__lead strong { color: var(--vc-text); }
 
 /* The honeycomb flower: the portrait in the middle cell, the six fields of work around it.
-   Flat-top cells of height --_h sit in three columns that overlap by a quarter of a cell; the
-   side columns drop by half a cell, so every neighbour shares an edge with the middle. */
+   Flat-top cells of height --site-flower-h sit in three columns that overlap by a quarter of a
+   cell; the side columns drop by half a cell, so every neighbour shares an edge with the middle.
+   The sizes are the site's own properties: Vici's components keep their private ones. */
 .site-flower {
-  --_h: clamp(6.25rem, 10.5vw, 9.25rem);
-  --_w: calc(var(--_h) * 1.1547);
-  --_gap: var(--vc-honeycomb-gap, 6px);   /* Vici's honeycomb gap */
+  --site-flower-h: clamp(6.25rem, 10.5vw, 9.25rem);
+  --site-flower-w: calc(var(--site-flower-h) * 1.1547);
+  --site-flower-gap: var(--vc-honeycomb-gap, 6px);   /* Vici's honeycomb gap */
   display: grid;
-  grid-template-columns: repeat(3, calc(var(--_w) * 0.75 + var(--_gap) * 0.866));
-  grid-template-rows: repeat(6, calc((var(--_h) + var(--_gap)) / 2));
-  padding-right: calc(var(--_w) * 0.25);
+  grid-template-columns: repeat(3, calc(var(--site-flower-w) * 0.75 + var(--site-flower-gap) * 0.866));
+  grid-template-rows: repeat(6, calc((var(--site-flower-h) + var(--site-flower-gap)) / 2));
+  padding-right: calc(var(--site-flower-w) * 0.25);
   justify-content: center;
 }
 .site-flower > * {
-  width: var(--_w);
-  height: var(--_h);
+  width: var(--site-flower-w);
+  height: var(--site-flower-h);
   margin: 0;
 }
-/* Vici's tile label follows the cell (--_h × 0.13, at most the small text size). On phones the
-   cells follow the screen width, so the labels follow the cell even at large text sizes, where
-   the tile's own minimum would make them outgrow it. */
-.site-flower__cell { font-size: min(calc(var(--_h) * 0.13), var(--vc-font-size-sm)); }
-.site-flower__portrait { --_h: var(--site-flower-cell); grid-area: 3 / 2 / span 2; }
+/* Vici's tile label follows the cell (its height × 0.13, at most the small text size). On phones
+   the cells follow the screen width, so the labels follow the cell even at large text sizes,
+   where the tile's own minimum would make them outgrow it. */
+.site-flower__cell { font-size: min(calc(var(--site-flower-h) * 0.13), var(--vc-font-size-sm)); }
+.site-flower__portrait { grid-area: 3 / 2 / span 2; }
 .site-flower__cell--n { grid-area: 1 / 2 / span 2; }
 .site-flower__cell--ne { grid-area: 2 / 3 / span 2; }
 .site-flower__cell--se { grid-area: 4 / 3 / span 2; }
 .site-flower__cell--s { grid-area: 5 / 2 / span 2; }
 .site-flower__cell--sw { grid-area: 4 / 1 / span 2; }
 .site-flower__cell--nw { grid-area: 2 / 1 / span 2; }
-/* The avatar sizes itself from its own --_h, so hand it the flower's cell height. */
-.site-flower { --site-flower-cell: var(--_h); }
 
 @media (max-width: 1023px) {
   .site-hero__grid { grid-template-columns: minmax(0, 1fr); gap: var(--vc-space-8); }
@@ -124,7 +123,7 @@
 }
 @media (max-width: 479px) {
   /* five cells across a phone: three columns of 0.75 + the last quarter = 2.5 cell widths */
-  .site-flower { --_h: min(6.5rem, calc((100vw - 2 * var(--vc-gutter, 1rem) - 16px) / 2.887)); }
+  .site-flower { --site-flower-h: min(6.5rem, calc((100vw - 2 * var(--vc-gutter, 1rem) - 16px) / 2.887)); }
 }
 
 /* ---- home: key figures ---------------------------------------------------------------------- */
