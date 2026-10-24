@@ -284,6 +284,11 @@
   height: var(--vc-cell-xl);
 }
 .site-proto__head .vc-cell { flex: none; }
+/* the name stays beside its cell and wraps there; only at large text sizes does it move under */
+.site-proto__titles {
+  flex: 1 1 10rem;
+  min-width: 0;
+}
 /* without an icon, the name's first letter, set like Vici's initials avatars */
 .site-proto__initial {
   font-size: var(--vc-font-size-xl);

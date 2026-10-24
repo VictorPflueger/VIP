@@ -254,7 +254,7 @@
     } else {
       head.appendChild(protoCell(item));
     }
-    var titles = el("div");
+    var titles = el("div", "site-proto__titles");
     var title = el("h2", "vc-card__title");
     var link = el("a", "vc-card__link", item.name);
     link.href = item.url;
