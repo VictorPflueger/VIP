@@ -1,708 +1,395 @@
-/* Victor Pflüger — semantic roles, base typography, page layout and components.
+/* Victor Pflüger — the site's own layout on top of Vici (vici/dist/vici.min.css).
  *
- * The site uses the design system of my two prototypes, Rebate Hunter and Navigator (see DESIGN.md
- * in their repositories). Every colour comes from css/tokens.css, copied unchanged from them; this
- * file only assigns roles and contains no colour values of its own apart from white. Their colour
- * grammar, applied to a personal site:
- *   1. Burgundy is identity and action: the mark and the name, the ring around the portrait, primary
- *      buttons and the page you are on.
- *   2. Slate is the canvas: the dot-grid work surface of the rebate board, with its ring, links and
- *      dots, behind the introduction and the lists.
- *   3. Ink, a neutral tinted with the brand hue, carries everything else.
- *   4. Red, amber, green, blue and violet mean states and the AI's voice in the prototypes, so they
- *      do not decorate here. The one green is the shield of the privacy note, as on the prototypes'
- *      note that actions stay drafts.
- * Type: Barlow for text, Barlow Semi Condensed for headings and figures, IBM Plex Mono for code.
+ * Vici supplies the colours, type, components and dark theme. This file only arranges them: it
+ * uses Vici's tokens (var(--vc-…)) and adds no colour values, fonts or round shapes of its own.
+ * Class names here start with "site-"; everything else on the pages is a Vici class.
  */
 
-:root {
-  color-scheme: light;
+/* ---- header ------------------------------------------------------------------------------- */
 
-  /* surfaces */
-  --paper: #ffffff;                    /* cards, header, sections */
-  --porcelain: var(--ink-3);           /* navigation bar, footer, tiles */
-  --porcelain-2: var(--ink-4);         /* hover on porcelain */
-  --line: var(--ink-5);                /* separators and card edges */
-  --line-strong: var(--ink-7);         /* button and card borders */
-  --border-control: var(--ink-9);      /* marks that must reach 3:1 against paper (WCAG 1.4.11) */
+/* The header lines up with the page content instead of Vici's wider default. */
+.vc-header { --vc-header-max: var(--vc-container-content); }
 
-  /* text */
-  --text: var(--ink-12);
-  --text-muted: var(--ink-11);
-  --text-faint: var(--ink-10);
-  --on-brand: #ffffff;
-
-  /* brand: burgundy, the colour of identity and of action */
-  --brand: var(--wine-9);
-  --brand-deep: var(--wine-10);
-  --brand-text: var(--wine-11);
-  --brand-mid: var(--wine-8);
-  --brand-line: var(--wine-7);
-  --brand-soft: var(--wine-3);
-  --brand-wash: var(--wine-2);
-
-  /* the one status colour in use: the privacy note's shield */
-  --success-line: var(--success-9);
-
-  /* the canvas: the prototypes' map and board */
-  --sea: var(--slate-3);
-  --network: var(--slate-9);
-
-  /* type */
-  --font-ui: "Barlow", "Segoe UI", "Helvetica Neue", Arial, system-ui, sans-serif;
-  --font-figures: "Barlow Semi Condensed", "Barlow", "Segoe UI", Arial, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
-
-  --fs-xs: 0.8125rem;
-  --fs-sm: 0.875rem;
-  --fs-md: 1rem;
-  --fs-lg: 1.1875rem;
-  --fs-xl: 1.5rem;
-  --fs-kpi: 2.125rem;
-
-  /* geometry */
-  --r-sm: 6px;
-  --r-md: 10px;
-  --r-lg: 14px;
-  --hit: 44px;                         /* minimum interactive size */
-  --page: 1180px;                      /* content width */
-  --gutter: 16px;
-  /* Elevation: shadows tinted with the darkest burgundy, never neutral black. */
-  --shadow-pop: 0 16px 40px rgb(67 19 32 / 0.16), 0 2px 6px rgb(67 19 32 / 0.06);
-  --shadow-soft: 0 4px 14px rgb(67 19 32 / 0.08);
-  /* Focus: a 2px burgundy ring outside a 2px white gap, 10:1 against paper (WCAG 2.4.13). */
-  --focus: 0 0 0 2px var(--paper), 0 0 0 4px var(--brand);
+/* Between phone and desktop the navigation shows the first word of each page's name, so the
+   bar stays on one line; the menu on phones and the bar on wide screens show the full names. */
+.vc-header__brand { white-space: nowrap; }
+@media (min-width: 768px) and (max-width: 1099px) {
+  .site-nav-more { display: none; }
 }
 
-/* Fluid root size, as in the prototypes: ~17px on a 1920px screen, never below 15px. */
-html {
-  font-size: clamp(15px, 0.48vw + 8px, 18px);
-  -webkit-text-size-adjust: 100%;
+/* The theme toggle needs vici.js; without it the page simply follows the system setting. */
+:root:not(.vc-js) [data-vc-theme-toggle] { display: none; }
+
+/* ---- shared --------------------------------------------------------------------------------- */
+
+.site-section-head {
+  max-width: 44rem;
+  margin-bottom: var(--vc-space-10);
+}
+.site-section-head h2 { margin-bottom: var(--vc-space-3); }
+.site-section-head > :last-child { margin-bottom: 0; }
+
+/* A link that sits above a card's stretched link (vc-card__link covers the whole card). */
+.site-above {
+  position: relative;
+  z-index: 2;
 }
 
-*, *::before, *::after { box-sizing: border-box; }
-* { scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }
-
-body {
+.site-plain-list {
   margin: 0;
-  min-height: 100vh;
-  min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  background: var(--paper);
-  color: var(--text);
-  font-family: var(--font-ui);
-  font-size: var(--fs-md);
-  line-height: 1.5;
-  font-feature-settings: "kern", "liga";
-  -webkit-font-smoothing: antialiased;
+  padding: 0;
+  list-style: none;
 }
-main { flex: 1 0 auto; }
-main:focus { outline: none; }
 
-::selection { background: var(--wine-5); color: var(--text); }
+/* ---- home: hero ----------------------------------------------------------------------------- */
 
-a { color: var(--brand); text-underline-offset: 2px; }
-a:hover { color: var(--brand-deep); }
-
-:focus-visible { outline: none; box-shadow: var(--focus); border-radius: var(--r-sm); }
-
-/* The hidden attribute always wins over component display rules. */
-[hidden] { display: none !important; }
-
-h1, h2, h3 {
-  margin: 0;
-  font-family: var(--font-figures);
-  font-weight: 700;
-  line-height: 1.15;
-  color: var(--text);
+/* Heads of the pages sit on Vici's honeycomb pattern, which fades out towards the content. */
+.site-hero,
+.site-page-head {
+  position: relative;
+  isolation: isolate;
+}
+.site-hero::before,
+.site-page-head::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: var(--vc-honeycomb-pattern);
+  background-size: var(--vc-honeycomb-pattern-size);
+  /* a mask only reads the alpha channel: any opaque colour will do */
+  mask-image: linear-gradient(to bottom, var(--vc-text) 45%, transparent);
+}
+.site-hero { padding-block: clamp(2.5rem, 6vw, 5.5rem) clamp(2.5rem, 6vw, 5rem); }
+.site-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--vc-space-12);
+}
+.site-hero__name { margin-bottom: var(--vc-space-4); }
+.site-hero__role {
+  max-width: 30rem;
+  margin: 0 0 var(--vc-space-4);
+  font-family: var(--vc-font-display);
+  font-size: var(--vc-font-size-2xl);
+  font-weight: var(--vc-weight-semibold);
+  line-height: 1.25;
+  letter-spacing: var(--vc-tracking-heading);
   text-wrap: balance;
 }
-p { margin: 0; text-wrap: pretty; }
-img { display: block; max-width: 100%; }
-
-.icon { display: inline-flex; align-items: center; justify-content: center; flex: none; line-height: 0; }
-.icon svg { display: block; }
-.visually-hidden { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
-.num { font-variant-numeric: tabular-nums lining-nums; }
-/* Keeps a hyphenated word such as Tech-Showcases on one line. */
-.nowrap { white-space: nowrap; }
-
-.wrap { width: min(var(--page), 100% - 2 * var(--gutter)); margin-inline: auto; }
-
-/* ------------------------------------------------------------------------------------------ */
-/* Skip link                                                                                   */
-/* ------------------------------------------------------------------------------------------ */
-
-.skip-link {
-  position: fixed; left: 16px; top: -80px; z-index: 4000;
-  padding: 10px 16px;
-  border-radius: var(--r-md);
-  background: var(--brand); color: var(--on-brand);
-  font-weight: 600; text-decoration: none;
-}
-.skip-link:focus { top: 12px; }
-.skip-link:hover { color: var(--on-brand); }
-
-/* ------------------------------------------------------------------------------------------ */
-/* Header: the mark and the name, then the profile links as the prototypes' header pills       */
-/* ------------------------------------------------------------------------------------------ */
-
-.site-header { background: var(--paper); border-bottom: 1px solid var(--line); }
-.header-bar {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 12px 24px;
-  min-height: 84px;
-  padding-block: 8px;
-}
-
-.brand {
-  display: inline-flex; align-items: center; gap: 12px;
-  min-width: 0; min-height: var(--hit);
-  padding-right: 6px;
-  border-radius: var(--r-md);
-  color: inherit; text-decoration: none;
-}
-.brand:hover { color: inherit; }
-.brand-mark { width: 34px; height: 34px; flex: none; }
-/* The mark is drawn from the tokens: a burgundy tile, a white V-shaped route and a rose ring at the
-   goal, in the language of the prototypes' marks. favicon.svg repeats it in plain colour values. */
-.brand-mark .mark-tile { fill: var(--brand); }
-.brand-mark .mark-line { fill: none; stroke: var(--on-brand); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-.brand-mark .mark-start { fill: var(--on-brand); }
-.brand-mark .mark-node { fill: var(--brand); stroke: var(--on-brand); stroke-width: 1.8; }
-.brand-mark .mark-ring { fill: none; stroke: var(--wine-6); stroke-width: 2; }
-.brand-text { display: flex; flex-direction: column; line-height: 1.1; min-width: 0; }
-.brand-name {
-  font-family: var(--font-figures);
-  font-weight: 700;
-  font-size: 1.6rem;
-  letter-spacing: 0.01em;
-  color: var(--brand);
-  white-space: nowrap;
-}
-.brand:hover .brand-name { color: var(--brand-deep); }
-.brand-sub { color: var(--text-muted); font-size: var(--fs-sm); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-.header-links { display: flex; align-items: center; gap: 8px 10px; flex-wrap: wrap; justify-content: flex-end; }
-
-.pill {
-  display: inline-flex; align-items: center; gap: 8px;
-  min-height: var(--hit); padding: 0 16px 0 13px;
-  border-radius: 999px;
-  border: 1px solid var(--line-strong);
-  background: var(--paper);
-  color: var(--text);
-  font: 600 var(--fs-sm) / 1 var(--font-ui);
-  text-decoration: none;
-  white-space: nowrap;
-  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-}
-.pill:hover { background: var(--porcelain); border-color: var(--border-control); color: var(--text); }
-.pill:active { transform: translateY(1px); }
-.pill .ext { color: var(--text-faint); }
-/* The one brand pill, like the prototypes' "How it works": the profile to connect on. */
-.pill-brand { border-color: var(--brand-mid); background: var(--brand-wash); color: var(--brand); }
-.pill-brand:hover { background: var(--brand-soft); border-color: var(--brand); color: var(--brand-deep); }
-.pill-brand .ext { color: var(--brand-mid); }
-
-/* ------------------------------------------------------------------------------------------ */
-/* Navigation: the prototypes' control bar, with the view buttons of their map and board       */
-/* ------------------------------------------------------------------------------------------ */
-
-.site-nav { background: var(--porcelain); border-bottom: 1px solid var(--line); }
-.nav-list {
-  display: flex; align-items: stretch; gap: 8px;
-  margin-block: 0; padding: 10px 0;
+.site-hero__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--vc-space-2) var(--vc-space-6);
+  margin: 0 0 var(--vc-space-6);
+  padding: 0;
   list-style: none;
+  color: var(--vc-text-muted);
+  font-size: var(--vc-font-size-sm);
 }
-.nav-list li { display: flex; min-width: 0; }
-.nav-link {
-  display: inline-flex; align-items: center; gap: 8px;
-  min-height: var(--hit); min-width: var(--hit);
-  padding: 0 18px 0 14px;
-  border-radius: var(--r-md);
-  border: 1px solid var(--line-strong);
-  background: var(--paper);
-  color: var(--text);
-  font: 600 var(--fs-md) / 1.2 var(--font-ui);
-  text-decoration: none;
-  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-}
-.nav-link:hover { background: var(--brand-soft); border-color: var(--brand-mid); color: var(--brand-deep); }
-.nav-link:active { transform: translateY(1px); }
-.nav-link .icon { color: var(--text-muted); }
-.nav-link:hover .icon { color: inherit; }
-/* The page you are on: burgundy underline, as a pressed view button in the prototypes. */
-.nav-link[aria-current="page"] {
-  background: var(--paper);
-  border-color: var(--brand-mid);
-  color: var(--brand-text);
-  box-shadow: inset 0 -3px 0 var(--brand), var(--shadow-soft);
-}
-.nav-link[aria-current="page"] .icon { color: var(--brand); }
-.nav-link[aria-current="page"]:focus-visible { box-shadow: inset 0 -3px 0 var(--brand), var(--focus), var(--shadow-soft); }
-
-/* ------------------------------------------------------------------------------------------ */
-/* Buttons and chips (the prototypes' components)                                              */
-/* ------------------------------------------------------------------------------------------ */
-
-.btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  min-height: var(--hit);
-  padding: 0 18px;
-  border-radius: var(--r-md);
-  border: 1px solid var(--line-strong);
-  background: var(--paper);
-  color: var(--text);
-  font: 600 var(--fs-md) / 1 var(--font-ui);
-  text-decoration: none;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-}
-.btn:hover { background: var(--brand-soft); border-color: var(--brand-mid); color: var(--brand-deep); }
-.btn:active { transform: translateY(1px); }
-.btn .icon { margin-left: -2px; }
-/* Primary: the one thing to do next. */
-.btn-primary { background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
-.btn-primary:hover { background: var(--brand-deep); border-color: var(--brand-deep); color: var(--on-brand); }
-/* Secondary brand: available, but not the main action. */
-.btn-brand-outline { background: var(--paper); border-color: var(--brand-mid); color: var(--brand-text); }
-.btn-brand-outline:hover { background: var(--brand-soft); border-color: var(--brand); color: var(--brand-deep); }
-.btn-ghost { background: transparent; border-color: transparent; color: var(--text-muted); }
-.btn-ghost:hover { background: var(--porcelain-2); color: var(--text); border-color: var(--line); }
-.btn-sm { padding: 0 14px; font-size: var(--fs-sm); }
-
-.chip {
-  display: inline-flex; align-items: center; gap: 6px;
-  height: 26px; padding: 0 10px;
-  border-radius: 999px;
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  border: 1px solid var(--line-strong);
-  background: var(--paper);
-  color: var(--text-muted);
-  white-space: nowrap;
-}
-/* Waiting for you is burgundy in the prototypes: here, an event that is still to come. */
-.chip[data-tone="pending"] { color: var(--brand-text); border-color: var(--brand-line); background: var(--brand-soft); }
-.chip .icon { margin-left: -2px; }
-
-/* ------------------------------------------------------------------------------------------ */
-/* The canvas: the rebate board's slate work surface with its faint dot grid                   */
-/* ------------------------------------------------------------------------------------------ */
-
-.canvas {
-  background-color: var(--sea);
-  background-image: radial-gradient(circle at 1px 1px, rgb(68 82 113 / 0.12) 1px, transparent 1.4px);
-  background-size: 22px 22px;
-}
-
-/* ------------------------------------------------------------------------------------------ */
-/* Landing: introduction                                                                       */
-/* ------------------------------------------------------------------------------------------ */
-
-.hero { border-bottom: 1px solid var(--line); }
-.hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+.site-hero__facts li {
+  display: inline-flex;
   align-items: center;
-  gap: 28px 40px;
-  padding-block: 40px 48px;
-}
-
-/* The constellation, after the rebate board's group view: the person as the hub, the fields of
-   work as the accounts linked on the ring. Decorative; the same fields are listed in the page. */
-.constellation {
-  position: relative;
-  width: 100%;
-  max-width: 600px;
-  aspect-ratio: 560 / 384;
-  justify-self: center;
-}
-.constellation > svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.ring-zone { fill: rgb(255 255 255 / 0.72); stroke: var(--slate-6); stroke-width: 2; }
-.ring-label { fill: var(--slate-11); font: 700 13px var(--font-ui); letter-spacing: 0.08em; text-transform: uppercase; }
-.reg-link { stroke: var(--network); stroke-width: 1.6; stroke-opacity: 0.55; fill: none; stroke-linecap: round; }
-.acct-halo { fill: rgb(255 255 255 / 0.9); }
-.acct-dot { fill: var(--slate-4); stroke: var(--slate-9); stroke-width: 2; }
-.acct-label {
-  fill: var(--text);
-  font: 600 18px var(--font-figures);
-  paint-order: stroke; stroke: var(--paper); stroke-width: 4px; stroke-linejoin: round;
-}
-
-.portrait {
-  position: absolute; left: 50%; top: 50%;
-  width: 30%;
+  gap: var(--vc-space-2);
   margin: 0;
-  transform: translate(-50%, -50%);
 }
-.portrait img {
-  width: 100%; height: auto;
-  aspect-ratio: 1;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 3px solid var(--brand);
-  background: var(--paper);
-  box-shadow: 0 0 0 6px rgb(255 255 255 / 0.9), var(--shadow-soft);
+.site-hero__lead {
+  max-width: 36rem;
+  margin-bottom: var(--vc-space-8);
 }
+.site-hero__lead strong { color: var(--vc-text); }
 
-/* The introduction sits on the canvas like the prototypes' floating caption card. */
-.hero-card {
-  background: var(--paper);
-  border: 1px solid var(--line);
-  border-radius: var(--r-lg);
-  box-shadow: var(--shadow-soft);
-  padding: 28px 32px 30px;
-}
-.hero-card h1 { font-size: clamp(2.3rem, 1.5rem + 2.2vw, 3.2rem); letter-spacing: 0.005em; }
-.hero-role { margin-top: 6px; font-size: var(--fs-lg); font-weight: 600; line-height: 1.35; color: var(--brand-text); }
-.hero-meta {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px;
-  margin-top: 10px;
-  color: var(--text-muted); font-size: var(--fs-sm);
-}
-.hero-meta span { display: inline-flex; align-items: center; gap: 6px; }
-.hero-meta .icon { color: var(--text-faint); }
-.hero-lead { margin-top: 18px; font-size: var(--fs-lg); line-height: 1.5; color: var(--text); max-width: 60ch; }
-.hero-lead strong { font-weight: 600; }
-.hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
-
-/* ------------------------------------------------------------------------------------------ */
-/* Landing: key figures, as the prototypes' KPI tiles (one value, one line of context)         */
-/* ------------------------------------------------------------------------------------------ */
-
-.kpi-section { padding-top: 28px; }
-.kpis {
+/* The honeycomb flower: the portrait in the middle cell, the six fields of work around it.
+   Flat-top cells of height --_h sit in three columns that overlap by a quarter of a cell; the
+   side columns drop by half a cell, so every neighbour shares an edge with the middle. */
+.site-flower {
+  --_h: clamp(6.25rem, 10.5vw, 9.25rem);
+  --_w: calc(var(--_h) * 1.1547);
+  --_gap: 6px;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
-  margin: 0; padding: 0;
+  grid-template-columns: repeat(3, calc(var(--_w) * 0.75 + var(--_gap) * 0.866));
+  grid-template-rows: repeat(6, calc((var(--_h) + var(--_gap)) / 2));
+  padding-right: calc(var(--_w) * 0.25);
+  justify-content: center;
+}
+.site-flower > * {
+  width: var(--_w);
+  height: var(--_h);
+  margin: 0;
+}
+.site-flower__cell { padding: 0 14%; }
+.site-flower__portrait { --_h: var(--site-flower-cell); grid-area: 3 / 2 / span 2; }
+.site-flower__cell--n { grid-area: 1 / 2 / span 2; }
+.site-flower__cell--ne { grid-area: 2 / 3 / span 2; }
+.site-flower__cell--se { grid-area: 4 / 3 / span 2; }
+.site-flower__cell--s { grid-area: 5 / 2 / span 2; }
+.site-flower__cell--sw { grid-area: 4 / 1 / span 2; }
+.site-flower__cell--nw { grid-area: 2 / 1 / span 2; }
+/* The avatar sizes itself from its own --_h, so hand it the flower's cell height. */
+.site-flower { --site-flower-cell: var(--_h); }
+
+@media (max-width: 899px) {
+  .site-hero__grid { grid-template-columns: minmax(0, 1fr); gap: var(--vc-space-8); }
+  /* on narrow screens the portrait comes first, the name right under it */
+  .site-flower { order: -1; }
+}
+@media (max-width: 479px) {
+  /* five cells across a phone: three columns of 0.75 + the last quarter = 2.5 cell widths */
+  .site-flower { --_h: min(6.5rem, calc((100vw - 2 * var(--vc-gutter, 1rem) - 16px) / 2.887)); }
+}
+
+/* ---- home: key figures ---------------------------------------------------------------------- */
+
+.site-glance { padding-block: 0 var(--vc-space-4); }
+.site-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+  gap: var(--vc-space-4);
+  margin: 0;
+  padding: 0;
   list-style: none;
 }
-.kpis > li { display: flex; min-width: 0; }
-.kpi {
-  position: relative;
-  display: flex; flex-direction: column; justify-content: center;
-  width: 100%;
-  min-height: 104px;
-  padding: 10px 16px 12px;
-  border-radius: var(--r-md);
-  border: 1px solid var(--line);
-  background: var(--porcelain);
-  color: var(--text);
+.site-stats > li {
+  display: flex;
+  margin: 0;
+}
+.site-stats .vc-stat {
+  flex: 1;
+  background: var(--vc-surface);
+}
+/* labels at the top, figures on one line across the row, however the labels wrap */
+.site-stats .vc-stat__value { margin-top: auto; padding-top: var(--vc-space-2); }
+.site-stat-link {
+  color: inherit;
   text-decoration: none;
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+  transition:
+    border-color var(--vc-duration-base) var(--vc-ease-standard),
+    box-shadow var(--vc-duration-base) var(--vc-ease-standard);
 }
-.kpi-label { color: var(--text-muted); font-size: var(--fs-sm); line-height: 1.3; padding-right: 22px; }
-.kpi-value {
-  font-family: var(--font-figures);
-  font-weight: 600;
-  font-size: var(--fs-kpi);
-  line-height: 1.1;
-  font-variant-numeric: tabular-nums lining-nums;
-  white-space: nowrap;
-}
-.kpi-sub { color: var(--text-muted); font-size: var(--fs-xs); line-height: 1.35; }
-a.kpi:hover { background: var(--brand-soft); border-color: var(--brand-mid); color: var(--text); }
-a.kpi:hover .kpi-value { color: var(--brand); }
-.kpi-go { position: absolute; top: 10px; right: 10px; color: var(--brand); }
-
-/* ------------------------------------------------------------------------------------------ */
-/* Landing: sections                                                                           */
-/* ------------------------------------------------------------------------------------------ */
-
-.section { padding-block: 56px 0; }
-.section:last-child { padding-bottom: 64px; }
-.section-head { margin-bottom: 22px; max-width: 70ch; }
-.section-head h2 { font-size: clamp(1.6rem, 1.3rem + 0.8vw, 1.9rem); }
-.section-head p { margin-top: 6px; color: var(--text-muted); font-size: var(--fs-lg); line-height: 1.45; }
-
-/* Fields of work: the intro window's "Why it pays off" columns. */
-.value-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 26px 28px;
-  margin: 0; padding: 0;
-  list-style: none;
-}
-.value-grid li { display: flex; flex-direction: column; gap: 4px; padding-top: 10px; border-top: 3px solid var(--brand-mid); }
-.value-grid h3 { font-size: 1.35rem; color: var(--brand); }
-.value-grid p { color: var(--text-muted); line-height: 1.45; }
-
-/* Career: the intro window's step track and the progress rail. Done steps carry a tick; the
-   current step is burgundy, the colour of the person. */
-.steps {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 16px;
-  margin: 0; padding: 0;
-  list-style: none;
-}
-.step { position: relative; display: flex; flex-direction: column; gap: 3px; padding-top: 56px; min-width: 0; }
-.step::before {
-  content: ""; position: absolute; top: 20px; left: 50px; right: -8px;
-  height: 2px; background: var(--line-strong);
-}
-.step:last-child::before { display: none; }
-.step-mark {
-  position: absolute; top: 0; left: 0;
-  width: 42px; height: 42px; border-radius: 50%;
-  display: grid; place-items: center;
-  border: 2px solid var(--border-control);
-  background: var(--paper);
-  color: var(--text-muted);
-}
-.step-years { font: 600 var(--fs-sm) / 1.25 var(--font-figures); letter-spacing: 0.02em; color: var(--text-muted); }
-.step-title { font-size: 1.2rem; line-height: 1.2; }
-.step-org { color: var(--text-muted); line-height: 1.4; }
-.step[data-now] .step-mark { border-color: var(--brand); background: var(--brand); color: var(--on-brand); box-shadow: 0 0 0 4px var(--brand-soft); }
-.step[data-now] .step-title { color: var(--brand); }
-.step[data-now] .step-years { color: var(--brand-text); }
-
-/* Education and recognition: two cards, as the prototypes' mode cards. */
-.panels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.panel {
-  padding: 20px 22px 22px;
-  border-radius: var(--r-lg);
-  border: 1px solid var(--line-strong);
-  background: var(--paper);
-  min-width: 0;
-}
-.panel h3 { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; font-size: 1.35rem; }
-.panel h3 .icon { color: var(--brand); }
-.facts { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
-.facts li { display: flex; flex-direction: column; gap: 2px; padding-top: 12px; border-top: 1px solid var(--line); }
-.facts li:first-child { padding-top: 0; border-top: 0; }
-.fact-title { font-weight: 600; line-height: 1.35; }
-.fact-sub { color: var(--text-muted); font-size: var(--fs-sm); line-height: 1.4; }
-
-/* The closing invitation: the brand wash of the prototypes' live mode card. */
-.cta {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 16px 28px; flex-wrap: wrap;
-  padding: 26px 28px;
-  border-radius: var(--r-lg);
-  border: 1px solid var(--brand-line);
-  border-top: 6px solid var(--brand);
-  background: var(--brand-wash);
-}
-.cta h2 { font-size: clamp(1.4rem, 1.2rem + 0.6vw, 1.65rem); color: var(--brand); max-width: 36ch; }
-.cta p { margin-top: 6px; color: var(--text-muted); }
-
-/* ------------------------------------------------------------------------------------------ */
-/* Subpages: page head and the lists on the canvas                                             */
-/* ------------------------------------------------------------------------------------------ */
-
-.page-head { padding-block: 40px 6px; }
-.page-head h1 { font-size: clamp(2.1rem, 1.5rem + 1.8vw, 2.8rem); }
-.page-head p { margin-top: 8px; max-width: 68ch; font-size: var(--fs-lg); line-height: 1.45; color: var(--text-muted); }
-.page-body { padding-block: 26px 64px; }
-.page-note { margin-top: 18px; color: var(--text-muted); font-size: var(--fs-sm); }
-
-/* Cards: white on the canvas, like the board's floating cards. The whole card is one link (the
-   title's link stretches over it); a second link, such as the source code, sits above it. */
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 430px), 1fr));
-  gap: 16px;
-  margin: 0; padding: 0;
-  list-style: none;
-}
-.card {
-  position: relative;
-  display: flex; flex-direction: column; gap: 12px;
-  min-width: 0;
-  padding: 20px 22px 18px;
-  border-radius: var(--r-lg);
-  border: 1px solid var(--line-strong);
-  background: var(--paper);
-  box-shadow: var(--shadow-soft);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
-}
-.card:hover { border-color: var(--brand-mid); box-shadow: var(--shadow-pop); transform: translateY(-2px); }
-.stretched { color: inherit; text-decoration: none; }
-.stretched:hover { color: inherit; }
-.stretched::after { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: var(--r-lg); }
-.card .above { position: relative; z-index: 2; }
-/* Keyboard focus rings the whole card where the browser can tell (:has); otherwise the link. */
-@supports selector(:has(*)) {
-  .stretched:focus-visible { box-shadow: none; }
-  .card:has(.stretched:focus-visible) { box-shadow: var(--focus), var(--shadow-pop); border-color: var(--brand); }
-}
-
-.card-top { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 14px; }
-.app-icon { width: 56px; height: 56px; flex: none; border-radius: 14px; box-shadow: var(--shadow-soft); }
-/* A prototype without an icon file gets a burgundy tile with its initial. */
-.app-icon-fallback {
-  display: grid; place-items: center;
-  background: var(--brand); color: var(--on-brand);
-  font: 700 1.6rem / 1 var(--font-figures);
-}
-.card-title { font-size: 1.55rem; }
-.card:hover .card-title { color: var(--brand); }
-.card-sub { margin-top: 2px; color: var(--text-muted); font-size: var(--fs-sm); line-height: 1.35; }
-.card-go { color: var(--text-faint); transition: color 0.15s ease; }
-.card:hover .card-go { color: var(--brand); }
-.card-desc { color: var(--text); line-height: 1.5; }
-.tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
-/* What a card is (prototype, demo, tech-showcase): the first chip, with its icon and a firmer edge. */
-.chip-kind { color: var(--text); border-color: var(--border-control); }
-.chip-kind .icon { color: var(--text-muted); }
-/* A card's practical note, such as how to try it: quiet, with an info mark. */
-.card-note { display: flex; align-items: flex-start; gap: 8px; color: var(--text-muted); font-size: var(--fs-sm); line-height: 1.4; }
-.card-note .icon { margin-top: 1px; color: var(--text-faint); }
-.card-foot {
-  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
-  gap: 8px 12px;
-  margin-top: auto;
-  padding-top: 14px;
-  border-top: 1px solid var(--line);
-}
-.card-cta { display: inline-flex; align-items: center; gap: 8px; color: var(--brand); font-weight: 600; }
-.card-cta .icon { transition: transform 0.15s ease; }
-.card:hover .card-cta .icon { transform: translateX(3px); }
-
-/* Articles, events and features, newest first, grouped by year. */
-.year-group + .year-group { margin-top: 34px; }
-.year {
-  display: flex; align-items: center; gap: 14px;
-  margin-bottom: 12px;
-  font-size: 1.3rem;
-  color: var(--text-muted);
-}
-.year::after { content: ""; flex: 1; height: 1px; background: var(--line-strong); }
-.entries { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
-.entry { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: 18px; padding: 20px 22px; }
-.kind-tile {
-  width: 56px; height: 56px; flex: none;
-  display: grid; place-items: center;
-  border-radius: 14px;
-  border: 1px solid var(--brand-line);
-  background: var(--brand-soft);
-  color: var(--brand);
-}
-.entry-body { display: flex; flex-direction: column; min-width: 0; }
-.entry-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; color: var(--text-muted); font-size: var(--fs-sm); }
-.entry-meta .sep { color: var(--line-strong); }
-.entry-title { margin-top: 8px; font-size: 1.4rem; line-height: 1.2; }
-.card:hover .entry-title { color: var(--brand); }
-.entry-desc { margin-top: 6px; max-width: 78ch; color: var(--text); }
-.entry-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; margin-top: 12px; }
-/* A link to the same piece in another language sits above the entry's own link. */
-/* The 44 px target reaches into the foot's spacing, so the row stays as low as the text beside it. */
-.entry-foot .btn { margin: -10px 0 -10px -6px; }
-.entry-role { color: var(--text-muted); font-size: var(--fs-sm); }
-
-/* Empty and no-script notes. */
-.empty {
-  display: flex; flex-direction: column; gap: 6px;
-  max-width: 62ch;
-  padding: 18px 20px;
-  border-radius: var(--r-lg);
-  border: 1px dashed var(--line-strong);
-  background: var(--paper);
-  color: var(--text-muted);
-}
-.empty strong { color: var(--text); font-size: var(--fs-lg); font-weight: 600; }
-
-/* ------------------------------------------------------------------------------------------ */
-/* Footer: the prototypes' drawer bar, with its note                                           */
-/* ------------------------------------------------------------------------------------------ */
-
-.site-footer { background: var(--porcelain); border-top: 1px solid var(--line); }
-.footer-bar {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 6px 20px; flex-wrap: wrap;
-  min-height: 64px;
-  padding-block: 10px;
-}
-.footer-links { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; margin: 0; padding: 0; list-style: none; }
-.footer-copy { padding-right: 10px; color: var(--text-muted); font-size: var(--fs-sm); }
-.footer-links a {
-  display: inline-flex; align-items: center; gap: 6px;
-  min-height: var(--hit); padding: 0 12px;
-  border-radius: var(--r-md);
-  color: var(--text-muted);
-  font-weight: 600; font-size: var(--fs-sm);
+.site-stat-link:hover {
+  border-color: var(--vc-border);
+  box-shadow: var(--vc-shadow-md);
+  color: inherit;
   text-decoration: none;
 }
-.footer-links a:hover { background: var(--porcelain-2); color: var(--text); }
-.footer-note { display: inline-flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: var(--fs-sm); }
-.footer-note .icon { color: var(--success-line); }
-
-/* ------------------------------------------------------------------------------------------ */
-/* Responsive                                                                                  */
-/* ------------------------------------------------------------------------------------------ */
-
-/* Small laptops keep the introduction side by side, so the name stays on the first screen. */
-@media (max-width: 1180px) {
-  .hero-grid { gap: 24px 28px; }
-  .hero-card { padding: 24px 26px 26px; }
+.site-stat-link:hover .site-stat-link__go { translate: 0.15rem 0; }
+.site-stat-link__go {
+  margin-inline-start: auto;
+  color: var(--vc-accent-text);
+  transition: translate var(--vc-duration-base) var(--vc-ease-standard);
 }
 
-@media (max-width: 900px) {
-  .hero-grid { grid-template-columns: minmax(0, 1fr); padding-block: 28px 36px; }
-  .constellation { max-width: 560px; }
-  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .value-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+/* ---- home: fields of work ------------------------------------------------------------------- */
+
+.site-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(18rem, 100%), 1fr));
+  gap: var(--vc-space-10) var(--vc-space-8);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.site-field {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-content: start;
+  column-gap: var(--vc-space-4);
+  margin: 0;
+}
+.site-field__cell {
+  --_h: 3.25rem;
+  grid-row: 1 / span 2;
+  width: calc(var(--_h) * 1.1547);
+  height: var(--_h);
+  padding: 0;
+}
+.site-field__cell > .vc-icon {
+  width: 1.375rem;
+  height: 1.375rem;
+  margin: 0;
+}
+.site-field h3 {
+  margin: var(--vc-space-1) 0 var(--vc-space-2);
+  font-size: var(--vc-font-size-xl);
+}
+.site-field p {
+  margin: 0;
+  color: var(--vc-text-muted);
 }
 
-@media (max-width: 860px) {
-  .steps { grid-template-columns: minmax(0, 1fr); gap: 18px; }
-  .step { padding: 0 0 0 58px; min-height: 42px; }
-  .step::before { top: 46px; bottom: -14px; left: 20px; right: auto; width: 2px; height: auto; }
-  .panels { grid-template-columns: minmax(0, 1fr); }
+/* ---- home: career, education ---------------------------------------------------------------- */
+
+.site-split {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: var(--vc-space-8) var(--vc-space-16);
+  align-items: start;
+}
+.site-split > .site-section-head { margin-bottom: 0; }
+@media (max-width: 899px) {
+  .site-split { grid-template-columns: minmax(0, 1fr); }
+}
+.site-timeline .vc-timeline__title {
+  font-family: var(--vc-font-text);
+  font-size: var(--vc-font-size-lg);
 }
 
-@media (max-width: 640px) {
-  :root { --fs-kpi: 1.75rem; }
-  .header-bar { min-height: 72px; }
-  .brand-mark { width: 30px; height: 30px; }
-  .brand-name { font-size: 1.4rem; }
-  .header-links .pill:not(.pill-brand) { display: none; }
-  .pill { padding: 0; width: var(--hit); justify-content: center; }
-  .pill .pill-text, .pill .ext { display: none; }
-  .hero-grid { padding-block: 18px 28px; gap: 18px; }
-  .hero-card { padding: 22px 20px 22px; }
-  .hero-actions .btn { flex: 1 1 auto; }
-  .value-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
-  .section { padding-top: 44px; }
-  .cta { padding: 22px 20px; }
-  .cta .btn { flex: 1 1 auto; }
-  .page-head { padding-top: 28px; }
-  .entry { grid-template-columns: minmax(0, 1fr); gap: 12px; padding: 18px; }
-  .kind-tile { display: none; }
-  .card { padding: 18px 18px 16px; }
-  .footer-bar { flex-direction: column; align-items: flex-start; padding-block: 12px 16px; }
-  /* Labels in the constellation would be too small to read: the fields are listed further down. */
-  .ring-label, .acct-label { display: none; }
+.site-panel-title {
+  display: flex;
+  align-items: center;
+  gap: var(--vc-space-3);
+  margin-bottom: var(--vc-space-3);
+}
+.site-facts { margin: 0; }
+.site-facts > li + li { margin-top: var(--vc-space-4); }
+.site-fact__title {
+  display: block;
+  font-weight: var(--vc-weight-semibold);
+}
+.site-fact__sub {
+  display: block;
+  color: var(--vc-text-muted);
+  font-size: var(--vc-font-size-sm);
 }
 
-/* Narrow screens: Home becomes an icon (its name stays for screen readers), and the two long page
-   names share the rest of the row, wrapping onto a second or third line where they must. */
-@media (max-width: 760px) {
-  .nav-list li:first-child { flex: none; }
-  .nav-list li:not(:first-child) { flex: 1 1 auto; min-width: 0; }
-  .nav-list li:not(:first-child) .nav-link { width: 100%; }
-  .nav-link { padding: 6px 14px 6px 12px; }
-  .nav-link .nav-text { white-space: normal; }
-  .nav-home { padding: 0; justify-content: center; }
-  .nav-home .nav-text { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
-  .nav-list li:not(:first-child) .nav-link .icon { display: none; }
+/* ---- home: contact -------------------------------------------------------------------------- */
+
+.site-contact { text-align: center; }
+.site-contact h2 {
+  max-width: 34rem;
+  margin-inline: auto;
 }
-@media (max-width: 560px) {
-  .nav-link { font-size: var(--fs-sm); line-height: 1.25; padding: 6px 10px; }
-  .nav-home { padding: 0; }
+.site-contact__actions {
+  justify-content: center;
+  margin-top: var(--vc-space-6);
 }
 
-@media (max-width: 400px) {
-  .kpi { padding: 10px 12px 12px; }
+/* ---- footer --------------------------------------------------------------------------------- */
+
+.site-footer-note {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--vc-space-2);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
-  .card:hover, .card:hover .card-cta .icon { transform: none; }
+/* ---- prototypes and articles: page head ----------------------------------------------------- */
+
+.site-page-head { padding-block: clamp(2.5rem, 6vw, 4.5rem) var(--vc-space-6); }
+.site-page-head h1 { max-width: 48rem; }
+.site-page-head .vc-lead {
+  max-width: 40rem;
+  margin: 0;
 }
+.site-page-body { padding-block: var(--vc-space-8) clamp(3rem, 7vw, 6rem); }
+
+/* ---- prototypes ----------------------------------------------------------------------------- */
+
+.site-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(22rem, 100%), 1fr));
+  gap: var(--vc-space-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.site-cards > li { margin: 0; }
+.site-proto__head {
+  display: flex;
+  align-items: center;
+  gap: var(--vc-space-4);
+  margin-bottom: var(--vc-space-2);
+}
+.site-proto__icon {
+  flex: none;
+  width: 3.5rem;
+  height: 3.5rem;
+}
+.site-proto__head .vc-cell { flex: none; }
+.site-proto__initial {
+  font-family: var(--vc-font-display);
+  font-size: var(--vc-font-size-xl);
+  font-weight: var(--vc-weight-display);
+}
+.site-proto__head .vc-card__meta { margin: var(--vc-space-1) 0 0; }
+.site-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--vc-space-2);
+  margin: var(--vc-space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.site-tags > li { margin: 0; }
+.site-note {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--vc-space-2);
+  color: var(--vc-text-muted);
+  font-size: var(--vc-font-size-sm);
+}
+.site-note > .vc-icon { margin-top: 0.15rem; }
+.site-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--vc-space-2);
+  margin-inline-end: auto;
+  color: var(--vc-accent-text);
+  font-size: var(--vc-font-size-sm);
+  font-weight: var(--vc-weight-semibold);
+}
+
+/* ---- articles ------------------------------------------------------------------------------- */
+
+.site-year {
+  margin: var(--vc-space-12) 0 var(--vc-space-5);
+  font-size: var(--vc-font-size-3xl);
+  font-variant-numeric: tabular-nums;
+}
+.site-year-group:first-child .site-year { margin-top: 0; }
+.site-entries {
+  display: grid;
+  gap: var(--vc-space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.site-entries > li { margin: 0; }
+.site-entry .vc-card__body {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: var(--vc-space-2) var(--vc-space-5);
+}
+.site-entry__cell { grid-row: 1 / span 4; }
+.site-entry__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--vc-space-2) var(--vc-space-4);
+  color: var(--vc-text-muted);
+  font-size: var(--vc-font-size-sm);
+}
+.site-entry__meta > span,
+.site-entry__meta > time {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--vc-space-1);
+}
+.site-entry__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--vc-space-2) var(--vc-space-4);
+  margin-top: var(--vc-space-2);
+  font-size: var(--vc-font-size-sm);
+}
+.site-entry__role { color: var(--vc-text-muted); }
+@media (max-width: 559px) {
+  /* on phones the kind's tag is enough; the cell would only push the title down */
+  .site-entry .vc-card__body { grid-template-columns: minmax(0, 1fr); }
+  .site-entry__cell { display: none; }
+}
+
+/* An empty list, or a list that needs JavaScript */
+.site-empty { margin-inline: auto; }

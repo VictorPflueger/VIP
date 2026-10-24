@@ -1,16 +1,16 @@
-# Victor Pflüger — personal website:
+# Victor Pflüger — personal website
 
-A static website with three pages, built in the design system of my two prototypes,
-[Rebate Hunter](https://github.com/VictorPflueger/PROC-Rebate-Hunter) and
-[Navigator](https://github.com/VictorPflueger/supply-chain-navigator): the same burgundy palette,
-fonts, buttons, cards and dotted canvas.
+A static website with three pages, built with [Vici](https://victorpflueger.github.io/ViciDesign/index.html),
+Victor's own design system: merlot `#250010` with pastels, hexagons instead of circles, Bricolage
+Grotesque and Inter, and the Vertex logo.
 
 No build step, no framework, no backend. It runs on GitHub Pages or any static host, and it also
-works when `index.html` is opened straight from disk.
+works when `index.html` is opened straight from disk. Live at
+<https://victorpflueger.github.io/VIP/index.html>.
 
 | Page | File | Content |
 |---|---|---|
-| Home | `index.html` | Introduction with portrait and LinkedIn link, key figures, fields of work, career, education, contact |
+| Home | `index.html` | Introduction with portrait, key figures, fields of work, career, education, contact |
 | Prototypes, Demos and Tech-Showcases | `prototypes.html` | One card per prototype, demo or tech-showcase, from `data/prototypes.js` |
 | Articles, Events & Features | `articles.html` | One entry per article, event or feature, from `data/articles.js` |
 
@@ -21,8 +21,8 @@ The two lists live in data files. Adding something means editing one file; the H
 ## Add a prototype, demo or tech-showcase
 
 1. Put its icon into `images/prototypes/`: a square SVG or PNG, at least 112 × 112 px. For my
-   prototypes, that is their `favicon.svg`. Without an icon, the card shows a burgundy tile with the
-   first letter.
+   prototypes, that is their `favicon.svg`. Without an icon, the card shows the first letter in a
+   merlot hexagon.
 2. Open `data/prototypes.js`, copy one block from `{` to `},` and paste it where the card should
    appear (the first block is the first card).
 3. Change the values:
@@ -43,8 +43,8 @@ The two lists live in data files. Adding something means editing one file; the H
 
 4. Save and reload the page. The card appears, and the counter on the home page goes up.
 
-The `kind` shows as the card's first label (*Prototype*, *Demo* or *Tech-Showcase*) and sets the
-card's link text (*Open the prototype*, *Open the demo*, *Open the showcase*).
+The `kind` shows as the card's first tag (*Prototype*, *Demo* or *Tech-Showcase*) and sets the
+hint at the bottom of the card (*Open the prototype*, *Open the demo*, *Open the showcase*).
 
 ## Add an article, event or feature
 
@@ -70,10 +70,10 @@ card's link text (*Open the prototype*, *Open the demo*, *Open the showcase*).
   },
 ```
 
-`language` adds "In German" to the entry's line of details. Each of the `translations` gets its own
-link next to the main one ("Also in German"), as on the Detecon interview.
+`language` adds "In German" to the entry's details. Each of the `translations` gets its own link
+next to the main one ("Also in German"), as on the Detecon interview.
 
-3. Save and reload. Events and talks dated today or later get an **Upcoming** chip, and the tile on
+3. Save and reload. Events and talks dated today or later get an **Upcoming** tag, and the tile on
    the home page then shows the next one instead of the latest.
 
 **If an entry does not appear**, open the browser console (F12 → Console): it names the entry and
@@ -82,8 +82,11 @@ the value that is missing or malformed, for example a `url` without `https://` o
 
 ## Replace the portrait
 
-`images/portrait.jpg` is a 600 × 600 px photo. To change it, save another square photo of at least
-400 × 400 px under the same name. The page crops it to a circle, so keep the face in the middle.
+The portrait is Vici's: `vici/assets/brand/portrait.jpg`, 640 × 640 px. The home page shows it in
+the middle hexagon of the honeycomb, which trims a sliver at the top and bottom and cuts the left
+and right corners, so frame head and shoulders centrally. To change it, replace the file in Vici
+(`assets/brand/portrait.jpg`) and copy it here as described under [Update Vici](#update-vici), or
+overwrite `vici/assets/brand/portrait.jpg` with another square photo of 640 px or more.
 
 ## Preview locally
 
@@ -99,14 +102,15 @@ python -m http.server 8000
 1. On GitHub, open the repository → **Settings** → **Pages**.
 2. Under **Build and deployment**, choose **Deploy from a branch**, branch **main**, folder
    **/ (root)**, and **Save**.
-3. After a minute or two, the site is live at <https://victorpflueger.github.io/VIP/>.
+3. After a minute or two, the site is live at <https://victorpflueger.github.io/VIP/index.html>.
 
 Every later push to `main` updates the site. The empty `.nojekyll` file tells GitHub to publish the
 files as they are.
 
 **Own domain.** Under **Settings → Pages → Custom domain**, enter the domain and add the DNS records
 GitHub lists there at your registrar. A Pages site has one custom domain; to use both a `.com` and a
-`.de` address, make one the custom domain and forward the other to it at the registrar.
+`.de` address, make one the custom domain and forward the other to it at the registrar. Vici's
+profile-links guideline names the address to link to; update it there when the site moves.
 
 **Before going live**, consider a legal notice (Impressum) and a privacy notice: for a professional
 website run from Germany these are usually expected. They can be added as a fourth page, linked from
@@ -115,43 +119,53 @@ the footer.
 ## Shared header, navigation and footer
 
 The three pages repeat the same header, navigation and footer. A change there, such as a new
-navigation item, goes into all three files.
+navigation item, goes into all three files. Between phone and desktop widths, the navigation shows
+only the first word of the two long page names (`<span class="site-nav-more">` holds the rest).
 
 ## Design
 
-The look comes from the prototypes' design system (their `DESIGN.md`):
+The look is Vici's, and the site follows its guidelines:
 
-- `css/tokens.css` holds the colour palette, copied unchanged from the prototypes, where
-  `tools/palette.mjs` generates it from the brand burgundy `#7a1e3a`. If the palette changes there,
-  copy the new `:root` block here.
-- `css/fonts.css` and `fonts/` are the prototypes' self-hosted fonts: Barlow, Barlow Semi Condensed
-  and IBM Plex Mono (SIL Open Font License).
-- `css/site.css` assigns roles (`--brand`, `--text-muted`, `--line` and so on) and styles the pages.
-  It adds no colour values of its own: use a role, not a new hex value.
-- The colour grammar stays the prototypes': burgundy for identity and action (the mark, primary
-  buttons, the page you are on), slate for the dotted canvas, ink for everything else. Red, amber,
-  green, blue and violet carry meaning in the prototypes, so they do not decorate here.
-- `favicon.svg` repeats the mark in plain colour values, because an icon file cannot read the tokens.
+- `vici/` holds Vici's stylesheet, script, fonts, logo, the platforms' marks and the portrait,
+  copied unchanged from a Vici release (see `vici/README.md`). Don't edit these files; change Vici
+  and copy them again.
+- `css/site.css` only arranges Vici's components: the hero's honeycomb, the grids and the cards. It
+  uses Vici's tokens (`var(--vc-…)`) and adds no colour values, fonts or round shapes of its own.
+  Its classes start with `site-`; every other class on the pages is Vici's.
+- Colour carries meaning, as in Vici: merlot for the name, links and the one main button; the six
+  fields of work each have a pastel (teal, fjord, apricot, honey, lilac, blush) that is the same in
+  the honeycomb and in "What I work on". Prototypes are tagged lilac, Vici's colour for
+  experimental work.
+- Light and dark theme follow the system setting; the moon/sun button switches and remembers the
+  choice. `js/theme.js` applies a stored choice before the page is drawn.
+- LinkedIn's [in] logo and GitHub's Invertocat are the platforms' own files, unchanged: black on
+  light surfaces and white on dark ones.
+- Links to my profiles use their canonical addresses and `rel="me"`. All links open in the same
+  tab, and the site doesn't link to its own repository.
+
+### Update Vici
+
+`vici/README.md` lists the files and the Vici release they come from. To update, copy the same
+files from a newer Vici release into the same places, keep `vici/README.md` in step, and check the
+three pages in light and dark.
 
 ## Privacy
 
 The pages load nothing from other sites: fonts, scripts and images are served from this repository,
 there are no cookies and no tracking, and a content security policy in each page makes the browser
-enforce it. Links to LinkedIn, GitHub, the prototypes and the articles open in a new tab.
+enforce it. The theme choice is kept in the browser's local storage and never leaves it.
 
 ## Files
 
 ```
 index.html               Home
-prototypes.html          Prototypes
+prototypes.html          Prototypes, Demos and Tech-Showcases
 articles.html            Articles, Events & Features
 data/prototypes.js       ← add prototypes, demos and tech-showcases here
 data/articles.js         ← add articles, events and features here
-js/site.js               turns the data files into cards and home-page tiles
-css/tokens.css           colour palette (from the prototypes)
-css/fonts.css, fonts/    self-hosted fonts (from the prototypes)
-css/site.css             roles, layout and components
-images/portrait.jpg      portrait (600 × 600 px)
+js/site.js               turns the data files into cards and home-page key figures
+js/theme.js              applies a stored light or dark choice before the page is drawn
+css/site.css             layout of the pages, on top of Vici
+vici/                    Vici, copied unchanged (stylesheet, script, fonts, logo, marks, portrait)
 images/prototypes/       prototype icons
-favicon.svg              browser tab icon
 ```
