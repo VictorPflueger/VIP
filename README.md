@@ -152,9 +152,10 @@ The look is Vici's, and the site follows its guidelines:
   Bricolage only for short headlines of a line or two (long article titles are set in Inter);
   no more than 75 characters per line in running text (Vici asks for 55 to 75; short card texts
   are naturally narrower).
-- Buttons that only show an icon have a tooltip with their name. Links, buttons and cards that
-  lead to another site show the external-link icon, except the footer's "Elsewhere" list and the
-  buttons that carry LinkedIn's or GitHub's logo, which already say where they lead.
+- Buttons that only show an icon have a tooltip with their name. Standalone links, buttons and
+  cards that lead to another site show the external-link icon. Links inside a sentence (such as
+  "Built with Vici"), the footer's "Elsewhere" list and the buttons that carry LinkedIn's or
+  GitHub's logo go without it, as Vici's link rule says.
 - Light and dark theme follow the system setting; the moon/sun button switches and remembers the
   choice. `js/theme.js` applies a stored choice before the page is drawn.
 - LinkedIn's [in] logo and GitHub's Invertocat are the platforms' own files, unchanged: black on

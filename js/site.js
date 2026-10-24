@@ -147,7 +147,7 @@
     var hint = el("span", "site-card-cta", text);
     hint.setAttribute("aria-hidden", "true");
     var ext = icon("external");
-    ext.classList.add("vc-icon--sm");   // the size of the "Source code" button's icon next to it
+    ext.classList.add("vc-icon--sm");   // like the "Source code" button's icon: about 1.15 × its text
     hint.appendChild(ext);
     return hint;
   }
