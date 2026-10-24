@@ -11,8 +11,8 @@ works when `index.html` is opened straight from disk. Live at
 | Page | File | Content |
 |---|---|---|
 | Home | `index.html` | Introduction with portrait, key figures, fields of work, career, education, contact |
-| Prototypes, Demos and Tech-Showcases | `prototypes.html` | One card per prototype, demo or tech-showcase, from `data/prototypes.js` |
-| Articles, Events & Features | `articles.html` | One entry per article, event or feature, from `data/articles.js` |
+| Prototypes, demos & tech-showcases | `prototypes.html` | One card per prototype, demo or tech-showcase, from `data/prototypes.js` |
+| Articles, events & features | `articles.html` | One entry per article, event or feature, from `data/articles.js` |
 
 The two lists live in data files. Adding something means editing one file; the HTML stays as it is.
 
@@ -20,9 +20,11 @@ The two lists live in data files. Adding something means editing one file; the H
 
 ## Add a prototype, demo or tech-showcase
 
-1. Put its icon into `images/prototypes/`: a square SVG or PNG, at least 112 × 112 px. For my
-   prototypes, that is their `favicon.svg`. Without an icon, the card shows the first letter in a
-   merlot hexagon.
+1. Pick an icon from Vici's set (Vici's docs → Guidelines → Icons), for example `search`, `clock`
+   or `layers`. The card shows it in a hexagon cell in the colour of the kind. Without an icon, the
+   cell shows the name's first letter. A prototype's own picture also works: put it into
+   `images/prototypes/` (a square image of at least 128 px, subject in the middle) and give its
+   path instead; the card crops it to the same hexagon.
 2. Open `data/prototypes.js`, copy one block from `{` to `},` and paste it where the card should
    appear (the first block is the first card).
 3. Change the values:
@@ -35,7 +37,7 @@ The two lists live in data files. Adding something means editing one file; the H
     description: "An AI agent that finds supplier rebates …", // one or two sentences (required)
     url: "https://victorpflueger.github.io/PROC-Rebate-Hunter/", // a click on the card opens this (required)
     code: "https://github.com/VictorPflueger/PROC-Rebate-Hunter", // "Source code" link
-    icon: "images/prototypes/rebate-hunter.svg",
+    icon: "search",                                         // a Vici icon, or images/prototypes/…
     tags: ["Agentic AI", "Procurement"],
     note: "Free simulation, no API key needed.",            // optional: a short practical note
   },
@@ -43,8 +45,10 @@ The two lists live in data files. Adding something means editing one file; the H
 
 4. Save and reload the page. The card appears, and the counter on the home page goes up.
 
-The `kind` shows as the card's first tag (*Prototype*, *Demo* or *Tech-Showcase*) and sets the
-hint at the bottom of the card (*Open the prototype*, *Open the demo*, *Open the showcase*).
+The `kind` shows as the card's first tag (*Prototype*, *Demo* or *Tech-showcase*, in lilac, fjord
+or teal), colours the card's hexagon cell and sets the hint at the bottom of the card (*Open the
+prototype*, *Open the demo*, *Open the showcase*). With no entries at all, the page shows Vici's
+empty state with a link to my GitHub profile.
 
 ## Add an article, event or feature
 
@@ -73,8 +77,9 @@ hint at the bottom of the card (*Open the prototype*, *Open the demo*, *Open the
 `language` adds "In German" to the entry's details. Each of the `translations` gets its own link
 next to the main one ("Also in German"), as on the Detecon interview.
 
-3. Save and reload. Events and talks dated today or later get an **Upcoming** tag, and the tile on
-   the home page then shows the next one instead of the latest.
+3. Save and reload. Events and talks dated today or later get an **Upcoming** status tag (Vici's
+   information tone with a clock icon), and the tile on the home page then shows the next one
+   instead of the latest.
 
 **If an entry does not appear**, open the browser console (F12 → Console): it names the entry and
 the value that is missing or malformed, for example a `url` without `https://` or a date written as
@@ -119,8 +124,9 @@ the footer.
 ## Shared header, navigation and footer
 
 The three pages repeat the same header, navigation and footer. A change there, such as a new
-navigation item, goes into all three files. Between phone and desktop widths, the navigation shows
-only the first word of the two long page names (`<span class="site-nav-more">` holds the rest).
+navigation item, goes into all three files. Between phone and desktop widths (768 to 1023 px), the
+navigation shows only the first word of the two long page names (`<span class="site-nav-more">`
+holds the rest).
 
 ## Design
 
@@ -129,13 +135,22 @@ The look is Vici's, and the site follows its guidelines:
 - `vici/` holds Vici's stylesheet, script, fonts, logo, the platforms' marks and the portrait,
   copied unchanged from a Vici release (see `vici/README.md`). Don't edit these files; change Vici
   and copy them again.
-- `css/site.css` only arranges Vici's components: the hero's honeycomb, the grids and the cards. It
-  uses Vici's tokens (`var(--vc-…)`) and adds no colour values, fonts or round shapes of its own.
-  Its classes start with `site-`; every other class on the pages is Vici's.
+- `css/site.css` only arranges Vici's components: the hero's honeycomb flower and a few details.
+  The grids, rows and stacks are Vici's layout classes (`vc-grid`, `vc-cluster`, `vc-stack`), the
+  breakpoints are Vici's (480, 768, 1024 px), and it uses Vici's tokens (`var(--vc-…)`) only, with
+  no colour values, fonts or round shapes of its own. Its classes start with `site-`; every other
+  class on the pages is Vici's.
 - Colour carries meaning, as in Vici: merlot for the name, links and the one main button; the six
-  fields of work each have a pastel (teal, fjord, apricot, honey, lilac, blush) that is the same in
-  the honeycomb and in "What I work on". Prototypes are tagged lilac, Vici's colour for
-  experimental work.
+  fields of work each have a pastel family (teal, fjord, apricot, honey, lilac and merlot's blush)
+  that is the same in the honeycomb and in "What I work on". The kinds of prototype are categories,
+  so they take pastel families too: lilac (Vici's colour for experimental work) for prototypes,
+  fjord for demos, teal for tech-showcases. Status, such as an upcoming event, takes Vici's
+  semantic tones with an icon and a word.
+- Text follows Vici's writing and type rules: sentence case for headings, navigation and buttons;
+  Bricolage only for short headlines of a line or two (long article titles are set in Inter);
+  reading text at 55 to 75 characters per line.
+- Buttons that only show an icon have a tooltip with their name; links and cards that lead to
+  another site show the external-link icon.
 - Light and dark theme follow the system setting; the moon/sun button switches and remembers the
   choice. `js/theme.js` applies a stored choice before the page is drawn.
 - LinkedIn's [in] logo and GitHub's Invertocat are the platforms' own files, unchanged: black on
@@ -159,13 +174,13 @@ enforce it. The theme choice is kept in the browser's local storage and never le
 
 ```
 index.html               Home
-prototypes.html          Prototypes, Demos and Tech-Showcases
-articles.html            Articles, Events & Features
+prototypes.html          Prototypes, demos & tech-showcases
+articles.html            Articles, events & features
 data/prototypes.js       ← add prototypes, demos and tech-showcases here
 data/articles.js         ← add articles, events and features here
 js/site.js               turns the data files into cards and home-page key figures
 js/theme.js              applies a stored light or dark choice before the page is drawn
 css/site.css             layout of the pages, on top of Vici
 vici/                    Vici, copied unchanged (stylesheet, script, fonts, logo, marks, portrait)
-images/prototypes/       prototype icons
+images/prototypes/       a prototype's own picture, if one is used (none at the moment)
 ```
