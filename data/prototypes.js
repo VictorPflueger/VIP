@@ -61,6 +61,17 @@ window.PROTOTYPES = [
     note: "Free simulation, no API key needed. Fictional trains, no client data.",
   },
   {
+    name: "Dispatch Lab",
+    kind: "prototype",
+    subtitle: "T-Brain Mobility Challenge",
+    description: "The Neu-Frankfurt rail scenario simulated in your browser under three dispatching strategies, from the challenge's baseline to a planner that serves every stop.",
+    url: "https://victorpflueger.github.io/mobilitychallenge/",
+    code: "https://github.com/VictorPflueger/mobilitychallenge",
+    icon: "flag",
+    tags: ["Optimization", "Rail"],
+    note: "Runs in your browser, no data leaves it. The scenario is the challenge's fictional network.",
+  },
+  {
     name: "Repack Pilot",
     kind: "showcase",
     subtitle: "Physical AI repacking showcase",
