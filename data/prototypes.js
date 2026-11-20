@@ -113,7 +113,7 @@ window.PROTOTYPES = [
     code: "https://github.com/VictorPflueger/PROC-data-quality",
     icon: "check",
     tags: ["Agentic AI", "Procurement"],
-    note: "Work in progress. Fictional company, no client data.",
+    note: "Fictional company, no client data.",
   },
   {
     name: "Repack Pilot",
