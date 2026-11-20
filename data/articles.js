@@ -1,4 +1,4 @@
-/* Articles, events and features — shown on articles.html, newest first, grouped by year.
+/* Articles, events and features: the entries on articles.html, newest first, grouped by year.
  * The order in this file does not matter: the page sorts by date.
  *
  * TO ADD AN ENTRY: copy one block from { to }, paste it anywhere in the list, and change the values.
@@ -50,7 +50,7 @@ window.ARTICLES = [
     publisher: "T-Systems",
     date: "2026-03-31",
     url: "https://www.t-systems.com/de/en/insights/newsroom/expert-blogs/agentic-ai-as-a-game-changer-1155332",
-    description: "Why agentic AI moves AI from assisting to acting, how the EU AI Act affects high-risk use cases, and how Detecon's APEX framework supports a secure, scalable rollout.",
+    description: "Why agentic AI moves AI from assisting to acting, how the EU AI Act affects high-risk use cases and how Detecon’s APEX framework supports a secure, scalable rollout.",
     role: "Co-author",
   },
   {
@@ -62,7 +62,7 @@ window.ARTICLES = [
     translations: [
       { language: "German", url: "https://www.detecon.com/de/insights/interview/so-wird-agentic-ai-zum-strategischen-game-changer" },
     ],
-    description: "Generative AI delivers answers, agentic AI delivers results: how agentic AI differs from automation and GenAI, where it pays off in industry, logistics, finance and customer service, and how governance and Detecon's APEX framework keep AI agents in check.",
+    description: "Generative AI delivers answers, agentic AI delivers results: how agentic AI differs from automation and GenAI, where it pays off in industry, logistics, finance and customer service, and how governance and Detecon’s APEX framework keep AI agents in check.",
     role: "Interviewee and co-author",
   },
   {
@@ -73,7 +73,7 @@ window.ARTICLES = [
     date: "2025-09-10",
     place: "Cologne",
     url: "https://www.digital-x.com/en/events/2025/focus-editions/ai",
-    description: "A masterclass with speakers from Deutsche Telekom and Detecon on why traditional automation reaches its limits, and how Detecon's agentic AI framework bridges the gap: adaptive, action-oriented agents, a clear method (APEX) and business impact from real projects.",
+    description: "A masterclass with speakers from Deutsche Telekom and Detecon on why traditional automation reaches its limits, and how Detecon’s agentic AI framework bridges the gap: adaptive, action-oriented agents, a clear method (APEX) and business impact from real projects.",
     role: "Speaker",
   },
 ];
