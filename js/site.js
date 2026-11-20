@@ -493,6 +493,21 @@
     }
   }
 
+  /* ---- header menu -------------------------------------------------------------------------- */
+
+  /* On phones the links fold into a menu behind Vici's toggle, but in the page they come before
+     the toggle, so after opening the menu with the keyboard, Tab would skip them. When the menu
+     opens from the keyboard (Enter or Space: a click without a pointer), focus moves to its first
+     link; Escape closes it and returns to the toggle (vici.js). Pointer clicks keep their focus. */
+  document.addEventListener("click", function (event) {
+    var toggle = event.target instanceof Element ? event.target.closest(".vc-header__toggle") : null;
+    if (!toggle || event.detail !== 0) return;
+    window.setTimeout(function () {
+      var first = document.querySelector(".vc-header__nav a");
+      if (toggle.getAttribute("aria-expanded") === "true" && first) first.focus();
+    }, 0);
+  });
+
   try {
     init();
   } catch (error) {

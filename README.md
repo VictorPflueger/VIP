@@ -130,7 +130,9 @@ the footer.
 The three pages repeat the same header, navigation and footer. A change there, such as a new
 navigation item, goes into all three files. Between phone and desktop widths (768 to 1023 px), the
 navigation shows only the first word of the two long page names (`<span class="site-nav-more">`
-holds the rest).
+holds the rest). On phones the links fold into a menu behind Vici's toggle; when the menu opens from
+the keyboard, `js/site.js` moves focus to its first link, because in the page the links come before
+the toggle.
 
 ## Byline
 
@@ -248,7 +250,7 @@ prototypes.html          Prototypes, demos & tech-showcases
 articles.html            Articles, events & features
 data/prototypes.js       ← add prototypes, demos and tech-showcases here
 data/articles.js         ← add articles, events and features here
-js/site.js               turns the data files into cards and home-page key figures
+js/site.js               turns the data files into cards and key figures; focus for the phone menu
 js/theme.js              applies a stored light or dark choice before the page is drawn
 css/site.css             layout of the pages, on top of Vici
 vici/                    Vici, copied unchanged (stylesheet, script, fonts, logo, marks, portrait)
