@@ -80,7 +80,7 @@ window.PROTOTYPES = [
     code: "https://github.com/VictorPflueger/dutyradar",
     icon: "filter",
     tags: ["Agentic AI", "Public sector"],
-    note: "Work in progress. Free simulation, no API key needed. Real federal law, assumed case numbers.",
+    note: "Free simulation, no API key needed, in English and German. Real federal law, assumed case numbers, no client data.",
   },
   {
     name: "Price Variance Agent",
