@@ -91,7 +91,7 @@ window.PROTOTYPES = [
     code: "https://github.com/VictorPflueger/PROC-price-variance",
     icon: "trend-down",
     tags: ["Agentic AI", "Procurement"],
-    note: "Work in progress. Fictional company, no client data.",
+    note: "Free simulation, no API key needed. Fictional company, no client data.",
   },
   {
     name: "Sovereignty Assessment",
