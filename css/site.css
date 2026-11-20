@@ -32,28 +32,9 @@
 
 /* ---- home: hero ----------------------------------------------------------------------------- */
 
-/* Heads of the pages sit on Vici's honeycomb pattern, which fades out towards the content. */
-.site-hero,
-.site-page-head {
-  position: relative;
-  isolation: isolate;
-}
-.site-hero::before,
-.site-page-head::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background-image: var(--vc-honeycomb-pattern);
-  background-size: var(--vc-honeycomb-pattern-size);
-  /* a mask only reads the alpha channel: any opaque colour will do */
-  mask-image: linear-gradient(to bottom, var(--vc-text) 45%, transparent);
-}
-/* in forced colours the pattern would only add noise behind the text */
-@media (forced-colors: active) {
-  .site-hero::before,
-  .site-page-head::before { display: none; }
-}
+/* The hero and the heads of the list pages sit on the page's flat canvas. The colour comes from
+   the honeycomb's pastel cells: Vici 2.0 keeps the honeycomb for real content and asks for flat
+   grounds rather than gradients. */
 .site-hero__grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -99,10 +80,25 @@
   padding-right: calc(var(--site-flower-w) * 0.25);
   justify-content: center;
 }
-.site-flower > * {
+.site-flower__portrait,
+.site-flower__cell {
   width: var(--site-flower-w);
   height: var(--site-flower-h);
   margin: 0;
+}
+/* The six fields are a list. It spans the flower and lays its cells on the flower's own tracks
+   (subgrid), so the portrait and the fields share one honeycomb. */
+.site-flower__fields {
+  display: grid;
+  grid-area: 1 / 1 / -1 / -1;
+  grid-template-columns: subgrid;
+  grid-template-rows: subgrid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@supports not (grid-template-rows: subgrid) {
+  .site-flower__fields { display: contents; }
 }
 /* Vici's tile label follows the cell (its height × 0.13, at most the small text size). On phones
    the cells follow the screen width, so the labels follow the cell even at large text sizes,
@@ -199,19 +195,9 @@
   padding: 0;
   list-style: none;
 }
-.site-field {
-  display: flex;
-  flex-wrap: wrap;   /* the text moves under its cell when the column gets too narrow for it */
-  align-items: flex-start;
-  gap: var(--vc-space-2) var(--vc-space-4);
-  margin: 0;
-}
-.site-field__text {
-  flex: 1 1 12rem;
-  min-width: 0;
-}
+.site-field { margin: 0; }
 .site-field h3 {
-  margin: var(--vc-space-1) 0 var(--vc-space-2);
+  margin: 0 0 var(--vc-space-2);
   font-size: var(--vc-font-size-xl);
 }
 .site-field p {
@@ -233,12 +219,7 @@
 }
 .site-timeline { max-width: var(--vc-container-prose); }
 
-.site-panel-title {
-  display: flex;
-  align-items: center;
-  gap: var(--vc-space-3);
-  margin-bottom: var(--vc-space-3);
-}
+.site-panel-title { margin-bottom: var(--vc-space-4); }
 .site-facts { margin: 0; }
 .site-facts > li + li { margin-top: var(--vc-space-4); }
 .site-fact__title {
