@@ -1,7 +1,10 @@
 # Vici, copied into this site
 
 These files come unchanged from Vici, Victor Pflüger's design system
-(<https://victorpflueger.github.io/ViciDesign/index.html>), version **v1.0.0** (commit `fdd868b` on its main branch).
+(<https://victorpflueger.github.io/ViciDesign/index.html>), version **2.0** before its release: commit
+`ddb0b95` on its main branch (`ddb0b951154aaa27320a702d5a435ec268b4998e`, 20 November 2026). Vici has no
+`v2.0.0` tag yet, and the `package.json` of that commit still says 1.0.0. Once the tag exists, copy the same
+files from it and update this paragraph.
 The site loads them from here rather than from a CDN, so every page is served from this site alone.
 
 | File here | What it is |
@@ -12,10 +15,11 @@ The site loads them from here rather than from a CDN, so every page is served fr
 | `assets/fonts/OFL-*.txt` | The SIL Open Font License of each font family |
 | `assets/logo/favicon.svg` | The Vertex favicon |
 | `assets/logo/vertex/color.svg`, `dark.svg` | The Vertex symbol for light and dark headers |
-| `assets/marks/linkedin.png` | LinkedIn's [in] logo, as LinkedIn publishes it |
+| `assets/marks/linkedin.png` | LinkedIn's [in] logo, as LinkedIn publishes it, also used in the byline |
 | `assets/marks/github.svg`, `OCTICONS-LICENSE` | GitHub's Invertocat from Octicons, inlined in the pages, with its licence |
 | `assets/marks/README.md` | Where the marks come from and how they may be used |
-| `assets/brand/portrait.jpg` | Victor's portrait, 640 × 640 px |
+| `assets/brand/portrait.jpg` | Victor's portrait, 640 × 640 px, in the middle of the home page's honeycomb |
+| `assets/brand/portrait-96.jpg` | The same portrait at 96 × 96 px, for the "Built by" byline at the foot of every page |
 | `LICENSE` | Vici's licence |
 
 Keep the folder structure: the stylesheet finds the fonts at `../assets/fonts/`.
