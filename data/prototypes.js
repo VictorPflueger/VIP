@@ -1,4 +1,4 @@
-/* Prototypes, demos and tech-showcases — shown as cards on prototypes.html, in the order listed here.
+/* Prototypes, demos and tech-showcases: the cards on prototypes.html, in the order listed here.
  *
  * TO ADD A PROTOTYPE, DEMO OR TECH-SHOWCASE: copy one block from { to }, paste it where the card
  * should appear (first block = first card), and change the values. Keep the quotes around text and
@@ -64,12 +64,12 @@ window.PROTOTYPES = [
     name: "Dispatch Lab",
     kind: "prototype",
     subtitle: "T-Brain Mobility Challenge",
-    description: "The Neu-Frankfurt rail scenario simulated in your browser under three dispatching strategies, from the challenge's baseline to a planner that serves every stop.",
+    description: "The Neu-Frankfurt rail scenario simulated in your browser under three dispatching strategies, from the challenge’s baseline to a planner that serves every stop.",
     url: "https://victorpflueger.github.io/mobilitychallenge/",
     code: "https://github.com/VictorPflueger/mobilitychallenge",
     icon: "flag",
-    tags: ["Optimization", "Rail"],
-    note: "Runs in your browser, no data leaves it. The scenario is the challenge's fictional network.",
+    tags: ["Optimisation", "Rail"],
+    note: "Runs in your browser, no data leaves it. The scenario is the challenge’s fictional network.",
   },
   {
     name: "Duty Radar",
