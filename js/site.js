@@ -1,4 +1,5 @@
-/* Victor Pflüger — turns data/prototypes.js and data/articles.js into cards and key figures.
+/* Victor Pflüger's website: builds the cards and key figures from data/prototypes.js and
+ * data/articles.js.
  *
  * A plain script rather than a module, so the pages also work when opened straight from disk. Every
  * value from the data files goes into the page as text (textContent), never as markup, and the
@@ -109,7 +110,7 @@
   }
 
   function warn(where, problem, consequence) {
-    console.warn("[" + where + "] " + problem + (consequence ? " – " + consequence : "") + ".");
+    console.warn("[" + where + "] " + problem + (consequence ? " (" + consequence + ")" : "") + ".");
   }
 
   function readList(globalName, file) {

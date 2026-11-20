@@ -1,4 +1,4 @@
-/* Victor Pflüger — the site's own layout on top of Vici (vici/dist/vici.min.css).
+/* Victor Pflüger's website: its own layout on top of Vici (vici/dist/vici.min.css).
  *
  * Vici supplies the colours, type, components, layout primitives and dark theme. This file only
  * arranges them: it uses Vici's tokens (var(--vc-…)) and breakpoints (480, 768, 1024 px), and adds
@@ -23,7 +23,7 @@
 /* ---- shared --------------------------------------------------------------------------------- */
 
 .site-section-head {
-  /* Vici's reading width: lines of 55-75 characters */
+  /* Vici's reading width: lines of 55–75 characters */
   max-width: var(--vc-container-prose);
   margin-bottom: var(--vc-space-10);
 }
