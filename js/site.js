@@ -20,16 +20,16 @@
     showcase:  { label: "Tech-showcase", icon: "eye",  tone: "teal",  cta: "Open the showcase" }
   };
 
-  /* The kinds of entry on the Articles, events & features page. "dated" kinds take place on a day,
-     so the ones still to come are marked as upcoming. */
+  /* The kinds of entry on the Articles, events & features page: the tag's label and the card's
+     hint. "dated" kinds take place on a day, so the ones still to come are marked as upcoming. */
   var KINDS = {
-    article:    { label: "Article",    icon: "type",     cta: "Read on" },
-    whitepaper: { label: "Whitepaper", icon: "book",     cta: "Read on" },
-    event:      { label: "Event",      icon: "calendar", cta: "Details on", dated: true },
-    talk:       { label: "Talk",       icon: "users",    cta: "Details on", dated: true },
-    feature:    { label: "Feature",    icon: "flag",     cta: "Read on" },
-    podcast:    { label: "Podcast",    icon: "play",     cta: "Listen on" },
-    interview:  { label: "Interview",  icon: "user",     cta: "Read on" }
+    article:    { label: "Article",    cta: "Read on" },
+    whitepaper: { label: "Whitepaper", cta: "Read on" },
+    event:      { label: "Event",      cta: "Details on", dated: true },
+    talk:       { label: "Talk",       cta: "Details on", dated: true },
+    feature:    { label: "Feature",    cta: "Read on" },
+    podcast:    { label: "Podcast",    cta: "Listen on" },
+    interview:  { label: "Interview",  cta: "Read on" }
   };
 
   var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -345,7 +345,6 @@
       url: url,
       host: siteName(url),
       label: isText(entry.label) ? entry.label.trim() : kind.label,
-      icon: kind.icon,
       cta: kind.cta,
       upcoming: Boolean(kind.dated) && isUpcoming(date),
       place: isText(entry.place) ? entry.place.trim() : "",
@@ -363,14 +362,20 @@
     return span;
   }
 
+  /* An entry: the title first, then the kind, publisher, date and place under it, because Vici puts
+     no label over a heading. */
   function articleCard(item) {
     var card = el("li", "vc-card vc-card--interactive site-entry");
     var body = el("div", "vc-card__body");
 
-    var cell = el("span", "vc-cell vc-cell--xl site-entry__cell");
-    cell.setAttribute("aria-hidden", "true");
-    cell.appendChild(icon(item.icon));
-    body.appendChild(cell);
+    // titles are quoted as published and often long: Inter (Vici's h5 style), as Bricolage is for
+    // short headlines of a line or two
+    var title = el("h3", "vc-card__title vc-h5");
+    var link = el("a", "vc-card__link", item.title);
+    link.href = item.url;
+    link.appendChild(hiddenText(" (on " + item.host + ")"));
+    title.appendChild(link);
+    body.appendChild(title);
 
     var meta = el("p", "site-entry__meta");
     meta.appendChild(tag(item.label));
@@ -384,15 +389,6 @@
     if (item.place) meta.appendChild(metaItem("pin", item.place));
     if (item.language) meta.appendChild(metaItem("globe-hex", "In " + item.language));
     body.appendChild(meta);
-
-    // titles are quoted as published and often long: Inter (Vici's h5 style), as Bricolage is for
-    // short headlines of a line or two
-    var title = el("h3", "vc-card__title vc-h5");
-    var link = el("a", "vc-card__link", item.title);
-    link.href = item.url;
-    link.appendChild(hiddenText(" (on " + item.host + ")"));
-    title.appendChild(link);
-    body.appendChild(title);
 
     if (item.description) body.appendChild(el("p", null, item.description));
 

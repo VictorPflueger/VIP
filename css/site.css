@@ -338,15 +338,8 @@
   padding: 0;
   list-style: none;
 }
-.site-entry .vc-card__body {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: start;
-  gap: var(--vc-space-2) var(--vc-space-5);
-}
-/* descriptions keep Vici's reading width: lines of 55-75 characters */
+/* descriptions keep Vici's reading width: lines of 55–75 characters */
 .site-entry .vc-card__body > p:not([class]) { max-width: var(--vc-container-prose); }
-.site-entry__cell { grid-row: 1 / span 4; }
 .site-entry__meta {
   display: flex;
   flex-wrap: wrap;
@@ -370,11 +363,6 @@
   font-size: var(--vc-font-size-sm);
 }
 .site-entry__role { color: var(--vc-text-muted); }
-@media (max-width: 479px) {
-  /* on phones the kind's tag is enough; the cell would only push the title down */
-  .site-entry .vc-card__body { grid-template-columns: minmax(0, 1fr); }
-  .site-entry__cell { display: none; }
-}
 
 /* An empty list, or a list that needs JavaScript */
 .site-empty { margin-inline: auto; }

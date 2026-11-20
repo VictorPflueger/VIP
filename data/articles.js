@@ -4,7 +4,7 @@
  * TO ADD AN ENTRY: copy one block from { to }, paste it anywhere in the list, and change the values.
  * Keep the quotes around text and the comma after each block.
  *
- *   kind          What it is; sets the icon and the label:                            (required)
+ *   kind          What it is; sets the label:                                         (required)
  *                 "article", "whitepaper", "event", "talk", "feature", "podcast" or "interview".
  *   label         Your own label instead of the kind's, e.g. "Expert article".       (optional)
  *   title         Title of the piece, talk or event.                                 (required)
