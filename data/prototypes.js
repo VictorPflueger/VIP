@@ -102,7 +102,7 @@ window.PROTOTYPES = [
     code: "https://github.com/VictorPflueger/sovereigntyassessment",
     icon: "honeycomb",
     tags: ["Agentic AI", "Public sector"],
-    note: "Work in progress. Free simulation, no API key needed. Indicative scores, not an official assessment.",
+    note: "Free simulation, no API key needed. Indicative scores, not an official assessment.",
   },
   {
     name: "Data Quality Agent",
