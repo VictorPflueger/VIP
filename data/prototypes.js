@@ -116,6 +116,17 @@ window.PROTOTYPES = [
     note: "Free simulation, no API key needed. Fictional company, no client data.",
   },
   {
+    name: "Business Model Canvas Challenger",
+    kind: "prototype",
+    subtitle: "Find where a business model breaks, and rebuild it",
+    description: "AI agents that complete a company’s Business Model Canvas, find where it breaks, put a yearly figure on each issue and propose how to rebuild the weak blocks.",
+    url: "https://victorpflueger.github.io/BMC-challenger/",
+    code: "https://github.com/VictorPflueger/BMC-challenger",
+    icon: "layout",
+    tags: ["Agentic AI", "Strategy"],
+    note: "Work in progress. In English and German.",
+  },
+  {
     name: "Repack Pilot",
     kind: "showcase",
     subtitle: "Physical AI repacking showcase",
