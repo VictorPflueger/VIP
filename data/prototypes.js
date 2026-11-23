@@ -124,6 +124,6 @@ window.PROTOTYPES = [
     code: "https://github.com/VictorPflueger/physicalAI-repacking",
     icon: "layers",
     tags: ["Physical AI", "Agentic AI", "Logistics"],
-    note: "Work in progress. Free simulation, no API key needed. Fictional retailer, no client data.",
+    note: "Free simulation, no API key needed. Fictional retailer, no client data.",
   },
 ];
