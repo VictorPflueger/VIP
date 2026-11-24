@@ -21,6 +21,14 @@
     showcase:  { label: "Tech-showcase", icon: "eye",  tone: "teal",  cta: "Open the showcase" }
   };
 
+  /* The parts of the Prototypes, demos and tech-showcases page, in the order they appear. A card's
+     group (data/prototypes.js) says which part it sits in; a card without one is functional. The
+     key is also the heading's id, so prototypes.html#methodological leads straight to that part. */
+  var GROUPS = {
+    functional:     { heading: "Functional prototypes, demos & tech-showcases" },
+    methodological: { heading: "Methodological prototypes & tools" }
+  };
+
   /* The kinds of entry on the Articles, events & features page: the tag's label and the card's
      hint. "dated" kinds take place on a day, so the ones still to come are marked as upcoming. */
   var KINDS = {
@@ -190,9 +198,18 @@
       warn(where, "kind should be one of: " + Object.keys(SHOWCASE_KINDS).join(", "), "shown as a prototype");
       kind = SHOWCASE_KINDS.prototype;
     }
+    var group = "functional";
+    if (given(entry.group)) {
+      group = isText(entry.group) ? entry.group.trim().toLowerCase() : "";
+      if (!Object.prototype.hasOwnProperty.call(GROUPS, group)) {
+        warn(where, "group should be one of: " + Object.keys(GROUPS).join(", "), "shown with the functional ones");
+        group = "functional";
+      }
+    }
     var item = {
       name: entry.name.trim(),
       kind: kind,
+      group: group,
       subtitle: isText(entry.subtitle) ? entry.subtitle.trim() : "",
       description: entry.description.trim(),
       url: url,
@@ -258,7 +275,8 @@
       head.appendChild(protoCell(item));
     }
     var titles = el("div", "site-proto__titles");
-    var title = el("h2", "vc-card__title");
+    // an h3 under its part's h2 heading; Vici's .vc-card__title sets the look, so it looks as before
+    var title = el("h3", "vc-card__title");
     var link = el("a", "vc-card__link", item.name);
     link.href = item.url;
     title.appendChild(link);
@@ -297,15 +315,27 @@
     return card;
   }
 
+  /* One part per group, in the order of GROUPS: a section labelled by its heading, holding the
+     group's cards in Vici's grid in the order of the data file. A group without cards is left out. */
   function renderPrototypes(root, items) {
     root.textContent = "";
     if (!items.length) {
-      // the empty state takes the list's place instead of sitting in it as one grid cell
-      root.hidden = true;
-      root.insertAdjacentElement("afterend", emptyNote("cube", "New prototypes, demos and tech-showcases are on their way.", "Until then, my code is on ", "GitHub", "https://github.com/VictorPflueger"));
+      root.appendChild(emptyNote("cube", "New prototypes, demos and tech-showcases are on their way.", "Until then, my code is on ", "GitHub", "https://github.com/VictorPflueger"));
       return;
     }
-    items.forEach(function (item) { root.appendChild(prototypeCard(item)); });
+    Object.keys(GROUPS).forEach(function (key) {
+      var cards = items.filter(function (item) { return item.group === key; });
+      if (!cards.length) return;
+      var section = el("section", "site-proto-group");
+      var heading = el("h2", "vc-h3 site-proto-group__title", GROUPS[key].heading);
+      heading.id = key;
+      section.setAttribute("aria-labelledby", heading.id);
+      section.appendChild(heading);
+      var list = el("ul", "vc-grid site-cards");
+      cards.forEach(function (item) { list.appendChild(prototypeCard(item)); });
+      section.appendChild(list);
+      root.appendChild(section);
+    });
   }
 
   /* ---- articles, events and features -------------------------------------------------------- */

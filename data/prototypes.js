@@ -1,14 +1,20 @@
-/* Prototypes, demos and tech-showcases: the cards on prototypes.html, in the order listed here.
+/* Prototypes, demos and tech-showcases: the cards on prototypes.html. The page has two parts (see
+ * group below); within each part, the cards keep the order listed here.
  *
  * TO ADD A PROTOTYPE, DEMO OR TECH-SHOWCASE: copy one block from { to }, paste it where the card
- * should appear (first block = first card), and change the values. Keep the quotes around text and
- * the comma after each block.
+ * should appear in its part (the functional cards come first, the methodological ones last, after
+ * their comment line), and change the values. Keep the quotes around text and the comma after each
+ * block.
  *
  *   name         Card title.                                                         (required)
  *   kind         What it is: "prototype", "demo" or "showcase"; shown as a tag in its   (optional)
  *                colour (lilac, fjord or teal), and the card's hint reads "Open the
  *                prototype", "Open the demo" or "Open the showcase". Without a kind,
  *                the card is a prototype.
+ *   group        Which part of the page the card sits in: "functional" (under          (optional)
+ *                "Functional prototypes, demos & tech-showcases") or "methodological"
+ *                (under "Methodological prototypes & tools"). Without a group, the
+ *                card is functional.
  *   subtitle     One line under the title.                                           (optional)
  *   description  One or two short sentences.                                         (required)
  *   url          Where a click on the card leads: the live version.                  (required)
@@ -116,8 +122,22 @@ window.PROTOTYPES = [
     note: "Free simulation, no API key needed. Fictional company, no client data.",
   },
   {
+    name: "Repack Pilot",
+    kind: "showcase",
+    subtitle: "Physical AI repacking showcase",
+    description: "A simulated robot cell, planned by an AI agent, repacks mixed pallets into store orders overnight and learns from surprises. An engine prices every 1,000 units in labour hours and euros, manual baseline against the hybrid cell.",
+    url: "https://victorpflueger.github.io/physicalAI-repacking/",
+    code: "https://github.com/VictorPflueger/physicalAI-repacking",
+    icon: "layers",
+    tags: ["Physical AI", "Agentic AI", "Logistics"],
+    note: "Free simulation, no API key needed. Fictional retailer, no client data.",
+  },
+
+  // Methodological prototypes and tools: the page's second part (group: "methodological").
+  {
     name: "Business Model Canvas Challenger",
     kind: "prototype",
+    group: "methodological",
     subtitle: "Find where a business model breaks, and rebuild it",
     description: "AI agents that complete a company’s Business Model Canvas, find where it breaks, put a yearly figure on each issue and propose how to rebuild the weak blocks.",
     url: "https://victorpflueger.github.io/BMC-challenger/",
@@ -129,6 +149,7 @@ window.PROTOTYPES = [
   {
     name: "SWOT Challenger",
     kind: "prototype",
+    group: "methodological",
     subtitle: "Strengths, weaknesses, opportunities and threats, put to the test",
     description: "AI agents that complete a company’s SWOT analysis, challenge every item, put a figure on what is wrong or missing and turn it into strategies.",
     url: "https://victorpflueger.github.io/SWOT-challenger/",
@@ -140,6 +161,7 @@ window.PROTOTYPES = [
   {
     name: "PESTEL Challenger",
     kind: "prototype",
+    group: "methodological",
     subtitle: "Outside forces, put to the test",
     description: "AI agents that complete a company’s PESTEL analysis, challenge it, put a figure on each outside force and propose what to do or watch.",
     url: "https://victorpflueger.github.io/PESTEL-challenger/",
@@ -151,6 +173,7 @@ window.PROTOTYPES = [
   {
     name: "Prototype Ideator",
     kind: "prototype",
+    group: "methodological",
     subtitle: "From documents to agentic-AI prototypes worth building",
     description: "AI agents that read documents about a company, map its business issues and KPIs, and propose agentic-AI prototypes that each improve a named KPI. Code scores and ranks the ideas, and you shortlist the one to build.",
     url: "https://victorpflueger.github.io/PrototypeIdeator/",
@@ -158,16 +181,5 @@ window.PROTOTYPES = [
     icon: "sparkle",
     tags: ["Agentic AI", "Innovation"],
     note: "Work in progress. In English and German.",
-  },
-  {
-    name: "Repack Pilot",
-    kind: "showcase",
-    subtitle: "Physical AI repacking showcase",
-    description: "A simulated robot cell, planned by an AI agent, repacks mixed pallets into store orders overnight and learns from surprises. An engine prices every 1,000 units in labour hours and euros, manual baseline against the hybrid cell.",
-    url: "https://victorpflueger.github.io/physicalAI-repacking/",
-    code: "https://github.com/VictorPflueger/physicalAI-repacking",
-    icon: "layers",
-    tags: ["Physical AI", "Agentic AI", "Logistics"],
-    note: "Free simulation, no API key needed. Fictional retailer, no client data.",
   },
 ];

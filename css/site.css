@@ -265,6 +265,10 @@
 
 /* ---- prototypes ----------------------------------------------------------------------------- */
 
+/* The page's parts (functional, then methodological), spaced like the years on the articles page */
+.site-proto-group + .site-proto-group { margin-top: var(--vc-space-12); }
+.site-proto-group__title { margin: 0 0 var(--vc-space-5); }
+
 /* Vici's auto grid */
 .site-cards {
   --vc-grid-min: 22rem;

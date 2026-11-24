@@ -12,7 +12,7 @@ works when `index.html` is opened straight from disk. Live at
 | Page | File | Content |
 |---|---|---|
 | Home | `index.html` | Introduction with portrait, key figures, fields of work, career, education, contact |
-| Prototypes, demos & tech-showcases | `prototypes.html` | One card per prototype, demo or tech-showcase, from `data/prototypes.js` |
+| Prototypes, demos & tech-showcases | `prototypes.html` | One card per prototype, demo or tech-showcase, from `data/prototypes.js`, in two parts: functional, then methodological |
 | Articles, events & features | `articles.html` | One entry per article, event or feature, from `data/articles.js` |
 
 The two lists live in data files. Adding something means editing one file; the HTML stays as it is.
@@ -27,13 +27,15 @@ The two lists live in data files. Adding something means editing one file; the H
    `images/prototypes/` (a square image of at least 128 px, subject in the middle) and give its
    path instead; the card crops it to the same hexagon.
 2. Open `data/prototypes.js`, copy one block from `{` to `},` and paste it where the card should
-   appear (the first block is the first card).
+   appear in its part: the functional cards come first in the file, the methodological ones last,
+   after their comment line. Within a part, the first block is the first card.
 3. Change the values:
 
 ```js
   {
     name: "Rebate Hunter",                                   // card title (required)
     kind: "prototype",                                       // prototype, demo or showcase (default: prototype)
+    group: "functional",                                     // functional or methodological (default: functional)
     subtitle: "Procurement Rebate Hunter",                   // one line under the title
     description: "An AI agent that finds supplier rebates …", // one or two sentences (required)
     url: "https://victorpflueger.github.io/PROC-Rebate-Hunter/", // a click on the card opens this (required)
@@ -50,6 +52,12 @@ The `kind` shows as the card's first tag (*Prototype*, *Demo* or *Tech-showcase*
 or teal), colours the card's hexagon cell and sets the hint at the bottom of the card (*Open the
 prototype*, *Open the demo*, *Open the showcase*). With no entries at all, the page shows Vici's
 empty state with a link to my GitHub profile.
+
+The `group` decides which part of the page the card sits in:
+*Functional prototypes, demos & tech-showcases* (`functional`, the default) or
+*Methodological prototypes & tools* (`methodological`). Each part has its own heading, and a part
+without cards is left out. A link to `prototypes.html#methodological` leads straight to the
+methodological part.
 
 ## Add an article, event or feature
 
