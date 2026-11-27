@@ -233,6 +233,12 @@
   font-size: var(--vc-font-size-sm);
 }
 
+/* ---- home: CV and project overview ---------------------------------------------------------- */
+
+/* Vici's list group, one row per PDF, beside the section head like the career timeline, and no
+   wider than the timeline when the columns stack. */
+.site-documents { max-width: var(--vc-container-prose); }
+
 /* ---- home: contact -------------------------------------------------------------------------- */
 
 .site-contact { text-align: center; }

@@ -11,7 +11,7 @@ works when `index.html` is opened straight from disk. Live at
 
 | Page | File | Content |
 |---|---|---|
-| Home | `index.html` | Introduction with portrait, key figures, fields of work, career, education, contact |
+| Home | `index.html` | Introduction with portrait, key figures, fields of work, career, education, CV and project overview to download, contact |
 | Prototypes, demos & tech-showcases | `prototypes.html` | One card per prototype, demo or tech-showcase, from `data/prototypes.js`, in two parts: functional, then methodological |
 | Articles, events & features | `articles.html` | One entry per article, event or feature, from `data/articles.js` |
 
@@ -93,6 +93,34 @@ next to the main one ("Also in German"), as on the Detecon interview.
 **If an entry does not appear**, open the browser console (F12 → Console): it names the entry and
 the value that is missing or malformed, for example a `url` without `https://` or a date written as
 `18.03.2027`. A broken entry is skipped; the rest of the page keeps working.
+
+## Update the CV and project overview
+
+The home page's section *CV & project overview* offers five PDFs from `documents/`, one row each:
+
+| File | Row on the page | Language |
+|---|---|---|
+| `Victor_Pflueger_CV.pdf` | CV | English |
+| `Victor_Pflueger_CV_no-photo.pdf` | CV without photo | English |
+| `Victor_Pflueger_Lebenslauf.pdf` | Lebenslauf | German |
+| `Victor_Pflueger_Project-Overview.pdf` | Project overview | English |
+| `Victor_Pflueger_Projektuebersicht.pdf` | Projektübersicht | German |
+
+To update a document, replace its file in `documents/` with the new version under the same name.
+The link keeps working, and visitors save the file under that name. Each row in `index.html` states
+the file's language, page count and size (its bytes divided by 1,024, rounded, as browsers count
+kilobytes), so when a new version has other pages or another size, change its row too:
+
+```html
+<li><a class="vc-list-item" href="documents/Victor_Pflueger_CV.pdf" download hreflang="en" type="application/pdf"><span class="vc-list-item__text"><span><span class="vc-visually-hidden">Download </span>CV</span><span>English · PDF · 2 pages · 88&nbsp;KB</span></span><span class="vc-icon vc-icon--download" aria-hidden="true"></span></a></li>
+```
+
+For another document, put the PDF into `documents/`, copy a row and change the file name, the title
+and the details. `hreflang` is the document's language (`en` or `de`), and a German title sits in a
+`<span lang="de">`, as `Lebenslauf` does, so screen readers pronounce it in German. The `download`
+attribute saves the file instead of opening it in the browser, and the hidden "Download" tells
+screen readers what the link does, because the download icon is hidden from them. Everything in
+`documents/` is public, like the rest of this repository.
 
 ## Replace the portrait
 
@@ -206,7 +234,8 @@ The look is Vici's, and the site follows its guidelines:
 - Buttons that only show an icon have a tooltip with their name. Standalone links, buttons and
   cards that lead to another site show the external-link icon. Links inside a sentence (such as
   "Built with Vici"), the footer's "Elsewhere" list, the byline and the buttons that carry
-  LinkedIn's or GitHub's logo go without it, as Vici's link rule says.
+  LinkedIn's or GitHub's logo go without it, as Vici's link rule says. The rows of *CV & project
+  overview* lead to files on this site, so they show Vici's download icon instead.
 - Light and dark theme follow the system setting; the moon/sun button switches and remembers the
   choice. `js/theme.js` applies a stored choice before the page is drawn.
 - LinkedIn's [in] logo and GitHub's Invertocat are the platforms' own files, unchanged: black on
@@ -261,6 +290,7 @@ data/articles.js         ← add articles, events and features here
 js/site.js               turns the data files into cards and key figures; focus for the phone menu
 js/theme.js              applies a stored light or dark choice before the page is drawn
 css/site.css             layout of the pages, on top of Vici
+documents/               ← the PDFs of the CV and project overview, offered on the home page
 vici/                    Vici, copied unchanged (stylesheet, script, fonts, logo, marks, portrait)
 images/prototypes/       for a prototype's own picture, if one is ever used (create the folder)
 ```
