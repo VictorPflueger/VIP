@@ -103,7 +103,7 @@ window.PROTOTYPES = [
     name: "Sovereignty Assessment",
     kind: "prototype",
     subtitle: "Digital sovereignty of German public services",
-    description: "An AI agent that assesses how digitally sovereign a German public service is: who makes and who runs each of its building blocks, scored per layer of the Deutschland-Stack, with a source for every finding.",
+    description: "An AI agent finds who makes and who runs each building block of a German public service, with a source for every finding. Code scores it per layer of the Deutschland-Stack and compares it with similar services.",
     url: "https://victorpflueger.github.io/sovereigntyassessment/",
     code: "https://github.com/VictorPflueger/sovereigntyassessment",
     icon: "honeycomb",
