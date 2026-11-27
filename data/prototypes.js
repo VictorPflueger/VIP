@@ -175,11 +175,11 @@ window.PROTOTYPES = [
     kind: "prototype",
     group: "methodological",
     subtitle: "From documents to agentic-AI prototypes worth building",
-    description: "AI agents that read documents about a company, map its business issues and KPIs, and propose agentic-AI prototypes that each improve a named KPI. Code scores and ranks the ideas, and you shortlist the one to build.",
+    description: "AI agents that read a company’s documents, map its business issues and KPIs, and propose agentic-AI prototypes that each improve a named KPI. Code scores and ranks them, you shortlist the one to build, and every run ends in a report to save as PDF.",
     url: "https://victorpflueger.github.io/PrototypeIdeator/",
     code: "https://github.com/VictorPflueger/PrototypeIdeator",
     icon: "sparkle",
     tags: ["Agentic AI", "Innovation"],
-    note: "Work in progress. In English and German.",
+    note: "Free simulation, no API key needed; a live run uses your own Claude key. In English and German.",
   },
 ];
